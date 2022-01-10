@@ -13,9 +13,13 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<name>analysis</name>
 	<description>Demo project for Spring Boot</description>
+
 	<properties>
-		<java.version>11</java.version>
+		<java.version>16</java.version>
 	</properties>
+
+	<packaging>pom</packaging>
+
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -60,5 +64,13 @@
 			</plugin>
 		</plugins>
 	</build>
+
+	<modules>
+		<module>analysis-api</module>
+		<module>analysis-common</module>
+		<module>analysis-dao</module>
+		<module>analysis-service</module>
+		<module>analysis-web</module>
+	</modules>
 
 </project>

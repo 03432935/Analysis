@@ -1,4 +1,4 @@
-package com.geologic.hazard.analysis.analysis.controller;
+package com.geologic.hazard.analysis.web.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -11,6 +11,7 @@ public class helloController {
     @RequestMapping("/world")
     @ResponseBody
     public String hello(){
-        return "hello beauty";
+        return "hello beauty ~";
     }
 }
+
