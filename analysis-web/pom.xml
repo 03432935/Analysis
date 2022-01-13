@@ -13,6 +13,12 @@
         <maven.compiler.target>16</maven.compiler.target>
     </properties>
 
+    <parent>
+        <groupId>com.geologic.hazard.analysis</groupId>
+        <artifactId>analysis</artifactId>
+        <version>0.0.1-SNAPSHOT</version>
+    </parent>
+
     <dependencies>
         <dependency>
             <groupId>com.geologic.hazard.analysis</groupId>
