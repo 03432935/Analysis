@@ -25,5 +25,25 @@
             <artifactId>analysis</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
+        <dependency>
+            <groupId>com.geologic.hazard.analysis</groupId>
+            <artifactId>analysis-api</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>com.geologic.hazard.analysis</groupId>
+            <artifactId>analysis-common</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>com.geologic.hazard.analysis</groupId>
+            <artifactId>analysis-dao</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>com.geologic.hazard.analysis</groupId>
+            <artifactId>analysis-service</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
     </dependencies>
 </project>

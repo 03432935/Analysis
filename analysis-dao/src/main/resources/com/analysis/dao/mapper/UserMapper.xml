@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.analysis.dao.mapper.UserMapper">
+
+    <insert id="insert">
+        insert into user_test value(#{id},#{name},#{code})
+    </insert>
+    <select id="selectById" resultType="com.analysis.dao.entity.User">
+        select id,name,code
+        from user_test
+        where id = #{id}
+    </select>
+</mapper>
