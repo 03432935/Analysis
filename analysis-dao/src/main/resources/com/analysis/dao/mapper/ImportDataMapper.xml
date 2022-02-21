@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.analysis.dao.mapper.ImportDataMapper">
+
+    <insert id="batchInsert">
+        insert into import_data(senid,ttime,vdata,avgv,maxv,minv,maxtime,mintime,sdata,avgs,maxs,mins)
+        value
+        <foreach collection="list" item="item" separator=",">
+            (#{item.senId},#{item.tTime},#{item.vData},#{item.avgV},#{item.maxV},
+            #{item.minV},#{item.maxTime},#{item.minTime},#{item.sData},#{item.avgS},#{item.maxS},#{item.minS})
+        </foreach>
+    </insert>
+    <select id="query" resultType="com.analysis.dao.entity.ImportData">
+        select
+        senid as senId,
+        ttime as tTime,
+        vdata as vData,
+        avgv as avgV,
+        maxv as maxV,
+        minv as minV,
+        maxtime as maxTime,
+        mintime as minTime,
+        sdata as sData,
+        avgs as avgS,
+        maxs as maxS,
+        mins as minS
+        from import_data
+        <where>
+            1 = 1
+            <if test="senId != null and senId != ''">
+                and senid = #{senId}
+            </if>
+            <if test="tTime != null and tTime != ''">
+                and ttime = #{tTime}
+            </if>
+            <if test="vData != null and vData != ''">
+                and vdata = #{vData}
+            </if>
+            <if test="avgV != null and avgV != ''">
+                and avgv = #{avgV}
+            </if>
+            <if test="maxV != null and maxV != ''">
+                and maxv = #{maxV}
+            </if>
+            <if test="minV != null and minV != ''">
+                and minv = #{minV}
+            </if>
+            <if test="maxTime != null and maxTime != ''">
+                and maxtime = #{maxTime}
+            </if>
+            <if test="minTime != null and minTime != ''">
+                and mintime = #{minTime}
+            </if>
+            <if test="sData != null and sData != ''">
+                and sdata = #{sData}
+            </if>
+            <if test="avgS != null and avgS != ''">
+                and avgs = #{avgS}
+            </if>
+            <if test="maxS != null and maxS != ''">
+                and maxs = #{maxS}
+            </if>
+            <if test="minS != null and minS != ''">
+                and mins = #{minS}
+            </if>
+
+        </where>
+    </select>
+</mapper>

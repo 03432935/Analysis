@@ -1,7 +1,6 @@
 package com.analysis.service.listener;
 
 import com.alibaba.excel.context.AnalysisContext;
-import com.alibaba.excel.metadata.CellExtra;
 import com.alibaba.excel.read.listener.ReadListener;
 import com.alibaba.excel.util.ListUtils;
 import com.alibaba.fastjson.JSON;
@@ -10,7 +9,6 @@ import com.analysis.service.service.ImportExcelService;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.List;
-import java.util.Map;
 
 /**
  * @description:

@@ -15,7 +15,7 @@ import java.util.List;
 @Slf4j
 public class PageUtils {
 
-    public static PageInfo<T> pageList(List<T> list,Integer pageNum, Integer pageSize){
+    public static<T> PageInfo<T> pageList(List<T> list, Integer pageNum, Integer pageSize){
         // 开启分页
         PageHelper.startPage(pageNum, pageSize);
         // 封装list到PageInfo对象中自动分页

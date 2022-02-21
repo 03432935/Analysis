@@ -2,20 +2,15 @@ package com.analysis.service.utils;
 
 import com.alibaba.excel.EasyExcel;
 import com.alibaba.excel.ExcelReader;
-import com.alibaba.excel.context.AnalysisContext;
 import com.alibaba.excel.read.listener.PageReadListener;
-import com.alibaba.excel.read.listener.ReadListener;
 import com.alibaba.excel.read.metadata.ReadSheet;
-import com.alibaba.excel.util.ListUtils;
 import com.alibaba.fastjson.JSON;
-import com.analysis.common.utils.FileUtil;
 import com.analysis.dao.entity.ImportData;
 import com.analysis.service.listener.ImportExcelListener;
 import com.analysis.service.service.ImportExcelService;
 import lombok.extern.slf4j.Slf4j;
 
-import java.io.File;
-import java.util.List;
+import java.io.InputStream;
 
 /**
  * @description:
@@ -25,8 +20,7 @@ import java.util.List;
 @Slf4j
 public class ExcelUtils {
 
-    public static void readWithoutListener(){
-        String fileName = FileUtil.getPath() + "demo" + File.separator + "demo.xlsx";
+    public static void readWithoutListener(String fileName){
     // 这里 需要指定读用哪个class去读，然后读取第一个sheet 文件流会自动关闭
     // 这里每次会读取3000条数据 然后返回过来 直接调用使用数据就行
         EasyExcel.read(fileName, ImportData.class, new PageReadListener<ImportData>(dataList -> {
@@ -36,8 +30,7 @@ public class ExcelUtils {
         })).sheet().doRead();
     }
 
-    public static void read(ImportExcelService importExcelService) {
-        String fileName = FileUtil.getPath() + "demo" + File.separator + "demo.xlsx";
+    public static void read(String fileName, ImportExcelService importExcelService) {
         // 一个文件一个reader
         ExcelReader excelReader = null;
         try {
@@ -54,11 +47,15 @@ public class ExcelUtils {
         }
     }
 
-    public static void readWithListener(ImportExcelService importExcelService){
+    public static void readWithListener(String fileName, ImportExcelService importExcelService){
         // 有个很重要的点 DemoDataListener 不能被spring管理，要每次读取excel都要new,然后里面用到spring可以构造方法传进去
         // 写法3：
-        String fileName = FileUtil.getPath() + "demo" + File.separator + "demo.xlsx";
         // 这里 需要指定读用哪个class去读，然后读取第一个sheet 文件流会自动关闭
         EasyExcel.read(fileName, ImportData.class, new ImportExcelListener(importExcelService)).sheet().doRead();
+    }
+
+    public static void readWithInputStream(InputStream inputStream, ImportExcelService importExcelService){
+
+        EasyExcel.read(inputStream, ImportData.class, new ImportExcelListener(importExcelService)).sheet().doRead();
     }
 }

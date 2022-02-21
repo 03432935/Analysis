@@ -18,7 +18,7 @@ public class ImportData {
     private String senId;
 
 //    @ExcelProperty(index = 1,value = "时间")
-    private Date time;
+    private Date tTime;
 
 //    @ExcelProperty(index = 2,value = "V数据")
     private Double vData;
@@ -54,7 +54,7 @@ public class ImportData {
     public String toString() {
         return "ImportData{" +
                 "senId='" + senId + '\'' +
-                ", time=" + time +
+                ", time=" + tTime +
                 ", vData=" + vData +
                 ", avgV=" + avgV +
                 ", maxV=" + maxV +
