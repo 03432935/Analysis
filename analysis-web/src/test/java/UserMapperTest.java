@@ -14,13 +14,13 @@ import org.springframework.test.context.ContextConfiguration;
 @SpringBootTest
 @ContextConfiguration(classes = StartApp.class)
 public class UserMapperTest {
+
     @Autowired
     private UserMapper userMapper;
 
     @Test
     public void uuser(){
         User user = new User();
-        user.setId(1);
         user.setCode("123");
         user.setName("lwx");
         System.out.println("insert test"+userMapper.insert(user));

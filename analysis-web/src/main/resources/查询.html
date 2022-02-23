@@ -1,0 +1,68 @@
+
+
+<!DOCTYPE html>
+<html lang="en-ZH">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>条件查询</title>
+    <script src="./vue.js"></script>
+    <link rel="stylesheet" href="./static/css/indextt.css">
+</head>
+
+<body>
+<div class='Share' id="app">
+    <div class='Share-1'>
+        <label>
+            <span class='text' name='wuliao-id'>新闻ID：</span>
+            <input type="text" class="input">
+        </label>
+
+        <label>
+            <span class='text' name='wuliao-name'>新闻名称：</span>
+            <input type="text" class="input">
+        </label>
+
+        <label id='wuliao-type'>
+            <span class='text' name='wuliao-name'>新闻类型：</span>
+            <select name="category[]" class='select'>
+                <!-- option 获取分组下的列表内容 -->
+                <option value="1" class='text'>网易新闻</option>
+                <option value="2" class='text'>腾讯新闻</option>
+                <option value="3" class='text'>人民日报</option>
+                <option value="4" class='text' selected>新华社</option>
+                <option value="5" class='text'>澎湃新闻</option>
+                <option value="6" class='text'>新浪资讯</option>
+                <option value="7" class='text'>今日一线</option>
+                <option value="8" class='text'>走进科学</option>
+            </select>
+        </label>
+
+        <label>
+            <span class='text' name='sucai-id'>新闻素材：</span>
+            <input type="text" class="input">
+        </label>
+
+        <label>
+            <span class='text' name='sucai-name'>素材ID：</span>
+            <input type="text" class="input">
+        </label>
+
+        <label for="project-id">
+            <span class='text' name='project'>素材名称：</span>
+        </label>
+        <input type="text" name='project' id='project-id' class="input">
+
+        <button class='button chax' name="select-botton">
+            <span>查询</span>
+        </button>
+        <button class='button' name="reset-botton">
+            <span> 重置</span>
+        </button>
+    </div>
+</div>
+</body>
+
+</html>

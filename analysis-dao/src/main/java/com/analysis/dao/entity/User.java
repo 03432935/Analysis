@@ -5,7 +5,7 @@ package com.analysis.dao.entity;
  * @author: lingwanxian
  * @date: 2022/1/18 20:05
  */
-public class User {
+public class User extends Base {
 
     private int id;
 

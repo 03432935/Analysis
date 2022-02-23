@@ -14,4 +14,6 @@ public interface UserMapper {
     int insert(User user);
 
     User selectById(int id);
+
+    //@Param注解用于给参数取别名，如果只有一个参数且参数在<if>里使用，则必须加别名
 }

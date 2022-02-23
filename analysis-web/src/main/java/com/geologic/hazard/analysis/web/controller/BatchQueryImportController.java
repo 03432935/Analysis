@@ -3,11 +3,11 @@ package com.geologic.hazard.analysis.web.controller;
 import com.analysis.common.utils.ResultUtils;
 import com.analysis.dao.entity.ImportData;
 import com.analysis.service.service.BatchQueryImportService;
+import com.github.pagehelper.PageInfo;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * @description:
@@ -16,14 +16,25 @@ import org.springframework.web.bind.annotation.ResponseBody;
  */
 @Controller
 @RequestMapping("/batchquery")
+@Slf4j
 public class BatchQueryImportController {
 
     @Autowired
     private BatchQueryImportService batchQueryImportService;
 
     @ResponseBody
-    @PostMapping("/import")
-    public String batchQuery(ImportData importData){
-        return ResultUtils.successResult(batchQueryImportService.query(importData));
+    @RequestMapping(path = "/import",method = RequestMethod.POST)
+    public String batchQuery(@RequestBody ImportData importData){
+        PageInfo<ImportData> pageInfo = batchQueryImportService.query(importData);
+        System.out.println(pageInfo);
+        log.info("pageinfo:{}",pageInfo);
+        return ResultUtils.successResult(pageInfo);
+    }
+
+    @ResponseBody
+    @PostMapping("/test")
+    public String test(@RequestBody String tt){
+        System.out.println(tt);
+        return ResultUtils.successResult(tt.toString());
     }
 }

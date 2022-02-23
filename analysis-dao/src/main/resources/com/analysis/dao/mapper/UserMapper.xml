@@ -3,11 +3,11 @@
 <mapper namespace="com.analysis.dao.mapper.UserMapper">
 
     <insert id="insert">
-        insert into user_test value(#{id},#{name},#{code})
+        insert into user_test value(#{id},#{name},#{code},#{del},#{createTime})
     </insert>
     <select id="selectById" resultType="com.analysis.dao.entity.User">
-        select id,name,code
+        select id,name,code,del,create_time
         from user_test
-        where id = #{id}
+        where del = 0 and id = #{id}
     </select>
 </mapper>

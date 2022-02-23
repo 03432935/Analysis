@@ -3,11 +3,13 @@
 <mapper namespace="com.analysis.dao.mapper.ImportDataMapper">
 
     <insert id="batchInsert">
-        insert into import_data(senid,ttime,vdata,avgv,maxv,minv,maxtime,mintime,sdata,avgs,maxs,mins)
+        insert into import_data(senid,ttime,vdata,avgv,maxv,minv,maxtime,mintime,sdata,avgs,maxs,mins,del,create_time)
         value
         <foreach collection="list" item="item" separator=",">
             (#{item.senId},#{item.tTime},#{item.vData},#{item.avgV},#{item.maxV},
-            #{item.minV},#{item.maxTime},#{item.minTime},#{item.sData},#{item.avgS},#{item.maxS},#{item.minS})
+            #{item.minV},#{item.maxTime},#{item.minTime},#{item.sData},#{item.avgS},#{item.maxS},#{item.minS},
+            #{item.del},#{item.createTime}
+            )
         </foreach>
     </insert>
     <select id="query" resultType="com.analysis.dao.entity.ImportData">
@@ -23,10 +25,12 @@
         sdata as sData,
         avgs as avgS,
         maxs as maxS,
-        mins as minS
+        mins as minS,
+        del,
+        create_time
         from import_data
         <where>
-            1 = 1
+            del = 0
             <if test="senId != null and senId != ''">
                 and senid = #{senId}
             </if>
@@ -63,7 +67,7 @@
             <if test="minS != null and minS != ''">
                 and mins = #{minS}
             </if>
-
         </where>
+        order by create_time desc
     </select>
 </mapper>

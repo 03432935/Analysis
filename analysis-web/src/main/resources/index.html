@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>查询导入的数据</title>
+</head>
+<body>
+<script type="text/javascript">
+        function login() {
+
+        }
+    </script>
+<form method="post" action="http://localhost:8080/web/batchquery/import" enctype="application/json">
+    <p>
+        senid:<input type="text" name="senId">
+    </p>
+    <p>
+        <input type="submit" onclick="login()" value="查询">
+    </p>
+</form>
+<form method="post" action="http://localhost:8080/web/batchquery/test">
+    <p>
+        test:<input type="text" name="tt">
+    </p>
+    <p>
+        <input type="submit" value="测试">
+    </p>
+</form>
+
+
+</body>
+</html>
