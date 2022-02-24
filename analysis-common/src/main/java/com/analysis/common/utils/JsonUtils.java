@@ -22,4 +22,15 @@ public class JsonUtils {
         }
     }
 
+    public static Object jsonStringToObject(String json){
+        try{
+            Object o = JSON.parseObject(json);
+            logger.info("把json字符串:{}转换成json对象:{}",json,o);
+            return o;
+        }catch (Exception e){
+            logger.error("json字符串:{}转换成json对象失败，异常消息:{}",json,e);
+            return null;
+        }
+    }
+
 }

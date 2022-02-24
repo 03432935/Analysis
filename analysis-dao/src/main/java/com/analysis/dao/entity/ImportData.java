@@ -54,7 +54,7 @@ public class ImportData extends Base {
     public String toString() {
         return "ImportData{" +
                 "senId='" + senId + '\'' +
-                ", time=" + tTime +
+                ", tTime=" + tTime +
                 ", vData=" + vData +
                 ", avgV=" + avgV +
                 ", maxV=" + maxV +

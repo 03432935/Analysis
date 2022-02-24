@@ -1,0 +1,192 @@
+<!--<!DOCTYPE html>-->
+<!--<html lang="en-ZH">-->
+
+<!--<head>-->
+<!--    <meta charset="UTF-8">-->
+<!--    <meta http-equiv="X-UA-Compatible" content="IE=edge">-->
+<!--    <meta name="viewport" content="width=device-width, initial-scale=1.0">-->
+<!--    <title>条件查询</title>-->
+<!--    <script src="./vue.js"></script>-->
+<!--    <link rel="stylesheet" href="./static/css/indextt.css">-->
+<!--</head>-->
+
+<!--<body>-->
+<!--<div class='DataSearch'>-->
+<!--    <h1>信息查询</h1>-->
+<!--    <table border="1" width="100%">-->
+<!--        <label>-->
+<!--            <span class='text' name='sen-id'>SENID：</span>-->
+<!--            <input type="text" class="input">-->
+<!--        </label>-->
+
+<!--        <label id='wuliao-type'>-->
+<!--            <span class='text' name='wuliao-name'>新闻类型：</span>-->
+<!--            <select name="category[]" class='select'>-->
+<!--                &lt;!&ndash; option 获取分组下的列表内容 &ndash;&gt;-->
+<!--                <option value="1" class='text'>网易新闻</option>-->
+<!--                <option value="2" class='text'>腾讯新闻</option>-->
+<!--                <option value="3" class='text'>人民日报</option>-->
+<!--                <option value="4" class='text' selected>新华社</option>-->
+<!--                <option value="5" class='text'>澎湃新闻</option>-->
+<!--                <option value="6" class='text'>新浪资讯</option>-->
+<!--                <option value="7" class='text'>今日一线</option>-->
+<!--                <option value="8" class='text'>走进科学</option>-->
+<!--            </select>-->
+<!--        </label>-->
+
+<!--        <label>-->
+<!--            <span class='text' name='sucai-id'>新闻素材：</span>-->
+<!--            <input type="text" class="input">-->
+<!--        </label>-->
+
+<!--        <label>-->
+<!--            <span class='text' name='sucai-name'>素材ID：</span>-->
+<!--            <input type="text" class="input">-->
+<!--        </label>-->
+
+<!--        <label for="project-id">-->
+<!--            <span class='text' name='project'>素材名称：</span>-->
+<!--        </label>-->
+<!--        <input type="text" name='project' id='project-id' class="input">-->
+
+<!--        <button class='button chax' name="select-botton">-->
+<!--            <span>查询</span>-->
+<!--        </button>-->
+
+<!--        <button class='button' name="reset-botton">-->
+<!--            <span> 重置</span>-->
+<!--        </button>-->
+<!--    </table>-->
+<!--</div>-->
+<!--</body>-->
+
+<!--</html>-->
+
+
+<!DOCTYPE html>
+<html lang="en-ZH">
+
+<head>
+    <meta charset="UTF-8">
+    <!--    <meta http-equiv="X-UA-Compatible" content="IE=edge">-->
+    <!--    <meta name="viewport" content="width=device-width, initial-scale=1.0">-->
+    <title>条件查询</title>
+<!--    <script src="./vue.js"></script>-->
+    <script src="../js/jquery-1.12.4.js"></script>
+    <script src="../js/common.js"></script>
+    <!--    <link rel="stylesheet" href="./static/css/indextt.css">-->
+    </script>
+    <script type="text/javascript">
+            $(document).ready(function(){
+                $("#hint").html(localStorage.string);
+                localStorage.string="";
+                getList(1);
+                // 提交检索
+                $("#search").click(function(){
+                    getList(1);
+                });
+                $("#check").change(function(){
+                    var obj=$("input[name='senId']");
+                    for(var i=0;i<obj.length;i++){
+                        obj[i].checked=this.checked;
+                    }
+                })
+            })
+            // 获取列表数据
+            function getList(pageIndex){
+                let requestData = {"senId":$("#senId").val()};
+                $.ajax({
+                    url:"http://localhost:8080/web/batchquery/import",
+                    method:"post",
+                    contentType: "application/json;charset=UTF-8",
+                    data:JSON.stringify(requestData),
+                    dataType:"json",
+                    error:function(textStatus){
+                        alert("获取数据失败"+textStatus);
+                    },
+                    success:function(result){
+                        if(result.code = "success"){
+                            alert("查询成功");
+                        }
+                        $("tbody").empty();
+                        $("tfoot").empty();
+                        $(result.message.list).each(function(i){
+                            var backColor="DeepSkyBlue";
+                            if(i % 2 !=0){
+                                backColor="LightSkyBlue";
+                            }
+                            $("tbody").append("<tr bgcolor='"+backColor+"'>" +
+                                "<td align='center'><input type='checkbox' name='senId' value='"+result.message.list[i].senId+"'></td>"+
+                                "<td>"+result.message.list[i].tTime+"</td>"+
+                                "<td>"+result.message.list[i].vData+"</td>"+
+                                "</tr>")
+                        })
+                        var previous="";
+                        if(result.firstPage){
+                            previous="首页 | 上页";
+                        }else{
+                            var pageindex=result.message.pageSize-1;
+                            previous="<a href='javascript:getList(1)'>首页</a>&nbsp;&nbsp;<a href='javascript:getList("+pageindex+")'>上页</a>";
+                        }
+                        var next="";
+                        if(result.lastPage){
+                            next="下页 | 尾页";
+                        }else{
+                            var pageindex=result.message.pageSize+1;
+                            next="<a href='javascript:getList("+pageindex+")'>下页</a>&nbsp;&nbsp;<a href='javascript:getList("+result.totalPage+")'>尾页</a>";
+                        }
+                        $("tfoot").append("<tr><td colspan='7' align='right'>"+previous+"&nbsp;&nbsp;"+result.pageIndex+"/"+
+                                result.message.total+"&nbsp;&nbsp;"+next+"</td></tr>");
+                    }
+                }
+
+                )
+            }
+    </script>
+</head>
+
+<body>
+<div align="center" class='DataSearch'>
+    <h1>信息查询</h1>
+    <table border="1" width="100%">
+        <thead>
+        <tr>
+            <td colspan="7" align="right">
+                <!--                <label>-->
+                <!--                    <span class='text' name='sen-id'>SENID：</span>-->
+                <!--                    <input type="text" class="input" name="senId" id="senId">-->
+                <!--                </label>-->
+                <input type="text" name="senId" id="senId">
+                <input type="button" value="查询" id="search">
+                <input type="button" value="重置" id="delete">
+            </td>
+        </tr>
+        <tr style="background-color: RoyalBlue">
+            <td align="center" width="2%"><input type="checkbox" id="check"></td>
+            <td align="center">SENID</td>
+            <td align="center">TIME</td>
+            <td align="center" width="30%">V</td>
+            <!--            <td align="center" width="10%">发布日期</td>-->
+            <!--            <td align="center" width="10%">实施日期</td>-->
+            <!--            <td align="center" width="10%">操作</td>-->
+        </tr>
+        </thead>
+        <tbody>
+        <tr id="load">
+            <td colspan="7">
+                <div id="" align="center">
+                    <img src="../img/load.gif" width="50" height="50"/>
+                    正在加载数据,请稍后...
+                </div>
+            </td>
+        </tr>
+        </tbody>
+        <tfoot>
+
+        </tfoot>
+    </table>
+</div>
+<div id="hint">信息展示...</div>
+</body>
+
+</html>
