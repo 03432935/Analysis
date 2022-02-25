@@ -31,7 +31,7 @@ public class ImportInsertTest {
     private ImportDataMapper importDataMapper;
 
     @Test
-    public void batchInserTest(){
+    public void batchInserTest() throws Exception {
         ImportData importData = new ImportData();
         importData.setSenId("1");
         List<ImportData> list = new ArrayList<>();
@@ -40,6 +40,7 @@ public class ImportInsertTest {
         System.out.println("insertMapper:");
         ImportData data = new ImportData();
         data.setSenId("2");
+        data.setDel(1);
         list.add(data);
         importExcelService.save(list);
         System.out.println("serviceInsert:");
