@@ -10,6 +10,7 @@ import java.io.IOException;
  * @date: 2022/2/24 17:44
  */
 public class CORSFilter implements Filter {
+    //todo：前端跨域问题
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
