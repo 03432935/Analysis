@@ -70,4 +70,44 @@
         </where>
         order by create_time desc
     </select>
+
+    <select id="selectId" resultType="java.lang.Integer">
+        select id from import_data where del = 0
+        <if test="senId != null and senId != ''">
+            and senid = #{senId}
+        </if>
+        <if test="tTime != null and tTime != ''">
+            and ttime = #{tTime}
+        </if>
+        <if test="vData != null and vData != ''">
+            and vdata = #{vData}
+        </if>
+        <if test="avgV != null and avgV != ''">
+            and avgv = #{avgV}
+        </if>
+        <if test="maxV != null and maxV != ''">
+            and maxv = #{maxV}
+        </if>
+        <if test="minV != null and minV != ''">
+            and minv = #{minV}
+        </if>
+        <if test="maxTime != null and maxTime != ''">
+            and maxtime = #{maxTime}
+        </if>
+        <if test="minTime != null and minTime != ''">
+            and mintime = #{minTime}
+        </if>
+        <if test="sData != null and sData != ''">
+            and sdata = #{sData}
+        </if>
+        <if test="avgS != null and avgS != ''">
+            and avgs = #{avgS}
+        </if>
+        <if test="maxS != null and maxS != ''">
+            and maxs = #{maxS}
+        </if>
+        <if test="minS != null and minS != ''">
+            and mins = #{minS}
+        </if>
+    </select>
 </mapper>

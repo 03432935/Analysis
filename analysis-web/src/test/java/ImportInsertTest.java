@@ -38,10 +38,10 @@ public class ImportInsertTest {
         list.add(importData);
         importDataMapper.batchInsert(list);
         System.out.println("insertMapper:");
-        ImportData data = new ImportData();
-        data.setSenId("2");
-        data.setDel(1);
-        list.add(data);
+//        ImportData data = new ImportData();
+//        data.setSenId("2");
+//        data.setDel(1);
+//        list.add(data);
         importExcelService.save(list);
         System.out.println("serviceInsert:");
     }
@@ -54,5 +54,10 @@ public class ImportInsertTest {
         System.out.println(list);
         PageInfo<ImportData> list1 = batchQueryImportService.query(importData);
         System.out.println(list1);
+    }
+
+    @Test
+    public void selectid(){
+
     }
 }

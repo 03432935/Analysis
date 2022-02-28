@@ -16,4 +16,6 @@ public interface ImportDataMapper {
     int batchInsert(List<ImportData> importData);
 
     List<ImportData> query(ImportData importData);
+
+    int selectId(ImportData importData);
 }
