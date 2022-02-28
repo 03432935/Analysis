@@ -31,7 +31,7 @@ public class ExcelController {
 
     @RequestMapping(path = "/upload",method = RequestMethod.POST)
     @ResponseBody
-    public String upload(MultipartFile fileData) throws IOException {
+    public String upload(@RequestParam("fileData") MultipartFile fileData) throws IOException {
         ExcelUtils.readWithInputStream(fileData.getInputStream(),importExcelService);
         return "success";
     }

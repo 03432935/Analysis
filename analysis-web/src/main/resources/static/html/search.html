@@ -21,10 +21,12 @@
                 $("#reset").click(function(){
                     getList(1);
                 });
-                //导入文件
-                $("#import").change(function(){
-                     importExcel();
-                });
+<!--                //导入文件-->
+<!--                $("#import").change(function(){-->
+<!--                    var file = $("#import").val();-->
+<!--                    alert(file);-->
+<!--                     importExcel(file);-->
+<!--                });-->
                 $("#check").change(function(){
                     var obj=$("input[name='senId']");
                     for(var i=0;i<obj.length;i++){
@@ -100,29 +102,51 @@
               var ss = (date.getSeconds() < 10 ? '0' + date.getSeconds() : date.getSeconds());
               return YY + MM + DD +" "+hh + mm + ss;
             }
-            function importExcel(file){
-                //　截取上传的文件后缀
-                var extension = file.substring(file.lastIndexOf("."),file.length);
-                // 验证上传文件后缀是否合法
-                var strRegex = "(.xls|.xlsx)$";
-                var re = new RegExp(strRegex);
-                // 如果不合法，在页面上显示出相应的提示消息
-                if (!re.test(extension.toLowerCase())) {
-                    alert('文件名不合法，请上传Excel文件！');
-                  return false;
-                }
-                var file = $("#fileData").file();
-                $.ajax({
-                    url:"http://localhost:8080/web/excel/upload",
-                    method:"post",
-                    data:file,
-                    dataType:"json",
-                    contentType: "multipart/form-data",
-                    success : function(result){
-                        alert("导入成功");
-                    }
-                    }
-                )
+
+<!--            function importExcel(file){-->
+<!--                alert("处理文件");-->
+<!--                var formData = new FormData();-->
+<!--                formData.append('fileData',file);-->
+<!--                //　截取上传的文件后缀-->
+<!--                var extension = file.substring(file.lastIndexOf("."),file.length);-->
+<!--                // 验证上传文件后缀是否合法-->
+<!--                var strRegex = "(.xls|.xlsx)$";-->
+<!--                var re = new RegExp(strRegex);-->
+<!--                // 如果不合法，在页面上显示出相应的提示消息-->
+<!--                if (!re.test(extension.toLowerCase())) {-->
+<!--                    alert('文件名不合法，请上传Excel文件！');-->
+<!--                  return false;-->
+<!--                }-->
+<!--                $.ajax({-->
+<!--                    url:"http://localhost:8080/web/excel/upload",-->
+<!--                    method:"post",-->
+<!--                    data:file,-->
+<!--                    dataType:"json",-->
+<!--                    contentType: "multipart/form-data",-->
+<!--                    success : function(result){-->
+<!--                        alert("导入成功");-->
+<!--                    }-->
+<!--                    }-->
+<!--                )-->
+<!--            }-->
+
+            function doUpload() {
+               var formData = new FormData($( "#importForm" )[0]);
+               $.ajax({
+                 url: 'http://localhost:8080/web/excel/upload' ,
+                 type: 'POST',
+                 data: formData,
+                 async: false,
+                 cache: false,
+                 contentType: false,
+                 processData: false,
+                 success: function (returndata) {
+                   alert("import success");
+                 },
+                 error: function (returndata) {
+                   alert("import false");
+                 }
+               });
             }
     </script>
 </head>
@@ -130,18 +154,19 @@
 <body>
 <div align="center" class='DataSearch'>
     <h1>信息查询</h1>
+    <form id="importForm">
+        <p>
+            导入excel：<input type="file" value="导入" id="import" name="fileData">
+            <input type="button" value="上传" onclick="doUpload()">
+        </p>
+    </form>
     <table border="1" width="100%">
         <thead>
         <tr>
             <td colspan="7" align="right">
-                <!--                <label>-->
-                <!--                    <span class='text' name='sen-id'>SENID：</span>-->
-                <!--                    <input type="text" class="input" name="senId" id="senId">-->
-                <!--                </label>-->
                 <input type="text" name="senId" id="senId">
                 <input type="button" value="查询" id="search">
                 <input type="button" value="重置" id="reset" onclick="document.getElementById('senId').value=''">
-                <input type="file" value="导入" id="import" name="fileData">
             </td>
         </tr>
         <tr style="background-color: RoyalBlue">
