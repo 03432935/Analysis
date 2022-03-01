@@ -1,7 +1,9 @@
 package com.analysis.dao.mapper;
 
 import com.analysis.dao.entity.ImportData;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -13,9 +15,9 @@ import java.util.List;
 @Mapper
 public interface ImportDataMapper {
 
-    int batchInsert(List<ImportData> importData);
+    Integer batchInsert(List<ImportData> importData);
 
     List<ImportData> query(ImportData importData);
 
-    int selectId(ImportData importData);
+    Integer selectId(ImportData importData);
 }

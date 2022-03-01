@@ -1,5 +1,6 @@
 package com.geologic.hazard.analysis.web.controller;
 
+import com.analysis.common.utils.PageUtils;
 import com.analysis.common.utils.ResultUtils;
 import com.analysis.dao.entity.ImportData;
 import com.analysis.service.service.BatchQueryImportService;

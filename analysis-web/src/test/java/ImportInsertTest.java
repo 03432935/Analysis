@@ -1,3 +1,4 @@
+import com.analysis.common.utils.PageUtils;
 import com.analysis.dao.entity.ImportData;
 import com.analysis.dao.mapper.ImportDataMapper;
 import com.analysis.service.service.BatchQueryImportService;
@@ -33,15 +34,15 @@ public class ImportInsertTest {
     @Test
     public void batchInserTest() throws Exception {
         ImportData importData = new ImportData();
-        importData.setSenId("1");
+        importData.setSenId("3");
         List<ImportData> list = new ArrayList<>();
         list.add(importData);
         importDataMapper.batchInsert(list);
         System.out.println("insertMapper:");
-//        ImportData data = new ImportData();
-//        data.setSenId("2");
-//        data.setDel(1);
-//        list.add(data);
+        ImportData data = new ImportData();
+        data.setSenId("2");
+        data.setDel(1);
+        list.add(data);
         importExcelService.save(list);
         System.out.println("serviceInsert:");
     }
@@ -49,9 +50,9 @@ public class ImportInsertTest {
     @Test
     public void query(){
         ImportData importData = new ImportData();
-        importData.setSenId("1");
-        List<ImportData> list = importDataMapper.query(importData);
-        System.out.println(list);
+        importData.setSenId("1110000201");
+//        List<ImportData> list = importDataMapper.query(importData);
+//        System.out.println(list);
         PageInfo<ImportData> list1 = batchQueryImportService.query(importData);
         System.out.println(list1);
     }

@@ -24,14 +24,16 @@ public class ImportExcelServiceImpl implements ImportExcelService {
     public void save(List<ImportData> importDataList){
         List<ImportData> list = new ArrayList<>();
         for (ImportData importData : importDataList){
-            int id = importDataMapper.selectId(importData);
-            if (id == 0){
+            Integer id = importDataMapper.selectId(importData);
+            if (id == null){
                 list.add(importData);
             }else{
                 //todo:update?
             }
         }
         //这个list为空的可能
-        importDataMapper.batchInsert(list);
+        if(!list.isEmpty()){
+            importDataMapper.batchInsert(list);
+        }
     }
 }
