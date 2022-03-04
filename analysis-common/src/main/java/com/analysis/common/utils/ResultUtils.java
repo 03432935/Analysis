@@ -8,6 +8,9 @@ public class ResultUtils {
     final static String SUCCESS = "success";
     final static String FAIL = "fail";
     final static String MESSAGE = "message";
+    final static String PAGENUM = "pageNum";
+    final static String PAGESIZE = "pageSize";
+    final static String SIZE = "size";
 
     /**
      * 返回数据
@@ -16,6 +19,9 @@ public class ResultUtils {
         Map<Object,Object> map = new HashMap<>();
         map.put(CODE,code);
         map.put(MESSAGE,message);
+//        map.put(PAGENUM,pageNum);
+//        map.put(PAGESIZE,pageSize);
+//        map.put(SIZE,size);
         return JsonUtils.objectToJson(map);
     }
 

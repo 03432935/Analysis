@@ -1,6 +1,8 @@
 package com.analysis.dao.mapper;
 
 import com.analysis.dao.entity.User;
+import com.analysis.dao.mybatis.SuperMapper;
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
 
 /**
@@ -9,9 +11,9 @@ import org.apache.ibatis.annotations.Mapper;
  * @date: 2022/1/18 20:06
  */
 @Mapper
-public interface UserMapper {
+public interface UserMapper extends BaseMapper<User> {
 
-    int insert(User user);
+    int insertf(User user);
 
     User selectById(int id);
 

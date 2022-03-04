@@ -1,17 +1,14 @@
 package com.analysis.service.service;
 
 import com.analysis.dao.entity.ImportData;
-import com.github.pagehelper.PageInfo;
-import org.springframework.stereotype.Service;
-
-import java.util.List;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 
 /**
  * @description:
  * @author: lingwanxian
  * @date: 2022/2/21 17:12
  */
-public interface BatchQueryImportService {
+public interface BatchQueryImportService extends SuperService<ImportData>{
 
-    public PageInfo<ImportData> query(ImportData importData);
+    public IPage<ImportData> query(ImportData importData);
 }

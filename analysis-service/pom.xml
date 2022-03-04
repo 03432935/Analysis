@@ -25,10 +25,26 @@
             <artifactId>analysis-common</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
+<!--        <dependency>-->
+<!--            <groupId>com.github.pagehelper</groupId>-->
+<!--            <artifactId>pagehelper-spring-boot-starter</artifactId>-->
+<!--            <version>1.4.1</version>-->
+<!--            <exclusions>-->
+<!--                <exclusion>-->
+<!--                    <artifactId>mybatis-spring-boot-starter</artifactId>-->
+<!--                    <groupId>org.mybatis.spring.boot</groupId>-->
+<!--                </exclusion>-->
+<!--            </exclusions>-->
+<!--        </dependency>-->
         <dependency>
             <groupId>com.geologic.hazard.analysis</groupId>
             <artifactId>analysis-dao</artifactId>
             <version>0.0.1-SNAPSHOT</version>
+        </dependency>
+        <!-- spring data redis -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-redis</artifactId>
         </dependency>
     </dependencies>
 </project>

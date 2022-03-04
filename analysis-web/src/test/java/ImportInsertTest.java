@@ -3,8 +3,8 @@ import com.analysis.dao.entity.ImportData;
 import com.analysis.dao.mapper.ImportDataMapper;
 import com.analysis.service.service.BatchQueryImportService;
 import com.analysis.service.service.ImportExcelService;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.geologic.hazard.analysis.web.StartApp;
-import com.github.pagehelper.PageInfo;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -53,7 +53,8 @@ public class ImportInsertTest {
         importData.setSenId("1110000201");
 //        List<ImportData> list = importDataMapper.query(importData);
 //        System.out.println(list);
-        PageInfo<ImportData> list1 = batchQueryImportService.query(importData);
+        IPage<ImportData> list1 = batchQueryImportService.query(importData);
+
         System.out.println(list1);
     }
 

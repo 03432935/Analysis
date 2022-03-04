@@ -1,16 +1,24 @@
 package com.analysis.dao.entity;
 
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
+
 /**
  * @description:
  * @author: lingwanxian
  * @date: 2022/1/18 20:05
  */
-public class User extends Base {
+@TableName("user_test")
+public class User {
 
+    @TableId("id")
     private int id;
 
+    @TableField("name")
     private String name;
 
+    @TableField("code")
     private String code;
 
     public int getId() {

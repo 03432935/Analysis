@@ -1,5 +1,7 @@
 package com.analysis.dao.entity;
 
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -12,9 +14,12 @@ import java.util.Date;
  */
 @Data
 @EqualsAndHashCode
-public class ImportData extends Base {
+@TableName("import_data")
+public class ImportData extends Base<ImportData> {
 
-    //    @ExcelProperty(index = 0,value = "ID")
+    @TableId
+    private int id;
+
     private String senId;
 
     //    @ExcelProperty(index = 1,value = "时间")

@@ -3,7 +3,8 @@
 <mapper namespace="com.analysis.dao.mapper.ImportDataMapper">
 
     <insert id="batchInsert">
-        insert into import_data(senid,ttime,vdata,avgv,maxv,minv,maxtime,mintime,sdata,avgs,maxs,mins,del,create_time)
+        insert into import_data(sen_id,t_time,v_data,avg_v,max_v,min_v,max_time,min_time,
+        s_data,avg_s,max_s,min_s,del,create_time)
         value
         <foreach collection="list" item="item" separator=",">
             (#{item.senId},#{item.tTime},#{item.vData},#{item.avgV},#{item.maxV},
@@ -15,102 +16,108 @@
 
     <select id="query" resultType="com.analysis.dao.entity.ImportData">
         select
-        senid as senId,
-        ttime as tTime,
-        vdata as vData,
-        avgv as avgV,
-        maxv as maxV,
-        minv as minV,
-        maxtime as maxTime,
-        mintime as minTime,
-        sdata as sData,
-        avgs as avgS,
-        maxs as maxS,
-        mins as minS,
+        sen_id as senId,
+        t_time as tTime,
+        v_data as vData,
+        avg_v as avgV,
+        max_v as maxV,
+        min_v as minV,
+        max_time as maxTime,
+        min_time as minTime,
+        s_data as sData,
+        avg_s as avgS,
+        max_s as maxS,
+        min_s as minS,
         del,
         create_time
         from import_data
         <where>
             del = 0
             <if test="senId != null and senId != ''">
-                and senid = #{senId}
+                and sen_id = #{senId}
             </if>
             <if test="tTime != null and tTime != ''">
-                and ttime = #{tTime}
+                and t_time = #{tTime}
             </if>
             <if test="vData != null and vData != ''">
-                and vdata = #{vData}
+                and v_data = #{vData}
             </if>
             <if test="avgV != null and avgV != ''">
-                and avgv = #{avgV}
+                and avg_v = #{avgV}
             </if>
             <if test="maxV != null and maxV != ''">
-                and maxv = #{maxV}
+                and max_v = #{maxV}
             </if>
             <if test="minV != null and minV != ''">
-                and minv = #{minV}
+                and min_v = #{minV}
             </if>
             <if test="maxTime != null and maxTime != ''">
-                and maxtime = #{maxTime}
+                and max_time = #{maxTime}
             </if>
             <if test="minTime != null and minTime != ''">
-                and mintime = #{minTime}
+                and min_time = #{minTime}
             </if>
             <if test="sData != null and sData != ''">
-                and sdata = #{sData}
+                and s_data = #{sData}
             </if>
             <if test="avgS != null and avgS != ''">
-                and avgs = #{avgS}
+                and avg_s = #{avgS}
             </if>
             <if test="maxS != null and maxS != ''">
-                and maxs = #{maxS}
+                and max_s = #{maxS}
             </if>
             <if test="minS != null and minS != ''">
-                and mins = #{minS}
+                and min_s = #{minS}
             </if>
         </where>
         order by create_time desc
+<!--        <if test="pageNum !=null and pageSize != null">-->
+<!--            limit #{pageNum},#{pageSize}-->
+<!--        </if>-->
     </select>
 
     <select id="selectId" resultType="java.lang.Integer">
         select id from import_data where del = 0
         <if test="senId != null and senId != ''">
-            and senid = #{senId}
+            and sen_id = #{senId}
         </if>
         <if test="tTime != null">
-            and ttime = #{tTime}
+            and t_time = #{tTime}
         </if>
         <if test="vData != null and vData != ''">
-            and vdata = #{vData}
+            and v_data = #{vData}
         </if>
         <if test="avgV != null and avgV != ''">
-            and avgv = #{avgV}
+            and avg_v = #{avgV}
         </if>
         <if test="maxV != null and maxV != ''">
-            and maxv = #{maxV}
+            and max_v = #{maxV}
         </if>
         <if test="minV != null and minV != ''">
-            and minv = #{minV}
+            and min_v = #{minV}
         </if>
         <if test="maxTime != null">
-            and maxtime = #{maxTime}
+            and max_time = #{maxTime}
         </if>
         <if test="minTime != null">
-            and mintime = #{minTime}
+            and min_time = #{minTime}
         </if>
         <if test="sData != null and sData != ''">
-            and sdata = #{sData}
+            and s_data = #{sData}
         </if>
         <if test="avgS != null and avgS != ''">
-            and avgs = #{avgS}
+            and avg_s = #{avgS}
         </if>
         <if test="maxS != null and maxS != ''">
-            and maxs = #{maxS}
+            and max_s = #{maxS}
         </if>
         <if test="minS != null and minS != ''">
-            and mins = #{minS}
+            and min_s = #{minS}
         </if>
     </select>
+<!--    <select id="selectPage" resultType="com.analysis.dao.entity.ImportData">-->
+
+<!--    </select>-->
 
 
 </mapper>

@@ -71,21 +71,21 @@
                                     "</tr>")
                         })
                         var previous="";
-                        if(result.message.hasPreviousPage){
+                        if(result.message.isFirstPage){
                             previous="首页 | 上页";
                         }else{
                             var pageindex=result.message.pageSize-1;
                             previous="<a href='javascript:getList(1)'>首页</a>&nbsp;&nbsp;<a href='javascript:getList("+pageindex+")'>上页</a>";
                         }
                         var next="";
-                        if(result.message.hasNextPage){
+                        if(result.message.isLastPage){
                             next="下页 | 尾页";
                         }else{
                             var pageindex=result.message.pageSize+1;
                             next="<a href='javascript:getList("+pageindex+")'>下页</a>&nbsp;&nbsp;<a href='javascript:getList("+result.message.pageNum+")'>尾页</a>";
                         }
-                        $("tfoot").append("<tr><td colspan='7' align='right'>"+previous+"&nbsp;&nbsp;"+result.pageIndex+"/"+
-                                result.message.total+"&nbsp;&nbsp;"+next+"</td></tr>");
+                        $("tfoot").append("<tr><td colspan='7' align='right'>"+previous+"&nbsp;&nbsp;"+result.message.pageNum+"/"+
+                                result.message.pages+"&nbsp;&nbsp;"+next+"</td></tr>");
                     }
                 }
 
@@ -102,33 +102,6 @@
               var ss = (date.getSeconds() < 10 ? '0' + date.getSeconds() : date.getSeconds());
               return YY + MM + DD +" "+hh + mm + ss;
             }
-
-<!--            function importExcel(file){-->
-<!--                alert("处理文件");-->
-<!--                var formData = new FormData();-->
-<!--                formData.append('fileData',file);-->
-<!--                //　截取上传的文件后缀-->
-<!--                var extension = file.substring(file.lastIndexOf("."),file.length);-->
-<!--                // 验证上传文件后缀是否合法-->
-<!--                var strRegex = "(.xls|.xlsx)$";-->
-<!--                var re = new RegExp(strRegex);-->
-<!--                // 如果不合法，在页面上显示出相应的提示消息-->
-<!--                if (!re.test(extension.toLowerCase())) {-->
-<!--                    alert('文件名不合法，请上传Excel文件！');-->
-<!--                  return false;-->
-<!--                }-->
-<!--                $.ajax({-->
-<!--                    url:"http://localhost:8080/web/excel/upload",-->
-<!--                    method:"post",-->
-<!--                    data:file,-->
-<!--                    dataType:"json",-->
-<!--                    contentType: "multipart/form-data",-->
-<!--                    success : function(result){-->
-<!--                        alert("导入成功");-->
-<!--                    }-->
-<!--                    }-->
-<!--                )-->
-<!--            }-->
 
             function doUpload() {
                var formData = new FormData($( "#importForm" )[0]);

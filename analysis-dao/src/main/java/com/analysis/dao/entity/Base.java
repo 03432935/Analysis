@@ -9,7 +9,7 @@ import java.util.Date;
  * @author: lingwanxian
  * @date: 2022/2/23 15:02
  */
-public class Base {
+public class Base<T> extends PageInfo<T>{
 
     private int del = 0;
 

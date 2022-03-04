@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ContextConfiguration;
 
+import java.util.List;
+
 /**
  * @description:
  * @author: lingwanxian
@@ -23,7 +25,13 @@ public class UserMapperTest {
         User user = new User();
         user.setCode("123");
         user.setName("lwx");
-        System.out.println("insert test"+userMapper.insert(user));
-        System.out.println("select test"+userMapper.selectById(1));
+        List<User> list = userMapper.selectList(null);
+        System.out.println("fu:"+list);
+    }
+
+    @Test
+    public void old(){
+        //        System.out.println("insert test"+userMapper.insertf(user));
+        System.out.println("select test"+userMapper.selectById(2));
     }
 }
