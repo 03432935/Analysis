@@ -1,5 +1,6 @@
 package com.analysis.service.service.impl;
 
+import com.analysis.dao.entity.EchartDto;
 import com.analysis.dao.entity.ImportData;
 import com.analysis.dao.mapper.ImportDataMapper;
 import com.analysis.service.service.BatchQueryImportService;
@@ -10,7 +11,10 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @description:
@@ -34,20 +38,35 @@ public class BatchQueryImportServiceImpl extends SuperServiceImpl<ImportDataMapp
         // 构建搜索条件
         queryWrapper.eq("sen_id","1110000201");
         Page<ImportData> page = new Page<>(importData.getCurrentPage(),importData.getPageSize());
-//        IPage<ImportData> pageList = batchQueryImportService.page(page,queryWrapper);
+//        IPage<ImportData> pageList = batchQueryImportService.page(page,queryWrapper); //两种表现形式
         IPage<ImportData> pageList = importDataMapper.selectPage(page,queryWrapper);
-        List<ImportData> list = pageList.getRecords();
-
+//        List<ImportData> list = pageList.getRecords();
         System.out.println("page:"+pageList);
-
         return pageList;
 
-//        //pageHelper分页失败：todo：查询sql打印日志查看有没有加上limit
-//        PageHelper.startPage(1,10);
-//        List<ImportData> list = importDataMapper.query(importData);
-//        PageInfo<ImportData> info = new PageInfo<>(list);
-//        log.info("query.info.result:{}",info);
-//        return info;
+    }
+
+    @Override
+    public List<ImportData> getList() {
+        List<ImportData> list = importDataMapper.selectList(null);
+        log.info("BatchQueryImportServiceImpl.getList:"+list);
+        return list;
+    }
+
+    @Override
+    public List<EchartDto> getEchartData(List<ImportData> importDataList) {
+        List<EchartDto> echartDtos = importDataList.stream()
+                .map(
+                        importData -> {
+                            EchartDto echartDto = new EchartDto();
+                            echartDto.setTimeData(importData.getTTime());
+                            echartDto.setVData(importData.getVData());
+                            return echartDto;
+                        }
+                )
+                .collect(Collectors.toList());
+        log.info("getEchartData.echartDtos:"+echartDtos);
+        return echartDtos;
     }
 }
 
@@ -76,6 +95,12 @@ public class BatchQueryImportServiceImpl extends SuperServiceImpl<ImportDataMapp
 //        List<ImportData> list = importDataMapper.query(importData);
 //        PageInfo<ImportData> info = new PageInfo<>(list);
 
+//        log.info("query.info.result:{}",info);
+//        return info;
+//        //pageHelper分页失败：todo：查询sql打印日志查看有没有加上limit
+//        PageHelper.startPage(1,10);
+//        List<ImportData> list = importDataMapper.query(importData);
+//        PageInfo<ImportData> info = new PageInfo<>(list);
 //        log.info("query.info.result:{}",info);
 //        return info;
 

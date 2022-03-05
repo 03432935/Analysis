@@ -7,6 +7,7 @@
     <title>条件查询</title>
     <script src="../js/jquery-1.12.4.js"></script>
     <script src="../js/common.js"></script>
+    <script src="../js/echarts.js"></script>
     </script>
     <script type="text/javascript">
             $(document).ready(function(){
@@ -21,22 +22,19 @@
                 $("#reset").click(function(){
                     getList(1);
                 });
-<!--                //导入文件-->
-<!--                $("#import").change(function(){-->
-<!--                    var file = $("#import").val();-->
-<!--                    alert(file);-->
-<!--                     importExcel(file);-->
-<!--                });-->
                 $("#check").change(function(){
                     var obj=$("input[name='senId']");
                     for(var i=0;i<obj.length;i++){
                         obj[i].checked=this.checked;
                     }
+                });
+                $("#getPictureData").click(function(){
+                    getPicture();
                 })
             })
             // 获取列表数据
             function getList(pageIndex){
-                let requestData = {"senId":$("#senId").val()};
+                let requestData = {"senId":$("#senId").val(),"currentPage":pageIndex};
                 $.ajax({
                     url:"http://localhost:8080/web/batchquery/import",
                     method:"post",
@@ -47,44 +45,41 @@
                         alert("获取数据失败"+textStatus);
                     },
                     success:function(result){
-                        if(result.code = "success"){
-                            alert("查询成功");
-                        }
                         $("tbody").empty();
                         $("tfoot").empty();
-                        $(result.message.list).each(function(i){
+                        $(result.message.records).each(function(i){
                                 var backColor="DeepSkyBlue";
                                 if(i % 2 !=0){
                                     backColor="LightSkyBlue";
                                 }
-                                var ctime = formatDate(result.message.list[i].createTime);
-                                var v = result.message.list[i].vData;
+                                var ctime = formatDate(result.message.records[i].createTime);
+                                var v = result.message.records[i].vData;
                                 if(typeof(v)== 'undefined'){
                                     v = "暂无值";
                                 }
                                 $("tbody").append("<tr bgcolor='"+backColor+"'>" +
-                                    "<td align='center'><input type='checkbox' name='senId' value='"+result.message.list[i].senId+"'></td>"+
-                                    "<td>"+result.message.list[i].senId+"</td>"+
+                                    "<td align='center'><input type='checkbox' name='senId' value='"+result.message.records[i].senId+"'></td>"+
+                                    "<td>"+result.message.records[i].senId+"</td>"+
                                     "<td>"+ctime+"</td>"+
                                     "<td>"+v+"</td>"+
-                                    "<td>"+result.message.list[i].del+"</td>"+
+                                    "<td>"+result.message.records[i].del+"</td>"+
                                     "</tr>")
                         })
                         var previous="";
-                        if(result.message.isFirstPage){
+                        if(result.message.current == 1){
                             previous="首页 | 上页";
                         }else{
-                            var pageindex=result.message.pageSize-1;
+                            var pageindex=result.message.current-1;
                             previous="<a href='javascript:getList(1)'>首页</a>&nbsp;&nbsp;<a href='javascript:getList("+pageindex+")'>上页</a>";
                         }
                         var next="";
-                        if(result.message.isLastPage){
+                        if(result.message.current == result.message.pages){
                             next="下页 | 尾页";
                         }else{
-                            var pageindex=result.message.pageSize+1;
-                            next="<a href='javascript:getList("+pageindex+")'>下页</a>&nbsp;&nbsp;<a href='javascript:getList("+result.message.pageNum+")'>尾页</a>";
+                            var pageindex = result.message.current+1;
+                            next="<a href='javascript:getList("+pageindex+")'>下页</a>&nbsp;&nbsp;<a href='javascript:getList("+result.message.pages+")'>尾页</a>";
                         }
-                        $("tfoot").append("<tr><td colspan='7' align='right'>"+previous+"&nbsp;&nbsp;"+result.message.pageNum+"/"+
+                        $("tfoot").append("<tr><td colspan='7' align='right'>"+previous+"&nbsp;&nbsp;"+result.message.current+"/"+
                                 result.message.pages+"&nbsp;&nbsp;"+next+"</td></tr>");
                     }
                 }
@@ -121,6 +116,24 @@
                  }
                });
             }
+
+            function getPicture() {
+            $.ajax({
+                 url: 'http://localhost:8080/web/echarts/data' ,
+                 type: 'POST',
+<!--                 data: null,-->
+                 method:"post",
+                 contentType: "application/json;charset=UTF-8",
+                 dataType:"json",
+                 success: function (returndata) {
+                   alert("picture success"+returndata);
+                 },
+                 error: function (returndata) {
+                   alert("picture false");
+                 }
+                 });
+            }
+
     </script>
 </head>
 
@@ -166,6 +179,75 @@
     </table>
 </div>
 <div id="hint">信息展示...</div>
+<!-- 为 ECharts 准备一个定义了宽高的 DOM -->
+<div id="main" style="width: 1000px;height:600px;">
+    <p>
+        <input type="button" id="getPictureData" value="获取图表的数据" onclick="getPicture()">
+    </p>
+</div>
+<script type="text/javascript">
+
+      // 基于准备好的dom，初始化echarts实例
+      var myChart = echarts.init(document.getElementById('main'));
+
+<!--        var base = +new Date(2014, 9, 3);-->
+<!--        var oneDay = 24 * 3600 * 1000;-->
+<!--        var date = [];-->
+<!--        var data = [Math.random() * 150];-->
+<!--        var now = new Date(base);-->
+<!--        function addData(shift) {-->
+<!--          now = [now.getFullYear(), now.getMonth() + 1, now.getDate()].join('/');-->
+<!--          date.push(now);-->
+<!--          data.push((Math.random() - 0.4) * 10 + data[data.length - 1]);-->
+<!--          if (shift) {-->
+<!--            date.shift();-->
+<!--            data.shift();-->
+<!--          }-->
+<!--          now = new Date(+new Date(now) + oneDay);-->
+<!--        }-->
+<!--        for (var i = 1; i < 100; i++) {-->
+<!--          addData();-->
+<!--        }-->
+<!--        option = {-->
+<!--          xAxis: {-->
+<!--            type: 'category',-->
+<!--            boundaryGap: false,-->
+<!--            data: date-->
+<!--          },-->
+<!--          yAxis: {-->
+<!--            boundaryGap: [0, '50%'],-->
+<!--            type: 'value'-->
+<!--          },-->
+<!--          series: [-->
+<!--            {-->
+<!--              name: '成交',-->
+<!--              type: 'line',-->
+<!--              smooth: true,-->
+<!--              symbol: 'none',-->
+<!--              stack: 'a',-->
+<!--              areaStyle: {-->
+<!--                normal: {}-->
+<!--              },-->
+<!--              data: data-->
+<!--            }-->
+<!--          ]-->
+<!--        };-->
+<!--        setInterval(function () {-->
+<!--          addData(true);-->
+<!--          myChart.setOption({-->
+<!--            xAxis: {-->
+<!--              data: date-->
+<!--            },-->
+<!--            series: [-->
+<!--              {-->
+<!--                name: '成交',-->
+<!--                data: data-->
+<!--              }-->
+<!--            ]-->
+<!--          });-->
+<!--        }, 500);-->
+<!--        option && myChart.setOption(option);-->
+    </script>
 </body>
 
 </html>

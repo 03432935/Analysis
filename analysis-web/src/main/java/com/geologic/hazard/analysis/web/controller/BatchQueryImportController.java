@@ -5,6 +5,7 @@ import com.analysis.common.utils.ResultUtils;
 import com.analysis.dao.entity.ImportData;
 import com.analysis.service.service.BatchQueryImportService;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -28,10 +29,9 @@ public class BatchQueryImportController {
     @ResponseBody
     @RequestMapping(path = "/import",method = RequestMethod.POST)
     public String batchQuery(@RequestBody ImportData importData){
-//        PageInfo<ImportData> info = batchQueryImportService.query(importData);
-//        log.info("info:{}",info);
-//        return ResultUtils.successResult(info);
-        return null;
+        IPage<ImportData> info = batchQueryImportService.query(importData);
+        log.info("info:{}",info);
+        return ResultUtils.successResult(info);
     }
 
     @ResponseBody
