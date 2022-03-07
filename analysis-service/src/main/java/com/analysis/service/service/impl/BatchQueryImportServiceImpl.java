@@ -36,7 +36,9 @@ public class BatchQueryImportServiceImpl extends SuperServiceImpl<ImportDataMapp
 
         QueryWrapper<ImportData> queryWrapper = new QueryWrapper<>();
         // 构建搜索条件
-        queryWrapper.eq("sen_id","1110000201");
+        if (!importData.getSenId().isBlank()){
+            queryWrapper.eq("sen_id",importData.getSenId());
+        }
         Page<ImportData> page = new Page<>(importData.getCurrentPage(),importData.getPageSize());
 //        IPage<ImportData> pageList = batchQueryImportService.page(page,queryWrapper); //两种表现形式
         IPage<ImportData> pageList = importDataMapper.selectPage(page,queryWrapper);

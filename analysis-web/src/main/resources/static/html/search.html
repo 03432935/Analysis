@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en-ZH">
 
@@ -28,9 +27,9 @@
                         obj[i].checked=this.checked;
                     }
                 });
-                $("#getPictureData").click(function(){
-                    getPicture();
-                })
+<!--                $("#getPictureData").click(function(){-->
+<!--                    getPicture();-->
+<!--                })-->
             })
             // 获取列表数据
             function getList(pageIndex){
@@ -117,23 +116,6 @@
                });
             }
 
-            function getPicture() {
-            $.ajax({
-                 url: 'http://localhost:8080/web/echarts/data' ,
-                 type: 'POST',
-<!--                 data: null,-->
-                 method:"post",
-                 contentType: "application/json;charset=UTF-8",
-                 dataType:"json",
-                 success: function (returndata) {
-                   alert("picture success"+returndata);
-                 },
-                 error: function (returndata) {
-                   alert("picture false");
-                 }
-                 });
-            }
-
     </script>
 </head>
 
@@ -180,74 +162,121 @@
 </div>
 <div id="hint">信息展示...</div>
 <!-- 为 ECharts 准备一个定义了宽高的 DOM -->
-<div id="main" style="width: 1000px;height:600px;">
-    <p>
-        <input type="button" id="getPictureData" value="获取图表的数据" onclick="getPicture()">
-    </p>
+<div id="main" style="width: 1200px;height:600px;">
+    <!--    <p>-->
+    <!--        <input type="button" id="getPictureData" value="获取图表的数据" onclick="getPicture()">-->
+    <!--    </p>-->
 </div>
 <script type="text/javascript">
 
       // 基于准备好的dom，初始化echarts实例
       var myChart = echarts.init(document.getElementById('main'));
+      var date = [];
+      var data = [];
+      function getPicture() {
+            $.ajax({
+            url: 'http://localhost:8080/web/echarts/data' ,
+            type: 'POST',
+<!--        data: null,-->
+            async:false, //修改为同步请求,这个是重点，因为不加上会导致数组为空
+            method:"post",
+            contentType: "application/json;charset=UTF-8",
+            dataType:"json",
+            success: function (returndata) {
+                alert("picture success"+returndata);
+                $(returndata.message).each(function(i){
+                    var resdate = new Date(returndata.message[i].timeData);
+                    resdate = [resdate.getFullYear(), resdate.getMonth()+1, resdate.getDate(), resdate.getHours()].join('/');
+                    date.push(resdate);
+                    data.push(returndata.message[i].vData)
+                })
+              },
+            error: function (returndata) {
+                alert("picture false");
+              }
+            });
+<!--            console.log("date:"+date);-->
+<!--            console.log("data:"+data);-->
+<!--            console.log("len:date:"+date.length+" len:data"+data.length)-->
+      }
+        getPicture();
+        var baseDate = [];
+        var baseData = [];
+        var flag = 0 ;
+        function addData(shift){
+            if(shift){
+                baseDate.push(date[flag]);
+                baseData.push(data[flag]);
 
-<!--        var base = +new Date(2014, 9, 3);-->
-<!--        var oneDay = 24 * 3600 * 1000;-->
-<!--        var date = [];-->
-<!--        var data = [Math.random() * 150];-->
-<!--        var now = new Date(base);-->
-<!--        function addData(shift) {-->
-<!--          now = [now.getFullYear(), now.getMonth() + 1, now.getDate()].join('/');-->
-<!--          date.push(now);-->
-<!--          data.push((Math.random() - 0.4) * 10 + data[data.length - 1]);-->
-<!--          if (shift) {-->
-<!--            date.shift();-->
-<!--            data.shift();-->
-<!--          }-->
-<!--          now = new Date(+new Date(now) + oneDay);-->
-<!--        }-->
-<!--        for (var i = 1; i < 100; i++) {-->
-<!--          addData();-->
-<!--        }-->
-<!--        option = {-->
-<!--          xAxis: {-->
-<!--            type: 'category',-->
-<!--            boundaryGap: false,-->
-<!--            data: date-->
-<!--          },-->
-<!--          yAxis: {-->
-<!--            boundaryGap: [0, '50%'],-->
-<!--            type: 'value'-->
-<!--          },-->
-<!--          series: [-->
-<!--            {-->
-<!--              name: '成交',-->
-<!--              type: 'line',-->
-<!--              smooth: true,-->
-<!--              symbol: 'none',-->
-<!--              stack: 'a',-->
-<!--              areaStyle: {-->
-<!--                normal: {}-->
-<!--              },-->
-<!--              data: data-->
-<!--            }-->
-<!--          ]-->
-<!--        };-->
-<!--        setInterval(function () {-->
-<!--          addData(true);-->
-<!--          myChart.setOption({-->
-<!--            xAxis: {-->
-<!--              data: date-->
-<!--            },-->
-<!--            series: [-->
-<!--              {-->
-<!--                name: '成交',-->
-<!--                data: data-->
-<!--              }-->
-<!--            ]-->
-<!--          });-->
-<!--        }, 500);-->
-<!--        option && myChart.setOption(option);-->
-    </script>
+                baseDate.shift();
+                baseData.shift();
+                flag = flag + 1 ;
+            }else{
+                for (var i = 0; i < 100; i++) {
+                    baseDate.push(date[i]);
+                    baseData.push(data[i]);
+                }
+                flag = 100;
+            }
+        }
+        addData(false);
+<!--        console.log("baseDate:"+baseDate);-->
+<!--        console.log("baseData:"+baseData);-->
+
+        option = {
+          tooltip: {
+            trigger: 'axis',
+            axisPointer: { type: 'cross' }
+<!--            开启鼠标滑动显示数值的标签-->
+          },
+          xAxis: {
+            type: 'category',
+            boundaryGap: false,
+            axisTick: {
+                alignWithLabel: true
+            }
+<!--            data: baseDate-->
+          },
+          yAxis: {
+            boundaryGap: [0, '50%'],
+            type: 'value'
+          },
+          series: [
+            {
+              name: 'v数值',
+              type: 'line',
+              smooth: true,
+              symbol: 'none',
+              stack: 'a',
+              areaStyle: {
+                normal: {}
+              },
+              data: baseData
+            }
+          ]
+        };
+        myChart.showLoading();
+        setInterval(function (i) {
+          myChart.hideLoading();
+            if(flag != data.length+1){
+                addData(true);
+            }
+
+          myChart.setOption({
+            xAxis: {
+              data: baseDate
+            },
+            series: [
+              {
+                name: 'v数值',
+                data: baseData
+              }
+            ]
+          });
+        }, 500);
+        option && myChart.setOption(option);
+
+</script>
 </body>
 
 </html>
