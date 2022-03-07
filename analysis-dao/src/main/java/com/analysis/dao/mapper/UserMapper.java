@@ -11,7 +11,7 @@ import org.apache.ibatis.annotations.Mapper;
  * @date: 2022/1/18 20:06
  */
 @Mapper
-public interface UserMapper extends BaseMapper<User> {
+public interface UserMapper extends SuperMapper<User> {
 
     int insertf(User user);
 

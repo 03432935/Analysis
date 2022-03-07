@@ -10,10 +10,10 @@ import com.baomidou.mybatisplus.annotation.TableName;
  * @date: 2022/1/18 20:05
  */
 @TableName("user_test")
-public class User {
+public class User extends Base<User>{
 
     @TableId("id")
-    private int id;
+    private Long id;
 
     @TableField("name")
     private String name;
@@ -21,11 +21,11 @@ public class User {
     @TableField("code")
     private String code;
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

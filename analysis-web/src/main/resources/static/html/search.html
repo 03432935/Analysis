@@ -114,6 +114,7 @@
                    alert("import false");
                  }
                });
+                window.location.reload(true);
             }
 
     </script>
@@ -135,6 +136,7 @@
                 <input type="text" name="senId" id="senId">
                 <input type="button" value="查询" id="search">
                 <input type="button" value="重置" id="reset" onclick="document.getElementById('senId').value=''">
+                <input type="button" value="刷新图表" id="fresh" onclick="getPicture()">
             </td>
         </tr>
         <tr style="background-color: RoyalBlue">
@@ -163,9 +165,6 @@
 <div id="hint">信息展示...</div>
 <!-- 为 ECharts 准备一个定义了宽高的 DOM -->
 <div id="main" style="width: 1200px;height:600px;">
-    <!--    <p>-->
-    <!--        <input type="button" id="getPictureData" value="获取图表的数据" onclick="getPicture()">-->
-    <!--    </p>-->
 </div>
 <script type="text/javascript">
 
@@ -273,7 +272,7 @@
               }
             ]
           });
-        }, 500);
+        }, 500); //每个0.5s刷新一次新数据
         option && myChart.setOption(option);
 
 </script>

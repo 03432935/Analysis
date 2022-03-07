@@ -31,7 +31,10 @@ public class UserMapperTest {
 
     @Test
     public void old(){
-        //        System.out.println("insert test"+userMapper.insertf(user));
+        User user = new User();
+        user.setCode("123");
+        user.setName("lwx");
+        System.out.println("insert test"+userMapper.insertf(user));
         System.out.println("select test"+userMapper.selectById(2));
     }
 }

@@ -8,14 +8,17 @@ import com.baomidou.mybatisplus.extension.plugins.MybatisPlusInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.inner.OptimisticLockerInnerInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.inner.PaginationInnerInterceptor;
 import com.baomidou.mybatisplus.extension.spring.MybatisSqlSessionFactoryBean;
+import org.apache.ibatis.logging.stdout.StdOutImpl;
 import org.apache.ibatis.plugin.Interceptor;
 import org.mybatis.spring.mapper.MapperScannerConfigurer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 
 import javax.sql.DataSource;
+import java.io.IOException;
 
 /**
  * @description:
@@ -67,14 +70,19 @@ public class MybatisPlusConfig {
 
     @Bean
     @ConfigurationProperties(prefix = "mybatis")
-    public MybatisSqlSessionFactoryBean mybatisSqlSessionFactoryBean(DataSource dataSource, MybatisPlusInterceptor mybatisPlusInterceptor) {
+    public MybatisSqlSessionFactoryBean mybatisSqlSessionFactoryBean(DataSource dataSource, MybatisPlusInterceptor mybatisPlusInterceptor) throws IOException {
         MybatisSqlSessionFactoryBean sessionFactoryBean = new MybatisSqlSessionFactoryBean();
         MybatisConfiguration configuration = new MybatisConfiguration();
+        PathMatchingResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();
         configuration.setMapUnderscoreToCamelCase(true); //下划线转骆驼
         Interceptor[] plugins = {mybatisPlusInterceptor};
+
         sessionFactoryBean.setPlugins(plugins);
         sessionFactoryBean.setDataSource(dataSource);
         sessionFactoryBean.setConfiguration(configuration);
+        // 配置打印sql语句
+        configuration.setLogImpl(StdOutImpl.class);
+        sessionFactoryBean.setMapperLocations(resolver.getResources("classpath*:mapper/*Mapper.xml"));
 
         return sessionFactoryBean;
     }

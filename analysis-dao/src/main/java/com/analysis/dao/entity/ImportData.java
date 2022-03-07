@@ -1,5 +1,7 @@
 package com.analysis.dao.entity;
 
+import com.alibaba.excel.annotation.ExcelProperty;
+import com.alibaba.excel.annotation.format.DateTimeFormat;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
@@ -17,42 +19,46 @@ import java.util.Date;
 @TableName("import_data")
 public class ImportData extends Base<ImportData> {
 
-    @TableId
-    private int id;
+    private Long id;
 
+    @ExcelProperty("SENID")
     private String senId;
 
-    //    @ExcelProperty(index = 1,value = "时间")
+    /**
+     * 这里用string 去接日期才能格式化
+     */
+//    @DateTimeFormat("yyyy/mm/dd hh:mm")
+    @ExcelProperty("TIME")
     private Date tTime;
 
-    //    @ExcelProperty(index = 2,value = "V数据")
+    @ExcelProperty("V")
     private Double vData;
 
-    //    @ExcelProperty(index = 3,value = "V平均值")
+    @ExcelProperty("AVGV")
     private Double avgV;
 
-    //    @ExcelProperty(index = 4,value = "V最大值")
+    @ExcelProperty("MAXV")
     private Double maxV;
 
-    //    @ExcelProperty(index = 5,value = "V最小值")
+    @ExcelProperty("MINV")
     private Double minV;
 
-    //    @ExcelProperty(index = 6,value = "最大时间")
+    @ExcelProperty("MAXT")
     private Date maxTime;
 
-    //    @ExcelProperty(index = 7,value = "最小时间")
+    @ExcelProperty("MINT")
     private Date minTime;
 
-    //    @ExcelProperty(index = 8,value = "S数据")
+    @ExcelProperty("S")
     private Double sData;
 
-    //    @ExcelProperty(index = 9,value = "S平均值")
+    @ExcelProperty("AVGS")
     private Double avgS;
 
-    //    @ExcelProperty(index = 10,value = "S最大值")
+    @ExcelProperty("MAXS")
     private Double maxS;
 
-    //    @ExcelProperty(index = 11,value = "S最小值")
+    @ExcelProperty("MINS")
     private Double minS;
 
     @Override
