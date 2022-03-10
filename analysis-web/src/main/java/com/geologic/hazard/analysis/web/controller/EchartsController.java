@@ -1,17 +1,18 @@
 package com.geologic.hazard.analysis.web.controller;
 
 import com.analysis.common.utils.ResultUtils;
+import com.analysis.dao.entity.AvgDto;
 import com.analysis.dao.entity.EchartDto;
-import com.analysis.dao.entity.ImportData;
+import com.analysis.dao.entity.ImportDto;
+import com.analysis.service.service.BatchQueryAvgService;
 import com.analysis.service.service.BatchQueryImportService;
+import com.analysis.service.service.EchartsSendService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -26,15 +27,13 @@ import java.util.List;
 public class EchartsController {
 
     @Autowired
-    private BatchQueryImportService batchQueryImportService;
+    private EchartsSendService echartsSendService;
 
     @RequestMapping(value = "/data",method = RequestMethod.POST)
     @ResponseBody
-    public String echartsSendData(){
-        List<ImportData> list = batchQueryImportService.getList();
-        log.info("EchartsController.echartsSendData.list"+list);
-        List<EchartDto> echartDtos = batchQueryImportService.getEchartData(list);
-        log.info("EchartsController.echartsSendData.echartDtos"+echartDtos);
-        return ResultUtils.successResult(echartDtos);
+    public String echartsSendData(@RequestBody AvgDto avgDto){
+        List<EchartDto> dtoList = echartsSendService.judgeInput(avgDto);
+        log.info("EchartsController.echartsSendData.res:"+dtoList);
+        return ResultUtils.successResult(dtoList);
     }
 }

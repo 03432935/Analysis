@@ -4,7 +4,7 @@ import com.alibaba.excel.context.AnalysisContext;
 import com.alibaba.excel.read.listener.ReadListener;
 import com.alibaba.excel.util.ListUtils;
 import com.alibaba.fastjson.JSON;
-import com.analysis.dao.entity.ImportData;
+import com.analysis.dao.entity.ImportDto;
 import com.analysis.service.service.ImportExcelService;
 import lombok.extern.slf4j.Slf4j;
 
@@ -16,7 +16,7 @@ import java.util.List;
  * @date: 2022/1/20 20:47
  */
 @Slf4j
-public class ImportExcelListener implements ReadListener<ImportData> {
+public class ImportExcelListener implements ReadListener<ImportDto> {
 
     /**
      * 每隔5条存储数据库，实际使用中可以100条，然后清理list ，方便内存回收
@@ -25,7 +25,7 @@ public class ImportExcelListener implements ReadListener<ImportData> {
     /**
      * 缓存的数据
      */
-    private List<ImportData> cachedDataList = ListUtils.newArrayListWithExpectedSize(BATCH_COUNT);
+    private List<ImportDto> cachedDataList = ListUtils.newArrayListWithExpectedSize(BATCH_COUNT);
 
     /**
      * 假设这个是一个DAO，当然有业务逻辑这个也可以是一个service。当然如果不用存储这个对象没用。
@@ -43,7 +43,7 @@ public class ImportExcelListener implements ReadListener<ImportData> {
      * @param context
      */
     @Override
-    public void invoke(ImportData data, AnalysisContext context) {
+    public void invoke(ImportDto data, AnalysisContext context) {
         log.info("解析到一条数据:{}", JSON.toJSONString(data));
         cachedDataList.add(data);
         // 达到BATCH_COUNT了，需要去存储一次数据库，防止数据几万条数据在内存，容易OOM

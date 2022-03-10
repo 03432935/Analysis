@@ -1,8 +1,8 @@
 package com.analysis.service.service.impl;
 
 import com.analysis.dao.entity.EchartDto;
-import com.analysis.dao.entity.ImportData;
-import com.analysis.dao.mapper.ImportDataMapper;
+import com.analysis.dao.entity.ImportDto;
+import com.analysis.dao.mapper.ImportDtoMapper;
 import com.analysis.service.service.BatchQueryImportService;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
@@ -11,8 +11,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -23,25 +21,25 @@ import java.util.stream.Collectors;
  */
 @Service
 @Slf4j
-public class BatchQueryImportServiceImpl extends SuperServiceImpl<ImportDataMapper,ImportData> implements BatchQueryImportService {
+public class BatchQueryImportServiceImpl extends SuperServiceImpl<ImportDtoMapper, ImportDto> implements BatchQueryImportService {
 
     @Autowired
-    private ImportDataMapper importDataMapper;
+    private ImportDtoMapper importDtoMapper;
 
     @Autowired
     private BatchQueryImportService batchQueryImportService;
 
     @Override
-    public IPage<ImportData> query(ImportData importData){
+    public IPage<ImportDto> query(ImportDto importDto){
 
-        QueryWrapper<ImportData> queryWrapper = new QueryWrapper<>();
+        QueryWrapper<ImportDto> queryWrapper = new QueryWrapper<>();
         // 构建搜索条件
-        if (!importData.getSenId().isBlank()){
-            queryWrapper.eq("sen_id",importData.getSenId());
+        if (!importDto.getSenId().isBlank()){
+            queryWrapper.eq("sen_id", importDto.getSenId());
         }
-        Page<ImportData> page = new Page<>(importData.getCurrentPage(),importData.getPageSize());
+        Page<ImportDto> page = new Page<>(importDto.getCurrentPage(), importDto.getPageSize());
 //        IPage<ImportData> pageList = batchQueryImportService.page(page,queryWrapper); //两种表现形式
-        IPage<ImportData> pageList = importDataMapper.selectPage(page,queryWrapper);
+        IPage<ImportDto> pageList = importDtoMapper.selectPage(page,queryWrapper);
 //        List<ImportData> list = pageList.getRecords();
         System.out.println("page:"+pageList);
         return pageList;
@@ -49,15 +47,22 @@ public class BatchQueryImportServiceImpl extends SuperServiceImpl<ImportDataMapp
     }
 
     @Override
-    public List<ImportData> getList() {
-        List<ImportData> list = importDataMapper.selectList(null);
+    public List<ImportDto> getList() {
+        List<ImportDto> list = importDtoMapper.selectList(null);
         log.info("BatchQueryImportServiceImpl.getList:"+list);
         return list;
     }
 
     @Override
-    public List<EchartDto> getEchartData(List<ImportData> importDataList) {
-        List<EchartDto> echartDtos = importDataList.stream()
+    public List<ImportDto> getSomeList(ImportDto dto) {
+        List<ImportDto> list = importDtoMapper.query(dto);
+        log.info("BatchQueryImportServiceImpl.getSomeList:"+list);
+        return list;
+    }
+
+    @Override
+    public List<EchartDto> getEchartData(List<ImportDto> importDtoList) {
+        List<EchartDto> echartDtos = importDtoList.stream()
                 .map(
                         importData -> {
                             EchartDto echartDto = new EchartDto();

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.analysis.dao.mapper.ImportDataMapper">
+<mapper namespace="com.analysis.dao.mapper.ImportDtoMapper">
 
     <insert id="batchInsert">
         insert into import_data(sen_id,t_time,v_data,avg_v,max_v,min_v,max_time,min_time,
@@ -14,7 +14,7 @@
         </foreach>
     </insert>
 
-    <select id="query" resultType="com.analysis.dao.entity.ImportData">
+    <select id="query" resultType="com.analysis.dao.entity.ImportDto">
         select
         sen_id as senId,
         t_time as tTime,
@@ -115,9 +115,6 @@
             and min_s = #{minS}
         </if>
     </select>
-<!--    <select id="selectPage" resultType="com.analysis.dao.entity.ImportData">-->
-
-<!--    </select>-->
 
 
 </mapper>

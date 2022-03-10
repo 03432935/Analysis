@@ -15,10 +15,11 @@ import lombok.extern.slf4j.Slf4j;
 public class StrategyServiceImpl implements StrategyService {
 
     @Override
-    public void strategyRun(String name) {
-//        todo:校验name
+    public void strategyRun(String code) {
+//        todo:校验code
+        StrategyEnum strategyEnum = StrategyEnum.findEnumByCode(code);
         //获取对应的策略handler
-        AbstractStrategy strategy = StrategyFactory.getInvokeStrategy(name);
+        AbstractStrategy strategy = StrategyFactory.getInvokeStrategy(code);
 
         //执行对应策略的方法
         strategy.run();

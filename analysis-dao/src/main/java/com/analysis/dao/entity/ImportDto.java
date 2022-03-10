@@ -1,8 +1,6 @@
 package com.analysis.dao.entity;
 
 import com.alibaba.excel.annotation.ExcelProperty;
-import com.alibaba.excel.annotation.format.DateTimeFormat;
-import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -17,7 +15,7 @@ import java.util.Date;
 @Data
 @EqualsAndHashCode
 @TableName("import_data")
-public class ImportData extends Base<ImportData> {
+public class ImportDto extends Base<ImportDto> {
 
     private Long id;
 

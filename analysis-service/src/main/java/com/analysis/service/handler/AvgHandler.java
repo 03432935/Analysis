@@ -1,6 +1,7 @@
 package com.analysis.service.handler;
 
-import com.analysis.dao.entity.ImportData;
+import com.analysis.dao.entity.AvgDto;
+import com.analysis.dao.entity.ImportDto;
 import com.analysis.service.enums.StrategyEnum;
 import com.analysis.service.factory.StrategyFactory;
 import lombok.extern.slf4j.Slf4j;
@@ -13,22 +14,22 @@ import java.util.List;
  * @date: 2022/2/28 17:18
  */
 @Slf4j
-public class AvgHandler extends AbstractStrategy{
+public class AvgHandler extends AbstractStrategy<AvgDto>{
 
     @Override
-    protected List<ImportData> before() {
+    protected List<ImportDto> before() {
         log.info("获取数据----");
         return null;
     }
 
     @Override
-    protected String analysisStrategy(List<ImportData> importDataList) {
+    protected List<AvgDto> analysisStrategy(List<ImportDto> importDtoList) {
         log.info("策略avghandler开始---------");
         return null;
     }
 
     @Override
-    protected void after() {
+    protected void after(List<AvgDto> avgDtos) {
         log.info("保存处理好的数据---------");
     }
 

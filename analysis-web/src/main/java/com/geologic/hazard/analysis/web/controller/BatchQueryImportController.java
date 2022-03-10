@@ -1,8 +1,7 @@
 package com.geologic.hazard.analysis.web.controller;
 
-import com.analysis.common.utils.PageUtils;
 import com.analysis.common.utils.ResultUtils;
-import com.analysis.dao.entity.ImportData;
+import com.analysis.dao.entity.ImportDto;
 import com.analysis.service.service.BatchQueryImportService;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
@@ -10,8 +9,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 /**
  * @description:
@@ -28,8 +25,8 @@ public class BatchQueryImportController {
 
     @ResponseBody
     @RequestMapping(path = "/import",method = RequestMethod.POST)
-    public String batchQuery(@RequestBody ImportData importData){
-        IPage<ImportData> info = batchQueryImportService.query(importData);
+    public String batchQuery(@RequestBody ImportDto importDto){
+        IPage<ImportDto> info = batchQueryImportService.query(importDto);
         log.info("info:{}",info);
         return ResultUtils.successResult(info);
     }

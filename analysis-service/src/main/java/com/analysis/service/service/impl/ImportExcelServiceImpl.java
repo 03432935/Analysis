@@ -1,7 +1,7 @@
 package com.analysis.service.service.impl;
 
-import com.analysis.dao.entity.ImportData;
-import com.analysis.dao.mapper.ImportDataMapper;
+import com.analysis.dao.entity.ImportDto;
+import com.analysis.dao.mapper.ImportDtoMapper;
 import com.analysis.service.service.ImportExcelService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,22 +18,22 @@ import java.util.List;
 public class ImportExcelServiceImpl implements ImportExcelService {
 
     @Autowired
-    private ImportDataMapper importDataMapper;
+    private ImportDtoMapper importDtoMapper;
 
     @Override
-    public void save(List<ImportData> importDataList){
-        List<ImportData> list = new ArrayList<>();
-        for (ImportData importData : importDataList){
-            Integer id = importDataMapper.selectId(importData);
+    public void save(List<ImportDto> importDtoList){
+        List<ImportDto> list = new ArrayList<>();
+        for (ImportDto importDto : importDtoList){
+            Integer id = importDtoMapper.selectId(importDto);
             if (id == null){
-                list.add(importData);
+                list.add(importDto);
             }else{
                 //todo:update?
             }
         }
         //这个list为空的可能
         if(!list.isEmpty()){
-            importDataMapper.batchInsert(list);
+            importDtoMapper.batchInsert(list);
         }
     }
 }

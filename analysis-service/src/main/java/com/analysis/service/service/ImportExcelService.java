@@ -1,6 +1,6 @@
 package com.analysis.service.service;
 
-import com.analysis.dao.entity.ImportData;
+import com.analysis.dao.entity.ImportDto;
 
 import java.util.List;
 
@@ -11,5 +11,5 @@ import java.util.List;
  */
 public interface ImportExcelService {
 
-    public void save(List<ImportData> importDataList);
+    public void save(List<ImportDto> importDtoList);
 }

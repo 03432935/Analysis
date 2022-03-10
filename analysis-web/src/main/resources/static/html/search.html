@@ -109,12 +109,12 @@
                  processData: false,
                  success: function (returndata) {
                    alert("import success");
+                   window.location.reload(true);
                  },
                  error: function (returndata) {
                    alert("import false");
                  }
                });
-                window.location.reload(true);
             }
 
     </script>
@@ -136,7 +136,6 @@
                 <input type="text" name="senId" id="senId">
                 <input type="button" value="查询" id="search">
                 <input type="button" value="重置" id="reset" onclick="document.getElementById('senId').value=''">
-                <input type="button" value="刷新图表" id="fresh" onclick="getPicture()">
             </td>
         </tr>
         <tr style="background-color: RoyalBlue">

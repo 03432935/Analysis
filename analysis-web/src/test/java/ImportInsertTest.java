@@ -1,6 +1,5 @@
-import com.analysis.common.utils.PageUtils;
-import com.analysis.dao.entity.ImportData;
-import com.analysis.dao.mapper.ImportDataMapper;
+import com.analysis.dao.entity.ImportDto;
+import com.analysis.dao.mapper.ImportDtoMapper;
 import com.analysis.service.service.BatchQueryImportService;
 import com.analysis.service.service.ImportExcelService;
 import com.baomidou.mybatisplus.core.metadata.IPage;
@@ -29,17 +28,17 @@ public class ImportInsertTest {
     private BatchQueryImportService batchQueryImportService;
 
     @Autowired
-    private ImportDataMapper importDataMapper;
+    private ImportDtoMapper importDtoMapper;
 
     @Test
     public void batchInserTest() throws Exception {
-        ImportData importData = new ImportData();
-        importData.setSenId("3");
-        List<ImportData> list = new ArrayList<>();
-        list.add(importData);
-        importDataMapper.batchInsert(list);
+        ImportDto importDto = new ImportDto();
+        importDto.setSenId("3");
+        List<ImportDto> list = new ArrayList<>();
+        list.add(importDto);
+        importDtoMapper.batchInsert(list);
         System.out.println("insertMapper:");
-        ImportData data = new ImportData();
+        ImportDto data = new ImportDto();
         data.setSenId("2");
         data.setDel(1);
         list.add(data);
@@ -49,11 +48,11 @@ public class ImportInsertTest {
 
     @Test
     public void query(){
-        ImportData importData = new ImportData();
-        importData.setSenId("1110000201");
+        ImportDto importDto = new ImportDto();
+        importDto.setSenId("1110000201");
 //        List<ImportData> list = importDataMapper.query(importData);
 //        System.out.println(list);
-        IPage<ImportData> list1 = batchQueryImportService.query(importData);
+        IPage<ImportDto> list1 = batchQueryImportService.query(importDto);
 
         System.out.println(list1);
     }
