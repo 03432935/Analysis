@@ -5,6 +5,7 @@ import com.analysis.service.factory.StrategyFactory;
 import com.analysis.service.handler.AbstractStrategy;
 import com.analysis.service.service.StrategyService;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Service;
 
 /**
  * @description:
@@ -12,6 +13,7 @@ import lombok.extern.slf4j.Slf4j;
  * @date: 2022/2/28 17:22
  */
 @Slf4j
+@Service
 public class StrategyServiceImpl implements StrategyService {
 
     @Override

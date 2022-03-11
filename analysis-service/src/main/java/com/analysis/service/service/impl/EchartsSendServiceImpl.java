@@ -10,6 +10,7 @@ import com.analysis.service.service.EchartsSendService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.poi.ss.formula.functions.T;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,6 +22,7 @@ import java.util.stream.Collectors;
  * @date: 2022/3/10 17:08
  */
 @Slf4j
+@Service
 public class EchartsSendServiceImpl implements EchartsSendService {
 
     @Autowired
@@ -66,7 +68,7 @@ public class EchartsSendServiceImpl implements EchartsSendService {
 
     @Override
     public List<EchartDto> judgeInput(AvgDto avgDto) {
-        if (avgDto.getStrategyCode().isBlank()){
+        if (avgDto.getStrategyCode() == null || avgDto.getStrategyCode().isBlank()){
             //如果策略为空,查询原始数据
             List<ImportDto> list;
             if (avgDto.isEmptyAll(avgDto)){
@@ -75,16 +77,16 @@ public class EchartsSendServiceImpl implements EchartsSendService {
                 log.info("EchartsController.echartsSendData.list(avgDto.isEmpty):"+list);
             }else{
                 ImportDto dto = new ImportDto();
-                if (!avgDto.getSenId().isBlank()){
+                if (avgDto.getSenId() != null && !avgDto.getSenId().isBlank()){
                     dto.setSenId(avgDto.getSenId());
                 }
-                if (!avgDto.getSenId().isBlank()){
+                if (avgDto.getTTime() != null){
                     dto.setTTime(avgDto.getTTime());
                 }
-                if (!avgDto.getSenId().isBlank()){
+                if (avgDto.getVData() != null){
                     dto.setVData(avgDto.getVData());
                 }
-                if (!avgDto.getSenId().isBlank()){
+                if (avgDto.getSData() != null){
                     dto.setSData(avgDto.getSData());
                 }
                 list = batchQueryImportService.getSomeList(dto);

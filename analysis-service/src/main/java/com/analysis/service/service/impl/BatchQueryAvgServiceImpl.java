@@ -12,6 +12,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.Collection;
 import java.util.List;
@@ -24,6 +25,7 @@ import java.util.function.Function;
  * @date: 2022/3/10 16:51
  */
 @Slf4j
+@Service
 public class BatchQueryAvgServiceImpl extends SuperServiceImpl<AvgDtoMapper, AvgDto> implements BatchQueryAvgService {
 
     @Autowired

@@ -10,7 +10,7 @@
         s_data as sData,
         del,
         create_time
-        from todo
+        from handle_data
         <where>
             del = 0
             <if test="senId != null and senId != ''">

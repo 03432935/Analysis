@@ -13,7 +13,7 @@ import java.util.Date;
  * @date: 2022/3/10 16:31
  */
 @Data
-@TableName("todo")
+@TableName("handle_data")
 public class AvgDto extends Base<AvgDto> {
 
     private Long id;
@@ -29,8 +29,8 @@ public class AvgDto extends Base<AvgDto> {
     private String strategyCode;
 
     public boolean isEmptyAll(AvgDto dto){
-        return dto.getSenId().isBlank() && dto.getTTime() == null && dto.getVData() == null &&
-                dto.getSData() == null && dto.getStrategyCode().isBlank();
+        return dto.getSenId() == null && dto.getTTime() == null && dto.getVData() == null &&
+                dto.getSData() == null && dto.getStrategyCode() == null;
     }
     @Override
     public String toString() {
