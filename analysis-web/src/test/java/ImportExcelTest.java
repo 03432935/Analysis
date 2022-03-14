@@ -21,14 +21,17 @@ public class ImportExcelTest {
     private ImportExcelService importExcelService;
 
     @Test
-    public void importExcel(){
+    public void importExcel() {
+        long startTime = System.currentTimeMillis();   //获取开始时间
         StaticComponentContainer.Modules.exportAllToAll();
-        ExcelUtils.readWithListener("C:\\Users\\28196\\Desktop\\1110000201.xlsx",importExcelService);
+        ExcelUtils.readWithListener("C:\\Users\\28196\\Desktop\\1110002104.xlsx", importExcelService);
         System.out.println("success");
+        long endTime = System.currentTimeMillis(); //获取结束时间
+        System.out.println("数据导入所花时间" + (endTime - startTime) + "ms");
     }
 
     @Test
-    public void dateChangeTest(){
+    public void dateChangeTest() {
         String s = "2015/9/8 18:00";
         System.out.println(s);
 

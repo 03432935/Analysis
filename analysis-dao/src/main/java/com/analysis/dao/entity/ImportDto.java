@@ -1,6 +1,8 @@
 package com.analysis.dao.entity;
 
 import com.alibaba.excel.annotation.ExcelProperty;
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -17,6 +19,7 @@ import java.util.Date;
 @TableName("import_data")
 public class ImportDto extends Base<ImportDto> {
 
+    @TableId
     private Long id;
 
     @ExcelProperty("SENID")
@@ -58,6 +61,12 @@ public class ImportDto extends Base<ImportDto> {
 
     @ExcelProperty("MINS")
     private Double minS;
+
+    @TableField(exist = false)
+    private Date startTime;
+
+    @TableField(exist = false)
+    private Date endTime;
 
     @Override
     public String toString() {

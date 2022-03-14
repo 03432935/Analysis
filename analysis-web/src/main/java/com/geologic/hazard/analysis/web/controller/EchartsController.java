@@ -31,7 +31,7 @@ public class EchartsController {
 
     @RequestMapping(value = "/data",method = RequestMethod.POST)
     @ResponseBody
-    public String echartsSendData(@RequestBody AvgDto avgDto){
+    public String echartsSendData(@RequestBody(required = false) AvgDto avgDto) throws Exception {
         List<EchartDto> dtoList = echartsSendService.judgeInput(avgDto);
         log.info("EchartsController.echartsSendData.res:"+dtoList);
         return ResultUtils.successResult(dtoList);

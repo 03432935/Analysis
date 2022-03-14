@@ -13,9 +13,9 @@ import java.util.List;
  */
 public interface EchartsSendService {
 
-    public List<EchartDto> importListToEchartDto(List<ImportDto> list);
+    public List<EchartDto> importListToEchartDto(List<ImportDto> list) throws Exception;
 
-    public List<EchartDto> avgListToEchartDto(List<AvgDto> list);
+    public List<EchartDto> avgListToEchartDto(List<AvgDto> list) throws Exception;
 
-    public List<EchartDto> judgeInput(AvgDto avgDto);
+    public List<EchartDto> judgeInput(AvgDto avgDto) throws Exception;
 }

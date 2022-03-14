@@ -69,6 +69,9 @@
             <if test="minS != null and minS != ''">
                 and min_s = #{minS}
             </if>
+            <if test="startTime != null and endTime != null">
+                AND (DATE_FORMAT( t_time, '%Y-%m-%d') BETWEEN DATE_FORMAT( #{startTime}, '%Y-%m-%d') and DATE_FORMAT( #{endTime}, '%Y-%m-%d'))
+            </if>
         </where>
         order by create_time desc
 <!--        <if test="pageNum !=null and pageSize != null">-->

@@ -28,6 +28,9 @@
             <if test="strategyCode != null and strategyCode != ''">
                 and strategy_code = #{strategyCode}
             </if>
+            <if test="startTime != null and endTime != null">
+                AND (DATE_FORMAT( t_time, '%Y-%m-%d') BETWEEN DATE_FORMAT( #{startTime}, '%Y-%m-%d') and DATE_FORMAT( #{endTime}, '%Y-%m-%d'))
+            </if>
         </where>
         order by create_time desc
     </select>

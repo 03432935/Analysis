@@ -1,11 +1,14 @@
 package com.analysis.dao.entity;
 
 import com.alibaba.excel.annotation.ExcelProperty;
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 import java.util.Date;
+import java.util.Objects;
 
 /**
  * @description:
@@ -16,6 +19,7 @@ import java.util.Date;
 @TableName("handle_data")
 public class AvgDto extends Base<AvgDto> {
 
+    @TableId
     private Long id;
 
     private String senId;
@@ -28,9 +32,17 @@ public class AvgDto extends Base<AvgDto> {
 
     private String strategyCode;
 
+    @TableField(exist = false)
+    private Date startTime;
+
+    @TableField(exist = false)
+    private Date endTime;
+
     public boolean isEmptyAll(AvgDto dto){
-        return dto.getSenId() == null && dto.getTTime() == null && dto.getVData() == null &&
-                dto.getSData() == null && dto.getStrategyCode() == null;
+        return dto.getSenId() == null || Objects.equals(dto.getSenId(), "") && dto.getTTime() == null && dto.getVData() == null &&
+                dto.getSData() == null && dto.getStrategyCode() == null || "".equals(dto.getStrategyCode()) &&
+                dto.getStartTime() == null && dto.getEndTime() == null
+                ;
     }
     @Override
     public String toString() {

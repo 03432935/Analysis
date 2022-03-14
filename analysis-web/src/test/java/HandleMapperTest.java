@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ContextConfiguration;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -27,9 +28,13 @@ public class HandleMapperTest {
     private EchartsSendService echartsSendService;
 
     @Test
-    public void mapperTest(){
+    public void mapperTest() throws Exception {
         AvgDto avgDto = new AvgDto();
+//        avgDto.setTTime(new Date());
+//        avgDto.setStrategyCode(StrategyEnum.AVGSTRATEGY.getCode());
+//        avgDto.setVData(1.3);
 //        avgDtoMapper.insert(avgDto);
+
         List<AvgDto> list = avgDtoMapper.getAvgListByAvg(avgDto);
         System.out.println("AvgDtoMapperTest.list"+list);
 

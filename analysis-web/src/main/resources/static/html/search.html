@@ -117,6 +117,7 @@
                });
             }
 
+
     </script>
 </head>
 
@@ -163,19 +164,47 @@
 </div>
 <div id="hint">信息展示...</div>
 <!-- 为 ECharts 准备一个定义了宽高的 DOM -->
+
+<div id="queryCriteria">
+    <p>
+        SenId:<input type="text" name="pictureSenId" id="pictureSenId">
+        Time:<input type="datetime-local" name="pictureStartTime" id="pictureStartTime">
+        <input type="datetime-local" name="pictureEndTime" id="pictureEndTime">
+        Strategy:<select id="pictureStrategy" name="pictureStrategy">
+            <option value="">原数据</option>
+            <option value="1">avg</option>
+            <option value="2">待定</option>
+            <option value="3">待定</option>
+            <option value="4">待定</option>
+        </select>
+        <input type="button" value="查询" id="query">
+    </p>
+</div>
 <div id="main" style="width: 1200px;height:600px;">
 </div>
 <script type="text/javascript">
-
+                // 查询
+                $("#query").click(function(){
+                    getPicture();
+                });
       // 基于准备好的dom，初始化echarts实例
       var myChart = echarts.init(document.getElementById('main'));
       var date = [];
       var data = [];
+      var baseDate = [];
+      var baseData = [];
+      var flag = 0 ;
       function getPicture() {
+          date = [];
+          data = [];
+          baseDate = [];
+          baseData = [];
+<!--          alert(pictureStrategy.option[pictureStrategy.selectedIndex].text);-->
+          let requestData = {"senId":$("#pictureSenId").val(),"startTime":$("#pictureStartTime").val(),"endTime":$("#pictureEndTime").val(),"strategyCode":$("#pictureStrategy option:selected").val()};
             $.ajax({
             url: 'http://localhost:8080/web/echarts/data' ,
             type: 'POST',
-<!--        data: null,-->
+            data:JSON.stringify(requestData),
             async:false, //修改为同步请求,这个是重点，因为不加上会导致数组为空
             method:"post",
             contentType: "application/json;charset=UTF-8",
@@ -193,31 +222,37 @@
                 alert("picture false");
               }
             });
+            addData(false);
 <!--            console.log("date:"+date);-->
 <!--            console.log("data:"+data);-->
 <!--            console.log("len:date:"+date.length+" len:data"+data.length)-->
       }
         getPicture();
-        var baseDate = [];
-        var baseData = [];
-        var flag = 0 ;
         function addData(shift){
-            if(shift){
-                baseDate.push(date[flag]);
-                baseData.push(data[flag]);
+            if(date.length > 100){
+                if(shift){
+                    baseDate.push(date[flag]);
+                    baseData.push(data[flag]);
 
-                baseDate.shift();
-                baseData.shift();
-                flag = flag + 1 ;
-            }else{
-                for (var i = 0; i < 100; i++) {
-                    baseDate.push(date[i]);
-                    baseData.push(data[i]);
+                    baseDate.shift();
+                    baseData.shift();
+                    flag = flag + 1 ;
+                }else{
+                    for (var i = 0; i < 99; i++) {
+                        baseDate.push(date[i]);
+                        baseData.push(data[i]);
+                    }
+                    flag = 99;
                 }
-                flag = 100;
+            }else{
+                for (var i = 0; i < date.length; i++) {
+                      baseDate.push(date[i]);
+                      baseData.push(data[i]);
+                }
+                flag = data.length;
             }
         }
-        addData(false);
+<!--        addData(false);-->
 <!--        console.log("baseDate:"+baseDate);-->
 <!--        console.log("baseData:"+baseData);-->
 
@@ -256,7 +291,7 @@
         myChart.showLoading();
         setInterval(function (i) {
           myChart.hideLoading();
-            if(flag != data.length+1){
+            if(flag != data.length){
                 addData(true);
             }
 
@@ -273,6 +308,7 @@
           });
         }, 500); //每个0.5s刷新一次新数据
         option && myChart.setOption(option);
+
 
 </script>
 </body>
