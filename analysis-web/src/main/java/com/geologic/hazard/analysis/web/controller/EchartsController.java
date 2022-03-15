@@ -33,10 +33,10 @@ public class EchartsController {
     @StringTrim
     @RequestMapping(value = "/data",method = RequestMethod.POST)
     @ResponseBody
-    public String echartsSendData(@RequestBody(required = false) AvgDto avgDto) throws Exception {
-        List<EchartDto> dtoList = echartsSendService.judgeInput(avgDto);
+    public String echartsSendData(@RequestBody(required = false) ImportDto importDto) throws Exception {
+        List<EchartDto> dtoList = echartsSendService.judgeInput(importDto);
         log.info("EchartsController.echartsSendData.res:"+dtoList);
-        System.out.println("input:"+avgDto+"output:"+dtoList);
+        System.out.println("input:"+importDto+"output:"+dtoList);
         return ResultUtils.successResult(dtoList);
     }
 }

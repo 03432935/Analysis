@@ -4,12 +4,12 @@
 
     <insert id="batchInsert">
         insert into import_data(sen_id,t_time,v_data,avg_v,max_v,min_v,max_time,min_time,
-        s_data,avg_s,max_s,min_s,del,create_time)
+        s_data,avg_s,max_s,min_s,del,create_time,completion_strategy)
         value
         <foreach collection="list" item="item" separator=",">
             (#{item.senId},#{item.tTime},#{item.vData},#{item.avgV},#{item.maxV},
             #{item.minV},#{item.maxTime},#{item.minTime},#{item.sData},#{item.avgS},#{item.maxS},#{item.minS},
-            #{item.del},#{item.createTime}
+            #{item.del},#{item.createTime},#{item.completionStrategy}
             )
         </foreach>
     </insert>

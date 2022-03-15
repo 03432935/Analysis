@@ -1,14 +1,16 @@
 package com.analysis.service.enums;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * @description:
  * @author: lingwanxian
  * @date: 2022/2/28 16:57
  */
-public enum StrategyEnum {
+public enum CompletionStrategyEnum {
+
+    /**
+     *原始数据默认标识
+     */
+    ORIGINAL("0","org"),
 
     /**
      * 策略一，漏的数据取平均值
@@ -32,8 +34,8 @@ public enum StrategyEnum {
      * @param code 枚举code
      * @return 枚举对象
      */
-    public static StrategyEnum findEnumByCode(String code) {
-        for (StrategyEnum statusEnum : StrategyEnum.values()) {
+    public static CompletionStrategyEnum findEnumByCode(String code) {
+        for (CompletionStrategyEnum statusEnum : CompletionStrategyEnum.values()) {
             if (statusEnum.getCode().equals(code)) {
                 //如果需要直接返回name则更改返回类型为String,return statusEnum.name;
                 return statusEnum;
@@ -47,8 +49,8 @@ public enum StrategyEnum {
      * @param name 枚举name
      * @return 枚举对象
      */
-    public static StrategyEnum findEnumByName(String name) {
-        for (StrategyEnum statusEnum : StrategyEnum.values()) {
+    public static CompletionStrategyEnum findEnumByName(String name) {
+        for (CompletionStrategyEnum statusEnum : CompletionStrategyEnum.values()) {
             if (statusEnum.getName().equals(name)) {
                 //如果需要直接返回code则更改返回类型为String,return statusEnum.code;
                 return statusEnum;
@@ -61,7 +63,7 @@ public enum StrategyEnum {
     private final String code;
     private final String name;
 
-    StrategyEnum(String code, String name) {
+    CompletionStrategyEnum(String code, String name) {
         this.code = code;
         this.name = name;
     }

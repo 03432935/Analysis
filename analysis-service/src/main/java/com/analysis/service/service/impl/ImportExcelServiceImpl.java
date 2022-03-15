@@ -31,6 +31,7 @@ public class ImportExcelServiceImpl implements ImportExcelService {
         for (ImportDto importDto : importDtoList){
             Integer id = importDtoMapper.selectId(importDto);
             if (id == null){
+                importDto.setCompletionStrategy("0");
                 list.add(importDto);
             }else{
                 //todo:update?

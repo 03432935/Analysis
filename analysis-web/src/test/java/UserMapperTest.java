@@ -1,3 +1,4 @@
+import com.analysis.dao.entity.ImportDto;
 import com.analysis.dao.entity.User;
 import com.analysis.dao.mapper.UserMapper;
 import com.geologic.hazard.analysis.web.StartApp;
@@ -42,5 +43,7 @@ public class UserMapperTest {
     public void stringTest(){
         System.out.println(String.class.toString());
         System.out.println(List.class.toString());
+        ImportDto importDto = new ImportDto();
+        System.out.println(importDto);
     }
 }

@@ -171,7 +171,7 @@
         Time:<input type="datetime-local" name="pictureStartTime" id="pictureStartTime">
         <input type="datetime-local" name="pictureEndTime" id="pictureEndTime">
         Strategy:<select id="pictureStrategy" name="pictureStrategy">
-            <option value="">原数据</option>
+            <option value="0">原数据</option>
             <option value="1">avg</option>
             <option value="2">待定</option>
             <option value="3">待定</option>
@@ -200,7 +200,7 @@
           baseDate = [];
           baseData = [];
 <!--          alert(pictureStrategy.option[pictureStrategy.selectedIndex].text);-->
-          let requestData = {"senId":$("#pictureSenId").val(),"startTime":$("#pictureStartTime").val(),"endTime":$("#pictureEndTime").val(),"strategyCode":$("#pictureStrategy option:selected").val()};
+          let requestData = {"senId":$("#pictureSenId").val(),"startTime":$("#pictureStartTime").val(),"endTime":$("#pictureEndTime").val(),"completionStrategy":$("#pictureStrategy option:selected").val()};
             $.ajax({
             url: 'http://localhost:8080/web/echarts/data' ,
             type: 'POST',

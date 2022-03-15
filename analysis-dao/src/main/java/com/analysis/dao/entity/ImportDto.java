@@ -8,6 +8,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 import java.util.Date;
+import java.util.Objects;
 
 /**
  * @description:
@@ -62,11 +63,42 @@ public class ImportDto extends Base<ImportDto> {
     @ExcelProperty("MINS")
     private Double minS;
 
+    /**
+     * 补全策略编号,原数据默认为0
+     */
+    private String completionStrategy = "0";
+
     @TableField(exist = false)
     private Date startTime;
 
     @TableField(exist = false)
     private Date endTime;
+
+    public String getCompletionStrategy(){
+        return completionStrategy;
+    }
+
+    public void setCompletionStrategy(String completionStrategy){
+        if(completionStrategy == null){
+            completionStrategy = "0";
+        }
+        this.completionStrategy = completionStrategy;
+    }
+
+    public boolean isEmptyAll(ImportDto dto){
+        boolean senFlag = false;
+        boolean strategyFlag = false;
+        if (dto.getSenId() == null || Objects.equals(dto.getSenId(), "")) {
+            senFlag = true;
+        }
+        if (dto.getCompletionStrategy() == null || "".equals(dto.getCompletionStrategy())) {
+            strategyFlag = true;
+        }
+        return senFlag && dto.getTTime() == null && dto.getVData() == null &&
+                dto.getSData() == null && strategyFlag &&
+                dto.getStartTime() == null && dto.getEndTime() == null
+                ;
+    }
 
     @Override
     public String toString() {

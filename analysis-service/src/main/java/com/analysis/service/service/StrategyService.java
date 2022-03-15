@@ -7,5 +7,9 @@ package com.analysis.service.service;
  */
 public interface StrategyService {
 
-    public void strategyRun(String name);
+    //补全策略
+    public void strategyRun(String code);
+
+    //todo：预测策略
+
 }

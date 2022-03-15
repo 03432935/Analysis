@@ -17,5 +17,5 @@ public interface EchartsSendService {
 
     public List<EchartDto> avgListToEchartDto(List<AvgDto> list) throws Exception;
 
-    public List<EchartDto> judgeInput(AvgDto avgDto) throws Exception;
+    public List<EchartDto> judgeInput(ImportDto importDto) throws Exception;
 }

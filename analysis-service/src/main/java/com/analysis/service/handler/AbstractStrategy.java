@@ -19,14 +19,13 @@ public abstract class AbstractStrategy<T> implements InitializingBean {
         List<ImportDto> importDtoList = before();
         //然后处理数据
         List<T> res = analysisStrategy(importDtoList);
-        //最后把处理好的数据存储到新的表
+        //补全策略的话，更改原表数据，预测策略的话把处理好的数据存储到新的表
         try{
             after(res);
         }catch (Exception e){
             log.error("保存数据出错",e);
             compensate();
         }
-
     }
 
     /**

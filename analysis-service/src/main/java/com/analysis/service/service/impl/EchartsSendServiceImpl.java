@@ -4,9 +4,11 @@ import com.analysis.common.utils.ResultUtils;
 import com.analysis.dao.entity.AvgDto;
 import com.analysis.dao.entity.EchartDto;
 import com.analysis.dao.entity.ImportDto;
+import com.analysis.service.enums.CompletionStrategyEnum;
 import com.analysis.service.service.BatchQueryAvgService;
 import com.analysis.service.service.BatchQueryImportService;
 import com.analysis.service.service.EchartsSendService;
+import com.analysis.service.service.StrategyService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.poi.ss.formula.functions.T;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,6 +36,9 @@ public class EchartsSendServiceImpl implements EchartsSendService {
 
     @Autowired
     private EchartsSendService echartsSendService;
+
+    @Autowired
+    private StrategyService strategyService;
 
     @Override
     public List<EchartDto> importListToEchartDto(List<ImportDto> list) throws Exception {
@@ -78,48 +83,23 @@ public class EchartsSendServiceImpl implements EchartsSendService {
     }
 
     @Override
-    public List<EchartDto> judgeInput(AvgDto avgDto) throws Exception {
-        if (avgDto == null || avgDto.getStrategyCode() == null || avgDto.getStrategyCode().isBlank()) {
-            //如果策略为空,查询原始数据
-            List<ImportDto> list;
-            if (avgDto == null ||
-                    avgDto.isEmptyAll(avgDto)) {
-                //如果入参为空，则查询全部原数据
-                list = batchQueryImportService.getList();
-                log.info("EchartsController.echartsSendData.list(avgDto.isEmpty):" + list);
-            } else {
-                ImportDto dto = new ImportDto();
-                if (avgDto.getSenId() != null && !avgDto.getSenId().isBlank()) {
-                    dto.setSenId(avgDto.getSenId());
-                }
-                if (avgDto.getTTime() != null) {
-                    dto.setTTime(avgDto.getTTime());
-                }
-                if (avgDto.getVData() != null) {
-                    dto.setVData(avgDto.getVData());
-                }
-                if (avgDto.getSData() != null) {
-                    dto.setSData(avgDto.getSData());
-                }
-                if (avgDto.getStartTime() != null) {
-                    dto.setStartTime(avgDto.getStartTime());
-                }
-                if (avgDto.getEndTime() != null) {
-                    dto.setEndTime(avgDto.getEndTime());
-                }
-                list = batchQueryImportService.getSomeList(dto);
-                log.info("EchartsController.echartsSendData.list(avgDto.isNotEmpty):" + list);
-            }
-            List<EchartDto> echartDtos = echartsSendService.importListToEchartDto(list);
-            log.info("EchartsController.echartsSendData.echartDtos" + echartDtos);
-            return echartDtos;
+    public List<EchartDto> judgeInput(ImportDto importDto) throws Exception {
+        List<ImportDto> list = null;
+        //如果策略为空,查询原始数据
+        if (importDto == null || importDto.isEmptyAll(importDto)) {
+            //如果入参为空，则查询全部原数据
+            list = batchQueryImportService.getList();
+            log.info("EchartsController.echartsSendData.list(importDto.isEmpty):" + list);
         } else {
-            //如果策略不为空，查询另一张表（处理了数据后的表）
-            List<AvgDto> list = batchQueryAvgService.getAvgList(avgDto);
-            log.info("EchartsController.echartsSendData.list(策略不为空):" + list);
-            List<EchartDto> echartDtos = echartsSendService.avgListToEchartDto(list);
-            log.info("EchartsController.echartsSendData.echartDtos" + echartDtos);
-            return echartDtos;
+            if (!importDto.getCompletionStrategy().equals(CompletionStrategyEnum.ORIGINAL.getCode())) {
+                //如果补全策略不为默认，对数据进行处理,update
+                strategyService.strategyRun(importDto.getCompletionStrategy());
+            }//如果没有策略不补数据，字段默认为0
+            list = batchQueryImportService.getSomeList(importDto);
+            log.info("EchartsController.echartsSendData.list(importDto.isNotEmpty):" + list);
         }
+        List<EchartDto> echartDtos = echartsSendService.importListToEchartDto(list);
+        log.info("EchartsController.echartsSendData.echartDtos" + echartDtos);
+        return echartDtos;
     }
 }
