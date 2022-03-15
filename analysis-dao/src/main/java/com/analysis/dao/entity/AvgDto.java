@@ -39,8 +39,16 @@ public class AvgDto extends Base<AvgDto> {
     private Date endTime;
 
     public boolean isEmptyAll(AvgDto dto){
-        return dto.getSenId() == null || Objects.equals(dto.getSenId(), "") && dto.getTTime() == null && dto.getVData() == null &&
-                dto.getSData() == null && dto.getStrategyCode() == null || "".equals(dto.getStrategyCode()) &&
+        boolean senFlag = false;
+        boolean strategyFlag = false;
+        if (dto.getSenId() == null || Objects.equals(dto.getSenId(), "")) {
+             senFlag = true;
+        }
+        if (dto.getStrategyCode() == null || "".equals(dto.getStrategyCode())) {
+            strategyFlag = true;
+        }
+        return senFlag && dto.getTTime() == null && dto.getVData() == null &&
+                dto.getSData() == null && strategyFlag &&
                 dto.getStartTime() == null && dto.getEndTime() == null
                 ;
     }

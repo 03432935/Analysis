@@ -1,6 +1,6 @@
 package com.analysis.dao.validator.constraint;
 
-import com.analysis.dao.validator.annotion.LongNotNull;
+import com.analysis.dao.validator.annotation.LongNotNull;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;

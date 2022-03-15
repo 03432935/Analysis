@@ -4,6 +4,7 @@ import com.analysis.common.utils.ResultUtils;
 import com.analysis.dao.entity.AvgDto;
 import com.analysis.dao.entity.EchartDto;
 import com.analysis.dao.entity.ImportDto;
+import com.analysis.dao.validator.annotation.StringTrim;
 import com.analysis.service.service.BatchQueryAvgService;
 import com.analysis.service.service.BatchQueryImportService;
 import com.analysis.service.service.EchartsSendService;
@@ -29,11 +30,13 @@ public class EchartsController {
     @Autowired
     private EchartsSendService echartsSendService;
 
+    @StringTrim
     @RequestMapping(value = "/data",method = RequestMethod.POST)
     @ResponseBody
     public String echartsSendData(@RequestBody(required = false) AvgDto avgDto) throws Exception {
         List<EchartDto> dtoList = echartsSendService.judgeInput(avgDto);
         log.info("EchartsController.echartsSendData.res:"+dtoList);
+        System.out.println("input:"+avgDto+"output:"+dtoList);
         return ResultUtils.successResult(dtoList);
     }
 }

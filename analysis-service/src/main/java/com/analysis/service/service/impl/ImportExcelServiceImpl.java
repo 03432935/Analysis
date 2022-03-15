@@ -18,11 +18,13 @@ import java.util.List;
 @Service
 public class ImportExcelServiceImpl implements ImportExcelService {
 
+    public final static String ASYNC_EXECUTOR_NAME = "asyncExecutor";
+
     @Autowired
     private ImportDtoMapper importDtoMapper;
 
     @Override
-    @Async
+    @Async(ASYNC_EXECUTOR_NAME)
     public void save(List<ImportDto> importDtoList){
         //导入Excel进行异步操作
         List<ImportDto> list = new ArrayList<>();

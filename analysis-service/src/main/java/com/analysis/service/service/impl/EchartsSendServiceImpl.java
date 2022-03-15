@@ -82,7 +82,8 @@ public class EchartsSendServiceImpl implements EchartsSendService {
         if (avgDto == null || avgDto.getStrategyCode() == null || avgDto.getStrategyCode().isBlank()) {
             //如果策略为空,查询原始数据
             List<ImportDto> list;
-            if (avgDto == null || avgDto.isEmptyAll(avgDto)) {
+            if (avgDto == null ||
+                    avgDto.isEmptyAll(avgDto)) {
                 //如果入参为空，则查询全部原数据
                 list = batchQueryImportService.getList();
                 log.info("EchartsController.echartsSendData.list(avgDto.isEmpty):" + list);

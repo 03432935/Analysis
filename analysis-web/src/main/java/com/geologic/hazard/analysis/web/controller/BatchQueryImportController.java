@@ -2,6 +2,7 @@ package com.geologic.hazard.analysis.web.controller;
 
 import com.analysis.common.utils.ResultUtils;
 import com.analysis.dao.entity.ImportDto;
+import com.analysis.dao.validator.annotation.StringTrim;
 import com.analysis.service.service.BatchQueryImportService;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
@@ -23,6 +24,7 @@ public class BatchQueryImportController {
     @Autowired
     private BatchQueryImportService batchQueryImportService;
 
+    @StringTrim
     @ResponseBody
     @RequestMapping(path = "/import",method = RequestMethod.POST)
     public String batchQuery(@RequestBody ImportDto importDto){

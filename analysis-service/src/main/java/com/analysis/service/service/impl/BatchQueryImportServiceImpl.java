@@ -37,6 +37,7 @@ public class BatchQueryImportServiceImpl extends SuperServiceImpl<ImportDtoMappe
         if (!importDto.getSenId().isBlank()){
             queryWrapper.eq("sen_id", importDto.getSenId());
         }
+        queryWrapper.orderByAsc("t_time");
         Page<ImportDto> page = new Page<>(importDto.getCurrentPage(), importDto.getPageSize());
 //        IPage<ImportData> pageList = batchQueryImportService.page(page,queryWrapper); //两种表现形式
         IPage<ImportDto> pageList = importDtoMapper.selectPage(page,queryWrapper);

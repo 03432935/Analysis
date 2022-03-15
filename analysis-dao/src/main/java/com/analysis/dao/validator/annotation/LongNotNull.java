@@ -1,4 +1,4 @@
-package com.analysis.dao.validator.annotion;
+package com.analysis.dao.validator.annotation;
 
 import com.analysis.dao.entity.Messages;
 import com.analysis.dao.validator.constraint.LongValidator;

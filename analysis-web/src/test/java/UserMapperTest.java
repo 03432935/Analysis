@@ -37,4 +37,10 @@ public class UserMapperTest {
         System.out.println("insert test"+userMapper.insertf(user));
         System.out.println("select test"+userMapper.selectById(2));
     }
+
+    @Test
+    public void stringTest(){
+        System.out.println(String.class.toString());
+        System.out.println(List.class.toString());
+    }
 }

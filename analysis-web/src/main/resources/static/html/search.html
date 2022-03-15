@@ -51,7 +51,7 @@
                                 if(i % 2 !=0){
                                     backColor="LightSkyBlue";
                                 }
-                                var ctime = formatDate(result.message.records[i].createTime);
+                                var ctime = formatDate(result.message.records[i].tTime);
                                 var v = result.message.records[i].vData;
                                 if(typeof(v)== 'undefined'){
                                     v = "暂无值";
@@ -61,7 +61,7 @@
                                     "<td>"+result.message.records[i].senId+"</td>"+
                                     "<td>"+ctime+"</td>"+
                                     "<td>"+v+"</td>"+
-                                    "<td>"+result.message.records[i].del+"</td>"+
+<!--                                    "<td>"+result.message.records[i].del+"</td>"+-->
                                     "</tr>")
                         })
                         var previous="";
@@ -143,8 +143,8 @@
             <td align="center" width="2%"><input type="checkbox" id="check"></td>
             <td align="center">SENID</td>
             <td align="center">TIME</td>
-            <td align="center" width="20%">V</td>
-            <td align="center" width="20%">DEL</td>
+            <td align="center" width="30%">V</td>
+<!--            <td align="center" width="20%">DEL</td>-->
         </tr>
         </thead>
         <tbody>

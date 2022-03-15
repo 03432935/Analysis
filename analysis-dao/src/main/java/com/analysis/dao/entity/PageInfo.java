@@ -1,7 +1,7 @@
 package com.analysis.dao.entity;
 
 
-import com.analysis.dao.validator.annotion.LongNotNull;
+import com.analysis.dao.validator.annotation.LongNotNull;
 import lombok.Data;
 
 /**
