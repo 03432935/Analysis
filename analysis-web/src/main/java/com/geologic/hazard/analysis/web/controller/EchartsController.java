@@ -30,6 +30,9 @@ public class EchartsController {
     @Autowired
     private EchartsSendService echartsSendService;
 
+    @Autowired
+    private BatchQueryAvgService batchQueryAvgService;
+
     @StringTrim
     @RequestMapping(value = "/data",method = RequestMethod.POST)
     @ResponseBody
@@ -38,5 +41,13 @@ public class EchartsController {
         log.info("EchartsController.echartsSendData.res:"+dtoList);
         System.out.println("input:"+importDto+"output:"+dtoList);
         return ResultUtils.successResult(dtoList);
+    }
+
+    @StringTrim
+    @RequestMapping(value = "/prediction",method = RequestMethod.POST)
+    @ResponseBody
+    public String predctionModule(@RequestBody AvgDto avgDto){
+        batchQueryAvgService.getAvgList(avgDto);
+        return ResultUtils.successResult(avgDto);
     }
 }
