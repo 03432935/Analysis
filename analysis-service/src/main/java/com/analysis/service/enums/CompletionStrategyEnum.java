@@ -1,7 +1,7 @@
 package com.analysis.service.enums;
 
 /**
- * @description:
+ * @description:数据补全枚举
  * @author: lingwanxian
  * @date: 2022/2/28 16:57
  */

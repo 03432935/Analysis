@@ -1,22 +1,36 @@
 package com.analysis.service.enums;
 
 /**
- * @description:数据预测枚举
+ * @description:数据异常枚举
  * @author: lingwanxian
- * @date: 2022/3/15 17:45
+ * @date: 2022/3/16 17:27
  */
-public enum PredictionStrategyEnum {
-    //预测策略
-    /**
-     * 策略一：未命名
-     */
-    One("1","function1"),
-    ;
 
-    PredictionStrategyEnum(String code,String name){
+public enum AbnormalDataEnum {
+
+    /**
+     * 正常数据默认值
+     */
+    NORMAL("0","normal"),
+
+    /**
+     * 数据异常大
+     */
+    BIG_ABNORMAL("1","bigAbnormal"),
+
+    /**
+     * 数据异常小
+     */
+    SMALL_ABNORMAL("2","smallAbnormal")
+
+    ;
+    AbnormalDataEnum(String code,String name){
         this.code = code;
         this.name = name;
     }
+    private String code;
+    private String name;
+
     public String getCode() {
         return code;
     }
@@ -31,8 +45,8 @@ public enum PredictionStrategyEnum {
      * @param code 枚举code
      * @return 枚举对象
      */
-    public static PredictionStrategyEnum findEnumByCode(String code) {
-        for (PredictionStrategyEnum statusEnum : PredictionStrategyEnum.values()) {
+    public static AbnormalDataEnum findEnumByCode(String code) {
+        for (AbnormalDataEnum statusEnum : AbnormalDataEnum.values()) {
             if (statusEnum.getCode().equals(code)) {
                 //如果需要直接返回name则更改返回类型为String,return statusEnum.name;
                 return statusEnum;
@@ -46,24 +60,13 @@ public enum PredictionStrategyEnum {
      * @param name 枚举name
      * @return 枚举对象
      */
-    public static PredictionStrategyEnum findEnumByName(String name) {
-        for (PredictionStrategyEnum statusEnum : PredictionStrategyEnum.values()) {
+    public static AbnormalDataEnum findEnumByName(String name) {
+        for (AbnormalDataEnum statusEnum : AbnormalDataEnum.values()) {
             if (statusEnum.getName().equals(name)) {
                 //如果需要直接返回code则更改返回类型为String,return statusEnum.code;
                 return statusEnum;
             }
         }
         throw new IllegalArgumentException("name is invalid");
-    }
-
-    private final String code;
-    private final String name;
-
-    @Override
-    public String toString() {
-        return "PredictionStrategyEnum{" +
-                "code='" + code + '\'' +
-                ", name='" + name + '\'' +
-                '}';
     }
 }

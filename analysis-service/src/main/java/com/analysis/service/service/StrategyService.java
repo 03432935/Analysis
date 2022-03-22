@@ -7,9 +7,12 @@ package com.analysis.service.service;
  */
 public interface StrategyService {
 
+    //异常检测策略
+    public void abnormalDetectionRun(String code) throws Exception;
+
     //补全策略
-    public void strategyRun(String code);
+    public void completionStrategyRun(String code) throws Exception;
 
-    //todo：预测策略
-
+    //预测策略
+    public void predictionStrategyRun(String code) throws Exception;
 }

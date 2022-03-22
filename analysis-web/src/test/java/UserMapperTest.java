@@ -1,3 +1,4 @@
+import com.analysis.common.utils.DateUtils;
 import com.analysis.dao.entity.ImportDto;
 import com.analysis.dao.entity.User;
 import com.analysis.dao.mapper.UserMapper;
@@ -7,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ContextConfiguration;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -45,5 +47,13 @@ public class UserMapperTest {
         System.out.println(List.class.toString());
         ImportDto importDto = new ImportDto();
         System.out.println(importDto);
+    }
+
+    @Test
+    public void doubleSum(){
+        Date date = new Date();
+        System.out.println(date);
+        String p = DateUtils.dateTimeToStrDay(date);
+        System.out.println(p);
     }
 }

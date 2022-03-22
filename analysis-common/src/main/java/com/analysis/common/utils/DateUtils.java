@@ -108,6 +108,18 @@ public class DateUtils {
     }
 
     /**
+     * Date 转换成  String yyyy-mm-dd格式
+     *
+     * @param dateTime
+     * @return
+     */
+    public static String dateTimeToStrDay(Date dateTime) {
+
+        SimpleDateFormat format = new SimpleDateFormat(YYYY_MM_DD);
+        return format.format(dateTime);
+    }
+
+    /**
      * 获取现在的时间 yyyy-MM-dd HH:mm:ss
      *
      * @return

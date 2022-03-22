@@ -6,15 +6,13 @@ import com.analysis.dao.entity.EchartDto;
 import com.analysis.dao.entity.ImportDto;
 import com.analysis.dao.validator.annotation.StringTrim;
 import com.analysis.service.service.BatchQueryAvgService;
-import com.analysis.service.service.BatchQueryImportService;
+import com.analysis.service.service.ConversionParamService;
 import com.analysis.service.service.EchartsSendService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 /**

@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>条件查询</title>
+    <title>大坝数据分析</title>
     <script src="../js/jquery-1.12.4.js"></script>
     <script src="../js/common.js"></script>
     <script src="../js/echarts.js"></script>
@@ -27,9 +27,6 @@
                         obj[i].checked=this.checked;
                     }
                 });
-<!--                $("#getPictureData").click(function(){-->
-<!--                    getPicture();-->
-<!--                })-->
             })
             // 获取列表数据
             function getList(pageIndex){
@@ -123,7 +120,7 @@
 
 <body>
 <div align="center" class='DataSearch'>
-    <h1>信息查询</h1>
+    <h1>大坝数据查询</h1>
     <form id="importForm">
         <p>
             导入excel：<input type="file" value="导入" id="import" name="fileData">
@@ -183,10 +180,13 @@
 <div id="main" style="width: 1200px;height:600px;">
 </div>
 <script type="text/javascript">
-                // 查询
-                $("#query").click(function(){
-                    getPicture();
-                });
+      // 查询
+      $("#query").click(function(){
+            getPicture(true);
+      });
+      $("#todo").click(function(){
+            getPicture(false);
+      });
       // 基于准备好的dom，初始化echarts实例
       var myChart = echarts.init(document.getElementById('main'));
       var date = [];
@@ -194,13 +194,21 @@
       var baseDate = [];
       var baseData = [];
       var flag = 0 ;
-      function getPicture() {
+      function getPicture(whe) {
           date = [];
           data = [];
           baseDate = [];
           baseData = [];
-<!--          alert(pictureStrategy.option[pictureStrategy.selectedIndex].text);-->
-          let requestData = {"senId":$("#pictureSenId").val(),"startTime":$("#pictureStartTime").val(),"endTime":$("#pictureEndTime").val(),"completionStrategy":$("#pictureStrategy option:selected").val()};
+          if(whe){
+            completion();
+          }else{
+            prediction();
+          }
+          addData(false);
+      }
+
+      function completion(){
+        let requestData = {"senId":$("#pictureSenId").val(),"startTime":$("#pictureStartTime").val(),"endTime":$("#pictureEndTime").val(),"completionStrategy":$("#pictureStrategy option:selected").val()};
             $.ajax({
             url: 'http://localhost:8080/web/echarts/data' ,
             type: 'POST',
@@ -222,12 +230,35 @@
                 alert("picture false");
               }
             });
-            addData(false);
-<!--            console.log("date:"+date);-->
-<!--            console.log("data:"+data);-->
-<!--            console.log("len:date:"+date.length+" len:data"+data.length)-->
       }
-        getPicture();
+
+<!--这还需要修改-->
+      function prediction(){
+            let requestData = {"senId":$("#pictureSenId").val(),"startTime":$("#pictureStartTime").val(),"endTime":$("#pictureEndTime").val(),"todo":$("#pictureStrategy option:selected").val()};
+            $.ajax({
+            url: 'http://localhost:8080/web/echarts/prediction' ,
+            type: 'POST',
+            data:JSON.stringify(requestData),
+            async:false, //修改为同步请求,这个是重点，因为不加上会导致数组为空
+            method:"post",
+            contentType: "application/json;charset=UTF-8",
+            dataType:"json",
+            success: function (returndata) {
+                alert("picture success"+returndata);
+                $(returndata.message).each(function(i){
+                    var resdate = new Date(returndata.message[i].timeData);
+                    resdate = [resdate.getFullYear(), resdate.getMonth()+1, resdate.getDate(), resdate.getHours()].join('/');
+                    date.push(resdate);
+                    data.push(returndata.message[i].vData)
+                })
+              },
+            error: function (returndata) {
+                alert("picture false");
+              }
+            });
+      }
+
+        getPicture(true);
         function addData(shift){
             if(date.length > 100){
                 if(shift){

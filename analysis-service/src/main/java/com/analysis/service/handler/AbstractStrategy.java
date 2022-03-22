@@ -14,7 +14,7 @@ import java.util.List;
 @Slf4j
 public abstract class AbstractStrategy<T> implements InitializingBean {
 
-    public void run(){
+    public void run() throws Exception {
         //先获取数据
         List<ImportDto> importDtoList = before();
         //然后处理数据
@@ -39,7 +39,7 @@ public abstract class AbstractStrategy<T> implements InitializingBean {
      * @param importDtoList
      * @return
      */
-    protected abstract List<T> analysisStrategy(List<ImportDto> importDtoList);
+    protected abstract List<T> analysisStrategy(List<ImportDto> importDtoList) throws Exception;
 
     /**
      * 处理后的数据进行存储数据库的另一张表

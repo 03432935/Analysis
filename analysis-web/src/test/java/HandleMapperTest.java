@@ -1,8 +1,8 @@
-import com.analysis.dao.entity.AvgDto;
 import com.analysis.dao.entity.EchartDto;
 import com.analysis.dao.entity.ImportDto;
 import com.analysis.dao.mapper.AvgDtoMapper;
 import com.analysis.service.enums.CompletionStrategyEnum;
+import com.analysis.service.service.ConversionParamService;
 import com.analysis.service.service.EchartsSendService;
 import com.geologic.hazard.analysis.web.StartApp;
 import org.junit.jupiter.api.Test;

@@ -68,6 +68,11 @@ public class ImportDto extends Base<ImportDto> {
      */
     private String completionStrategy = "0";
 
+    /**
+     * 异常标识，正常默认为0
+     */
+    private String abnormal = "0";
+
     @TableField(exist = false)
     private Date startTime;
 
