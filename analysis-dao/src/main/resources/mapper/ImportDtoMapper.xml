@@ -14,6 +14,7 @@
         </foreach>
     </insert>
 
+
     <select id="query" resultType="com.analysis.dao.entity.ImportDto">
         select
         sen_id as senId,
@@ -118,6 +119,5 @@
             and min_s = #{minS}
         </if>
     </select>
-
 
 </mapper>

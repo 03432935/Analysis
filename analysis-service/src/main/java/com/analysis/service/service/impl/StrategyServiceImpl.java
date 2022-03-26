@@ -20,6 +20,11 @@ import org.springframework.stereotype.Service;
 @Service
 public class StrategyServiceImpl implements StrategyService {
 
+    /**
+     * 异常策略
+     * @param code
+     * @throws Exception
+     */
     @Override
     public void abnormalDetectionRun(String code) throws Exception {
         OperationEnum operationEnum = OperationEnum.findEnumByCode(code);
@@ -45,6 +50,11 @@ public class StrategyServiceImpl implements StrategyService {
         log.info("策略运行结束,return:xxx");
     }
 
+    /**
+     * 预测策略
+     * @param code
+     * @throws Exception
+     */
     @Override
     public void predictionStrategyRun(String code) throws Exception {
         PredictionStrategyEnum predictionStrategyEnum = PredictionStrategyEnum.findEnumByCode(code);

@@ -119,6 +119,19 @@ public class DateUtils {
         return format.format(dateTime);
     }
 
+    public static String dateTimeToStrMonth(Date dateTime) {
+
+        SimpleDateFormat format = new SimpleDateFormat(YYYY_MM);
+        return format.format(dateTime);
+    }
+
+    public static String dateTimeToStrYear(Date dateTime) {
+
+        SimpleDateFormat format = new SimpleDateFormat(YYYY);
+        return format.format(dateTime);
+    }
+
+
     /**
      * 获取现在的时间 yyyy-MM-dd HH:mm:ss
      *

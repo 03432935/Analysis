@@ -30,13 +30,13 @@ public class MyScheduleConfigure {
         System.out.println("执行定时任务 " + LocalDateTime.now());
     }
 
-    //捕捉异常定时任务
-    @Scheduled(cron = "0/5 * * * * ?")
+    //捕捉异常定时任务,每三秒执行一次
+    @Scheduled(cron = "0/3 * * * * ?")
     private void abnormalDectectionTask() throws Exception {
         //考虑过在导入Excel的时候就进行异常解析，但是这样的话异常只针对导入那个文件的异常，如果后续有其他数据加入，就形成了割裂，
         //举个例子，就是某个传感器某个时间段的数据稍微大了一点，可能会判定成异常，但是我一旦再次导入这个传感器的其他时间段数据，这个就不一定会成为异常
         //是否异常是需要根据大数据总量进行判断的，变化的，所以用定时任务定时扫总量判断异常比较好。
-//        strategyService.abnormalDetectionRun(OperationEnum.ANOMALY_DETECTION.getCode());
+        strategyService.abnormalDetectionRun(OperationEnum.ANOMALY_DETECTION.getCode());
         log.info("定时执行捕捉异常任务");
     }
 

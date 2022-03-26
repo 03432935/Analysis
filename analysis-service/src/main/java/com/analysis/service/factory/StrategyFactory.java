@@ -1,6 +1,8 @@
 package com.analysis.service.factory;
 
 import com.analysis.service.handler.AbstractStrategy;
+import lombok.Builder;
+import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -10,6 +12,7 @@ import java.util.Map;
  * @author: lingwanxian
  * @date: 2022/2/28 17:11
  */
+@Service
 public class StrategyFactory {
 
     private static Map<String, AbstractStrategy> strategyMap = new HashMap<>(10);

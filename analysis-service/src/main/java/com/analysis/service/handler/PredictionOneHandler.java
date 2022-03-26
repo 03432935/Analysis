@@ -6,7 +6,9 @@ import com.analysis.service.enums.CompletionStrategyEnum;
 import com.analysis.service.enums.PredictionStrategyEnum;
 import com.analysis.service.factory.StrategyFactory;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Component;
 
+import javax.naming.Context;
 import java.util.List;
 
 /**
@@ -15,22 +17,23 @@ import java.util.List;
  * @date: 2022/3/15 17:44
  */
 @Slf4j
+@Component
 public class PredictionOneHandler extends AbstractStrategy<AvgDto> {
 
     @Override
-    protected List<ImportDto> before() {
+    protected List<ImportDto> before(StrategyContext strategyContext) {
         log.info("准备要处理预测所用的数据---");
         return null;
     }
 
     @Override
-    protected List<AvgDto> analysisStrategy(List<ImportDto> importDtoList) {
+    protected List<AvgDto> analysisStrategy(List<ImportDto> importDtoList,StrategyContext strategyContext) {
         log.info("对现有数据进行处理---");
         return null;
     }
 
     @Override
-    protected void after(List<AvgDto> list) {
+    protected void after(List<AvgDto> list,StrategyContext strategyContext) {
         log.info("预测的数据写在handler表---");
     }
 

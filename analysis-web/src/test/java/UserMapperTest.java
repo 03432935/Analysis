@@ -23,6 +23,7 @@ public class UserMapperTest {
     @Autowired
     private UserMapper userMapper;
 
+
     @Test
     public void uuser(){
         User user = new User();
@@ -56,4 +57,5 @@ public class UserMapperTest {
         String p = DateUtils.dateTimeToStrDay(date);
         System.out.println(p);
     }
+
 }
