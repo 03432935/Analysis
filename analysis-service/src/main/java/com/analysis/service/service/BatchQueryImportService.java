@@ -21,10 +21,10 @@ public interface BatchQueryImportService extends SuperService<ImportDto>{
     public IPage<ImportDto> query(ImportDto importDto);
 
     /**
-     * 获取导入的原始全部数据
+     * 获取导入的原始全部数据,入参为是否展示异常值的判断
      * @return
      */
-    public List<ImportDto> getList();
+    public List<ImportDto> getList(String isShowException);
 
     /**
      * 获取条件满足下的数据

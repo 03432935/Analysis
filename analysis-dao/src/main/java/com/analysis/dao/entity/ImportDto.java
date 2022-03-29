@@ -73,6 +73,13 @@ public class ImportDto extends Base<ImportDto> {
      */
     private String abnormal = "0";
 
+    /**
+     * 是否展示包括异常值,默认展示
+     */
+    @TableField(exist = false)
+    private String isShowException = "1";
+
+
     @TableField(exist = false)
     private Date startTime;
 

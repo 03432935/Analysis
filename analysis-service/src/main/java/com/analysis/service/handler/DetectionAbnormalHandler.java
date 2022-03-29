@@ -5,6 +5,7 @@ import com.analysis.dao.entity.ImportDto;
 import com.analysis.dao.entity.ImportKeyDto;
 import com.analysis.dao.mapper.ImportDtoMapper;
 import com.analysis.service.enums.AbnormalDataEnum;
+import com.analysis.service.enums.CompletionStrategyEnum;
 import com.analysis.service.enums.OperationEnum;
 import com.analysis.service.factory.StrategyFactory;
 import com.analysis.service.service.ConversionParamService;
@@ -93,8 +94,13 @@ public class DetectionAbnormalHandler extends AbstractStrategy<ImportDto> {
             log.info("没有异常出现,list:" + list);
         } else {
             for (int i = 0; i < list.size(); i++) {
+                if(!Objects.equals(list.get(i).getCompletionStrategy(), CompletionStrategyEnum.ORIGINAL.getCode())){
+                    //如果是补全的数据，就跳过
+                    continue;
+                }
                 //异常标志更新
                 UpdateWrapper<ImportDto> updateWrapper = new UpdateWrapper<>();
+                updateWrapper.set("abnormal", AbnormalDataEnum.NORMAL.getCode());
                 if (strategyContext.getAvgValue().get(i) < list.get(i).getVData()) {
                     updateWrapper.set("abnormal", AbnormalDataEnum.BIG_ABNORMAL.getCode());
                 }else{
@@ -119,8 +125,4 @@ public class DetectionAbnormalHandler extends AbstractStrategy<ImportDto> {
         StrategyFactory.register(OperationEnum.ANOMALY_DETECTION.getName(), this);
     }
 
-    private Double avgCalculation(List<ImportKeyDto> dtoList, Date time) {
-        String strTime = DateUtils.dateTimeToStrDay(time);
-        return null;
-    }
 }

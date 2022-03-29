@@ -3,6 +3,7 @@ package com.analysis.service.service.impl;
 import com.analysis.dao.entity.EchartDto;
 import com.analysis.dao.entity.ImportDto;
 import com.analysis.dao.mapper.ImportDtoMapper;
+import com.analysis.service.enums.AbnormalDataEnum;
 import com.analysis.service.service.BatchQueryImportService;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
@@ -48,10 +49,16 @@ public class BatchQueryImportServiceImpl extends SuperServiceImpl<ImportDtoMappe
     }
 
     @Override
-    public List<ImportDto> getList() {
-        List<ImportDto> list = importDtoMapper.selectList(null);
+    public List<ImportDto> getList(String isShowException) {
+        QueryWrapper<ImportDto> queryWrapper = new QueryWrapper<>();
+        if ("0".equals(isShowException)) {
+            //如果不展示异常值，条件上就加上只筛选正常值
+            queryWrapper.eq("abnormal", AbnormalDataEnum.NORMAL);
+        }
+        List<ImportDto> list = importDtoMapper.selectList(queryWrapper);
         log.info("BatchQueryImportServiceImpl.getList:"+list);
         return list;
+
     }
 
     @Override

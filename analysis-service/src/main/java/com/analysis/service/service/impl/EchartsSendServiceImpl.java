@@ -37,7 +37,7 @@ public class EchartsSendServiceImpl implements EchartsSendService {
         //如果策略为空,查询原始数据
         if (importDto == null || importDto.isEmptyAll(importDto)) {
             //如果入参为空，则查询全部原数据
-            list = batchQueryImportService.getList();
+            list = batchQueryImportService.getList(importDto.getIsShowException());
             log.info("EchartsController.echartsSendData.list(importDto.isEmpty):" + list);
         } else {
             if (!importDto.getCompletionStrategy().equals(CompletionStrategyEnum.ORIGINAL.getCode())) {

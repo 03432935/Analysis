@@ -70,6 +70,13 @@
             <if test="minS != null and minS != ''">
                 and min_s = #{minS}
             </if>
+<!--            查询不需要根据这个进行查询-->
+<!--            <if test="completionStrategy != null and completionStrategy != ''">-->
+<!--                and completion_strategy = #{completionStrategy}-->
+<!--            </if>-->
+            <if test="abnormal != null and abnormal != ''">
+                and abnormal = #{abnormal}
+            </if>
             <if test="startTime != null and endTime != null">
                 and (DATE_FORMAT( t_time, '%Y-%m-%d') BETWEEN DATE_FORMAT( #{startTime}, '%Y-%m-%d') and DATE_FORMAT( #{endTime}, '%Y-%m-%d'))
             </if>

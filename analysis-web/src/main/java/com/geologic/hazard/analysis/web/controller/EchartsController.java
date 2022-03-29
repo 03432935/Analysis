@@ -41,6 +41,7 @@ public class EchartsController {
         return ResultUtils.successResult(dtoList);
     }
 
+
     @StringTrim
     @RequestMapping(value = "/prediction",method = RequestMethod.POST)
     @ResponseBody

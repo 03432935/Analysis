@@ -115,6 +115,7 @@
             }
 
 
+
     </script>
 </head>
 
@@ -141,7 +142,7 @@
             <td align="center">SENID</td>
             <td align="center">TIME</td>
             <td align="center" width="30%">V</td>
-<!--            <td align="center" width="20%">DEL</td>-->
+            <!--            <td align="center" width="20%">DEL</td>-->
         </tr>
         </thead>
         <tbody>
@@ -168,13 +169,30 @@
         Time:<input type="datetime-local" name="pictureStartTime" id="pictureStartTime">
         <input type="datetime-local" name="pictureEndTime" id="pictureEndTime">
         Strategy:<select id="pictureStrategy" name="pictureStrategy">
-            <option value="0">原数据</option>
-            <option value="1">avg</option>
-            <option value="2">待定</option>
-            <option value="3">待定</option>
-            <option value="4">待定</option>
-        </select>
+        <option value="0">原数据</option>
+        <option value="1">avg</option>
+        <option value="2">待定</option>
+        <option value="3">待定</option>
+        <option value="4">待定</option>
+    </select>
+        是否展示包括异常值:<select id="isShowException" name="isShowException">
+        <option value="1">原数据</option>
+        <option value="0">去除异常值</option>
+    </select>
+
         <input type="button" value="查询" id="query">
+    </p>
+    <p>
+        PredictionStrategy:<select id="PredictionStrategy" name="PredictionStrategy">
+        <option value="1">策略1</option>
+        <option value="2">策略2</option>
+        <option value="3">策略3</option>
+    </select>
+        <input type="button" value="预测查询" id="PredictionQuery">
+    </p>
+    <p>
+        <!--        展示全部数据的图表-->
+        <input type="button" value="展示全部" id="showAllPicture">
     </p>
 </div>
 <div id="main" style="width: 1200px;height:600px;">
@@ -182,10 +200,13 @@
 <script type="text/javascript">
       // 查询
       $("#query").click(function(){
-            getPicture(true);
+            getPicture(true,false);
       });
-      $("#todo").click(function(){
-            getPicture(false);
+      $("#PredictionQuery").click(function(){
+            getPicture(false,false);
+      });
+      $("#showAllPicture").click(function(){
+            getPicture(true,true);
       });
       // 基于准备好的dom，初始化echarts实例
       var myChart = echarts.init(document.getElementById('main'));
@@ -194,21 +215,23 @@
       var baseDate = [];
       var baseData = [];
       var flag = 0 ;
-      function getPicture(whe) {
+      function getPicture(whe,allPicture) {
           date = [];
           data = [];
           baseDate = [];
           baseData = [];
+          flag = 0;
           if(whe){
-            completion();
+            completion(allPicture);
           }else{
-            prediction();
+            prediction(allPicture);
           }
-          addData(false);
       }
 
-      function completion(){
-        let requestData = {"senId":$("#pictureSenId").val(),"startTime":$("#pictureStartTime").val(),"endTime":$("#pictureEndTime").val(),"completionStrategy":$("#pictureStrategy option:selected").val()};
+      function completion(allPicture){
+        let requestData = {"senId":$("#pictureSenId").val(),"startTime":$("#pictureStartTime").val(),"endTime":$("#pictureEndTime").val(),"completionStrategy":$("#pictureStrategy option:selected").val(),
+        "isShowException":$("#isShowException option:selected").val()
+        };
             $.ajax({
             url: 'http://localhost:8080/web/echarts/data' ,
             type: 'POST',
@@ -230,10 +253,15 @@
                 alert("picture false");
               }
             });
+            if(allPicture){
+                addAllData();
+            }else{
+                addData(false);
+            }
       }
 
 <!--这还需要修改-->
-      function prediction(){
+      function prediction(allPicture){
             let requestData = {"senId":$("#pictureSenId").val(),"startTime":$("#pictureStartTime").val(),"endTime":$("#pictureEndTime").val(),"todo":$("#pictureStrategy option:selected").val()};
             $.ajax({
             url: 'http://localhost:8080/web/echarts/prediction' ,
@@ -256,9 +284,21 @@
                 alert("picture false");
               }
             });
+            if(allPicture){
+                addAllData();
+            }else{
+                addData(false);
+            }
       }
 
-        getPicture(true);
+        getPicture(true,false);
+
+        function addAllData(){
+            for (var i = 0; i < date.length; i++) {
+                 baseDate.push(date[i]);
+                 baseData.push(data[i]);
+            }
+        }
         function addData(shift){
             if(date.length > 100){
                 if(shift){
@@ -322,7 +362,7 @@
         myChart.showLoading();
         setInterval(function (i) {
           myChart.hideLoading();
-            if(flag != data.length){
+            if(flag != data.length && flag != 0){
                 addData(true);
             }
 
@@ -339,6 +379,7 @@
           });
         }, 500); //每个0.5s刷新一次新数据
         option && myChart.setOption(option);
+
 
 
 </script>
