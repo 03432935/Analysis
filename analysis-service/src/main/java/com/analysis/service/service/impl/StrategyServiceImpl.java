@@ -57,6 +57,7 @@ public class StrategyServiceImpl implements StrategyService {
      */
     @Override
     public void predictionStrategyRun(String code) throws Exception {
+        //todo：考虑加一个校验code的方法，因为预测方法和数据成分分离，有点过于割裂？
         PredictionStrategyEnum predictionStrategyEnum = PredictionStrategyEnum.findEnumByCode(code);
         String name = predictionStrategyEnum.getName();
         //获取对应的策略handler

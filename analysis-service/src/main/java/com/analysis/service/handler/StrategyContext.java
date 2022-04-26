@@ -14,4 +14,14 @@ import java.util.List;
 public class StrategyContext {
 
     private List<Double> avgValue;
+
+//    /**
+//     * 趋势成分
+//     */
+//    private boolean trend = false;
+//
+//    /**
+//     * 季节成分
+//     */
+//    private boolean season = false;
 }

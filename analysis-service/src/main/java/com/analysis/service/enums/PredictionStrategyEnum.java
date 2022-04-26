@@ -8,16 +8,13 @@ package com.analysis.service.enums;
 public enum PredictionStrategyEnum {
     //预测策略
     /*
-    常见的预测算法有
-    1.简易平均法，包括几何平均法、算术平均法及加权平均法;
-    2.移动平均法，包括简单移动平均法和加权移动平均法;
-    3,指数平滑法，包括一次指数平滑法和二次指数平滑法，三次指数平滑法;
-    4,线性回归法，包括一元线性回归和二元线性回归
+    时序数据分为平稳序列以及非平稳序列，
+    其中平稳序列不存在规律随机波动，非平稳序列包含规律以及趋势
      */
     /**
      * 策略一：未命名
      */
-    One("1","function1"),
+    ARMA("1","ARMA"),
     ;
 
     PredictionStrategyEnum(String code,String name){

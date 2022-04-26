@@ -63,6 +63,9 @@ public class BatchQueryImportServiceImpl extends SuperServiceImpl<ImportDtoMappe
 
     @Override
     public List<ImportDto> getSomeList(ImportDto dto) {
+        if("1".equals(dto.getIsShowException())){
+            dto.setAbnormal(null);
+        }
         List<ImportDto> list = importDtoMapper.query(dto);
         log.info("BatchQueryImportServiceImpl.getSomeList:"+list);
         return list;

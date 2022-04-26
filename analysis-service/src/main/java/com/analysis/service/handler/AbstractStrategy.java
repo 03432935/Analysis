@@ -32,6 +32,14 @@ public abstract class AbstractStrategy<T> implements InitializingBean {
         }
     }
 
+//    /**
+//     * 写一个专门用于预测的通用方法（好像又没必要，先不写
+//     * @throws Exception
+//     */
+//    public void predict() throws Exception{
+//
+//    }
+
     /**
      * 获取数据库数据
      * @return
