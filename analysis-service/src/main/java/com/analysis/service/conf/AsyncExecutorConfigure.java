@@ -19,6 +19,7 @@ public class AsyncExecutorConfigure {
 
     public final static String ASYNC_EXECUTOR_NAME = "asyncExecutor";
 
+
     @Bean(name = ASYNC_EXECUTOR_NAME)
     public Executor asyncExecutor(){
         ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
@@ -31,4 +32,18 @@ public class AsyncExecutorConfigure {
         executor.initialize();
         return executor;
     }
+
+
+//    @Bean(name = PREDICTION_EXECUTOR_NAME_TWO)
+//    public Executor predictionExecutorErrorStream(){
+//        ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
+//        executor.setCorePoolSize(5);
+//        executor.setMaxPoolSize(5);
+//        executor.setQueueCapacity(Integer.MAX_VALUE);
+//        executor.setWaitForTasksToCompleteOnShutdown(true);
+//        executor.setThreadNamePrefix("ErrorStreamThread-");
+//        executor.setRejectedExecutionHandler(new ThreadPoolExecutor.CallerRunsPolicy());
+//        executor.initialize();
+//        return executor;
+//    }
 }

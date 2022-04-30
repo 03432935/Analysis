@@ -1,5 +1,6 @@
 package com.analysis.service.service.impl;
 
+import com.analysis.common.utils.DateUtils;
 import com.analysis.dao.entity.AvgDto;
 import com.analysis.dao.entity.EchartDto;
 import com.analysis.dao.entity.ImportDto;
@@ -13,8 +14,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Comparator;
-import java.util.List;
+import java.text.ParseException;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -101,5 +102,57 @@ public class ConversionParamServiceImpl implements ConversionParamService {
             throw new Exception("ImportDto转成ImportKeyDto出错：ImportDto:{}" + list, e);
         }
 
+    }
+
+    @Override
+    public List<EchartDto> resampling(List<ImportDto> list) throws Exception {
+
+        List<EchartDto> echartDtos = conversionParamService.importListToEchartDto(list);
+        List<EchartDto> res = new ArrayList<>();
+
+        for (EchartDto echartDto:echartDtos){
+            //日均
+            Double avgDay = echartDtos.stream().filter(
+                            echartDto1 ->
+                                    DateUtils.dateTimeToStrDay(echartDto.getTimeData()).equals(DateUtils.dateTimeToStrDay(echartDto1.getTimeData())))
+                    .mapToDouble(EchartDto::getVData).average().orElse(0.0);
+            Date time = DateUtils.dateTimeToDateDay(echartDto.getTimeData());
+            if (res.size()>0 && res.get(res.size()-1).getTimeData().equals(time)){
+                continue;
+            }
+            EchartDto resDto = new EchartDto();
+            resDto.setTimeData(DateUtils.dateTimeToDateDay(echartDto.getTimeData()));
+            resDto.setVData(avgDay);
+            res.add(resDto);
+        }
+        System.out.println(res);
+        return res;
+    }
+
+    @Override
+    public List<AvgDto> pyBackStringToAvg(String string,Date date) {
+        int start = string.indexOf("[");
+        int end = string.indexOf("]");
+        String subString = string.substring(start,end);
+        System.out.println("substring"+subString);
+        String[] splitString = subString.split(",");
+        System.out.println("splitstring"+ Arrays.toString(splitString));
+
+        List<AvgDto> avgDtos = new ArrayList<>();
+        int i = 1;
+        for (String s : splitString) {
+            AvgDto dto = new AvgDto();
+            Double d = Double.parseDouble(s);
+
+            Calendar calendar = new GregorianCalendar();
+            calendar.setTime(date);
+            calendar.add(Calendar.DATE,i); //把日期往后增加一天,整数  往后推,负数往前移动
+            i++;
+            date = calendar.getTime(); //这个时间就是日期往后推一天的结果
+            dto.setVData(d);
+            dto.setTTime(date);
+            avgDtos.add(dto);
+        }
+        return avgDtos;
     }
 }

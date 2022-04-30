@@ -49,4 +49,6 @@ public class EchartsController {
         batchQueryAvgService.getAvgList(avgDto);
         return ResultUtils.successResult(avgDto);
     }
+
+
 }

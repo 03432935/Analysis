@@ -166,5 +166,4 @@ if __name__ == '__main__':
             pred.append(last)
         print("Result")
         print(str(pred))
-        print("py over")
 # See PyCharm help at https://www.jetbrains.com/help/pycharm/

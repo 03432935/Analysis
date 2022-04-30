@@ -131,6 +131,13 @@ public class DateUtils {
         return format.format(dateTime);
     }
 
+    public static Date dateTimeToDateDay(Date dateTime) throws ParseException {
+
+        SimpleDateFormat format = new SimpleDateFormat(YYYY_MM_DD);
+        String s = format.format(dateTime);
+        return format.parse(s);
+    }
+
 
     /**
      * 获取现在的时间 yyyy-MM-dd HH:mm:ss

@@ -12,7 +12,11 @@ public enum PredictionStrategyEnum {
     其中平稳序列不存在规律随机波动，非平稳序列包含规律以及趋势
      */
     /**
-     * 策略一：未命名
+     * 原数据（用来进行对比）
+     */
+    ORIGINAL("0","original"),
+    /**
+     * 策略一：ARMA
      */
     ARMA("1","ARMA"),
     ;
