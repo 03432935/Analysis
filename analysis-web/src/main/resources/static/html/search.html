@@ -165,10 +165,10 @@
 
 <div id="queryCriteria">
     <p>
-        SenId:<input type="text" name="pictureSenId" id="pictureSenId">
-        Time:<input type="datetime-local" name="pictureStartTime" id="pictureStartTime">
+        测点模型号SenId:<input type="text" name="pictureSenId" id="pictureSenId">
+        时间Time:<input type="datetime-local" name="pictureStartTime" id="pictureStartTime">
         <input type="datetime-local" name="pictureEndTime" id="pictureEndTime">
-        Strategy:<select id="pictureStrategy" name="pictureStrategy">
+        补全策略Strategy:<select id="pictureStrategy" name="pictureStrategy">
         <option value="0">原数据</option>
         <option value="1">avg</option>
         <option value="2">待定</option>
@@ -183,11 +183,13 @@
         <input type="button" value="查询" id="query">
     </p>
     <p>
-        PredictionStrategy:<select id="PredictionStrategy" name="PredictionStrategy">
-        <option value="1">策略1</option>
+        测点模型号SenId:<input type="text" name="picturePredictionSenId" id="picturePredictionSenId">
+        时间Time:<input type="datetime-local" name="picturePredictionStartTime" id="picturePredictionStartTime">
+        预测策略PredictionStrategy:<select id="PredictionStrategy" name="PredictionStrategy">
+        <option value="1">ARMA</option>
         <option value="2">策略2</option>
         <option value="3">策略3</option>
-    </select>
+        </select>
         <input type="button" value="预测查询" id="PredictionQuery">
     </p>
     <p>
@@ -215,6 +217,8 @@
       var baseDate = [];
       var baseData = [];
       var flag = 0 ;
+      var predate = [];
+      var predata = [];
       function getPicture(whe,allPicture) {
           date = [];
           data = [];
@@ -262,7 +266,7 @@
 
 <!--这还需要修改-->
       function prediction(allPicture){
-            let requestData = {"senId":$("#pictureSenId").val(),"startTime":$("#pictureStartTime").val(),"endTime":$("#pictureEndTime").val(),"todo":$("#pictureStrategy option:selected").val()};
+            let requestData = {"senId":$("#picturePredictionSenId").val(),"startTime":$("#picturePredictionStartTime").val(),"strategyCode":$("#PredictionStrategy option:selected").val()};
             $.ajax({
             url: 'http://localhost:8080/web/echarts/prediction' ,
             type: 'POST',
@@ -274,10 +278,15 @@
             success: function (returndata) {
                 alert("picture success"+returndata);
                 $(returndata.message).each(function(i){
-                    var resdate = new Date(returndata.message[i].timeData);
+                    var resdate = new Date(returndata.message[i].tTime);
                     resdate = [resdate.getFullYear(), resdate.getMonth()+1, resdate.getDate(), resdate.getHours()].join('/');
-                    date.push(resdate);
-                    data.push(returndata.message[i].vData)
+                    if(returndata.message[i].strategyCode == "0"){
+                        date.push(resdate);
+                        data.push(returndata.message[i].vData);
+                    }else{
+                        predate.push(resdate);
+                        predata.push(returndata.message[i].vData);
+                    }
                 })
               },
             error: function (returndata) {
@@ -326,12 +335,18 @@
 <!--        addData(false);-->
 <!--        console.log("baseDate:"+baseDate);-->
 <!--        console.log("baseData:"+baseData);-->
+<!--        console.log("predate:"+predate);-->
+<!--        console.log("predata:"+predata);-->
 
+        var colors = ['#5793f3', '#d14a61', '#675bba'];
         option = {
           tooltip: {
             trigger: 'axis',
             axisPointer: { type: 'cross' }
 <!--            开启鼠标滑动显示数值的标签-->
+          },
+          legend: {
+              data:['原数据','预测数据']
           },
           xAxis: {
             type: 'category',
@@ -347,7 +362,7 @@
           },
           series: [
             {
-              name: 'v数值',
+              name: '原数据',
               type: 'line',
               smooth: true,
               symbol: 'none',
@@ -356,6 +371,17 @@
                 normal: {}
               },
               data: baseData
+            },
+            {
+              name: '预测数据',
+              type: 'line',
+              smooth: true,
+              symbol: 'none',
+              stack: 'a',
+              areaStyle: {
+                normal: {}
+              },
+              data: predata
             }
           ]
         };
@@ -372,15 +398,17 @@
             },
             series: [
               {
-                name: 'v数值',
+                name: '原数据',
                 data: baseData
+              },
+              {
+                name: '预测数据',
+                data: predata
               }
             ]
           });
         }, 500); //每个0.5s刷新一次新数据
         option && myChart.setOption(option);
-
-
 
 </script>
 </body>

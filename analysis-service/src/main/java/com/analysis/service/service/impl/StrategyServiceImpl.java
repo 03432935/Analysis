@@ -1,5 +1,6 @@
 package com.analysis.service.service.impl;
 
+import com.analysis.dao.entity.AvgDto;
 import com.analysis.dao.entity.ImportDto;
 import com.analysis.service.enums.CompletionStrategyEnum;
 import com.analysis.service.enums.OperationEnum;
@@ -32,7 +33,7 @@ public class StrategyServiceImpl implements StrategyService {
         OperationEnum operationEnum = OperationEnum.findEnumByCode(code);
         String name = operationEnum.getName();
         AbstractStrategy strategy = StrategyFactory.getInvokeStrategy(name);
-        strategy.run();
+        strategy.run(null);
         log.info("策略运行结束,return:xxx");
     }
 
@@ -48,7 +49,7 @@ public class StrategyServiceImpl implements StrategyService {
         //获取对应的策略handler
         AbstractStrategy strategy = StrategyFactory.getInvokeStrategy(name);
         //执行对应策略的方法
-        strategy.run();
+        strategy.run(null);
         log.info("策略运行结束,return:xxx");
     }
 
@@ -58,14 +59,14 @@ public class StrategyServiceImpl implements StrategyService {
      * @throws Exception
      */
     @Override
-    public void predictionStrategyRun(String code) throws Exception {
+    public void predictionStrategyRun(String code, AvgDto dto) throws Exception {
         //todo：考虑加一个校验code的方法，因为预测方法和数据成分分离，有点过于割裂？
         PredictionStrategyEnum predictionStrategyEnum = PredictionStrategyEnum.findEnumByCode(code);
         String name = predictionStrategyEnum.getName();
         //获取对应的策略handler
         AbstractStrategy strategy = StrategyFactory.getInvokeStrategy(name);
         //执行对应策略的方法
-        strategy.run();
+        strategy.run(dto);
         log.info("策略运行结束,return:xxx");
     }
 

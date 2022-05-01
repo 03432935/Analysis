@@ -30,5 +30,5 @@ public interface ConversionParamService {
     /**
      * python传回的string变成List<AvgDto>
      */
-    public List<AvgDto> pyBackStringToAvg(String string, Date date);
+    public List<AvgDto> pyBackStringToAvg(String string, Date date) throws ParseException;
 }

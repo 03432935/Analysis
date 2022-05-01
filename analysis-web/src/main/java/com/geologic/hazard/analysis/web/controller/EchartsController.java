@@ -45,9 +45,11 @@ public class EchartsController {
     @StringTrim
     @RequestMapping(value = "/prediction",method = RequestMethod.POST)
     @ResponseBody
-    public String predctionModule(@RequestBody AvgDto avgDto){
-        batchQueryAvgService.getAvgList(avgDto);
-        return ResultUtils.successResult(avgDto);
+    public String predctionModule(@RequestBody AvgDto avgDto) throws Exception {
+        log.info("EchartsController.predctionModule.dto:{}",avgDto);
+        List<AvgDto> res = batchQueryAvgService.getAvgList(avgDto);
+        System.out.println("input:"+avgDto+"output:"+res);
+        return ResultUtils.successResult(res);
     }
 
 

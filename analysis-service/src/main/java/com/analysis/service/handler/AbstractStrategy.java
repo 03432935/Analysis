@@ -1,11 +1,14 @@
 package com.analysis.service.handler;
 
+import com.analysis.dao.entity.AvgDto;
 import com.analysis.dao.entity.ImportDto;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.InitializingBean;
 
 import javax.naming.Context;
+import java.text.ParseException;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -16,9 +19,11 @@ import java.util.List;
 @Slf4j
 public abstract class AbstractStrategy<T> implements InitializingBean {
 
-    public void run() throws Exception {
+    public void run(AvgDto avgDto) throws Exception {
         //上下文
         StrategyContext strategyContext = new StrategyContext();
+        strategyContext.setTime(avgDto.getStartTime());
+        strategyContext.setSenId(avgDto.getSenId());
         //先获取数据
         List<ImportDto> importDtoList = before(strategyContext);
         //然后处理数据
@@ -31,6 +36,7 @@ public abstract class AbstractStrategy<T> implements InitializingBean {
             compensate();
         }
     }
+
 
 //    /**
 //     * 写一个专门用于预测的通用方法（好像又没必要，先不写
@@ -56,7 +62,7 @@ public abstract class AbstractStrategy<T> implements InitializingBean {
     /**
      * 处理后的数据进行存储数据库的另一张表
      */
-    protected abstract void after(List<T> list,StrategyContext strategyContext);
+    protected abstract void after(List<T> list,StrategyContext strategyContext) throws Exception;
 
     /**
      * 补偿措施，用于后置处理出现问题后的重试操作

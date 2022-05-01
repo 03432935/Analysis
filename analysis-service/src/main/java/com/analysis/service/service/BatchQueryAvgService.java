@@ -11,6 +11,6 @@ import java.util.List;
  */
 public interface BatchQueryAvgService extends SuperService<AvgDto>{
 
-    public List<AvgDto> getAvgList(AvgDto dto);
+    public List<AvgDto> getAvgList(AvgDto dto) throws Exception;
 
 }

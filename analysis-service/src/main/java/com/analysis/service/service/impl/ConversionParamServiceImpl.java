@@ -6,6 +6,7 @@ import com.analysis.dao.entity.EchartDto;
 import com.analysis.dao.entity.ImportDto;
 import com.analysis.dao.entity.ImportKeyDto;
 import com.analysis.service.enums.CompletionStrategyEnum;
+import com.analysis.service.enums.PredictionStrategyEnum;
 import com.analysis.service.service.BatchQueryAvgService;
 import com.analysis.service.service.BatchQueryImportService;
 import com.analysis.service.service.ConversionParamService;
@@ -130,10 +131,14 @@ public class ConversionParamServiceImpl implements ConversionParamService {
     }
 
     @Override
-    public List<AvgDto> pyBackStringToAvg(String string,Date date) {
+    public List<AvgDto> pyBackStringToAvg(String string,Date date) throws ParseException {
+        if (string.isBlank()){
+            log.error("python无输出，此处有问题");
+            System.out.println("python输出有问题");
+        }
         int start = string.indexOf("[");
         int end = string.indexOf("]");
-        String subString = string.substring(start,end);
+        String subString = string.substring(start+1,end);
         System.out.println("substring"+subString);
         String[] splitString = subString.split(",");
         System.out.println("splitstring"+ Arrays.toString(splitString));
@@ -141,13 +146,20 @@ public class ConversionParamServiceImpl implements ConversionParamService {
         List<AvgDto> avgDtos = new ArrayList<>();
         int i = 1;
         for (String s : splitString) {
+            if (s.isBlank()){
+                continue;
+            }
             AvgDto dto = new AvgDto();
-            Double d = Double.parseDouble(s);
+            //加上策略ARMA的标识
+            dto.setStrategyCode(PredictionStrategyEnum.ARMA.getCode());
+            System.out.println("s:"+s);
+            Double d = Double.parseDouble(s.trim());
 
             Calendar calendar = new GregorianCalendar();
+            string = DateUtils.getOneDayStartTime(date);
+            date = DateUtils.strToDateTime(string);
             calendar.setTime(date);
             calendar.add(Calendar.DATE,i); //把日期往后增加一天,整数  往后推,负数往前移动
-            i++;
             date = calendar.getTime(); //这个时间就是日期往后推一天的结果
             dto.setVData(d);
             dto.setTTime(date);

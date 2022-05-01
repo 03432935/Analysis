@@ -1,5 +1,9 @@
 package com.analysis.service.service;
 
+import com.analysis.dao.entity.AvgDto;
+
+import java.util.Date;
+
 /**
  * @description:
  * @author: lingwanxian
@@ -14,5 +18,5 @@ public interface StrategyService {
     public void completionStrategyRun(String code) throws Exception;
 
     //预测策略
-    public void predictionStrategyRun(String code) throws Exception;
+    public void predictionStrategyRun(String code, AvgDto dto) throws Exception;
 }

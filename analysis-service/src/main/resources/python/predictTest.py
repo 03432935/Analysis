@@ -125,7 +125,7 @@ def ARMA_model(train_data,order):
     arma_model = sm.tsa.ARIMA(train_data,order=(order[0],1,order[1]))  #ARMA模型
     arma = arma_model.fit()  #激活模型
     # sample_pred = arma.predict(start=7,end = 15,dynamic=True)
-    sample_pred_five = arma.forecast(5)
+    sample_pred_five = arma.forecast(7)
     # print(sample_pred)
     print(sample_pred_five)
     return sample_pred_five
@@ -165,5 +165,8 @@ if __name__ == '__main__':
             last = last + res[i]
             pred.append(last)
         print("Result")
-        print(str(pred))
+        print(str(list(pred)))
+    else:
+        print("Result")
+        print(str(list(res)))
 # See PyCharm help at https://www.jetbrains.com/help/pycharm/

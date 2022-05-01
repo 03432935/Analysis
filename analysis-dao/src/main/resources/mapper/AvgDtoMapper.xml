@@ -8,6 +8,7 @@
         t_time as tTime,
         v_data as vData,
         s_data as sData,
+        strategy_code as strategyCode,
         del,
         create_time
         from handle_data
@@ -32,6 +33,6 @@
                 AND (DATE_FORMAT( t_time, '%Y-%m-%d') BETWEEN DATE_FORMAT( #{startTime}, '%Y-%m-%d') and DATE_FORMAT( #{endTime}, '%Y-%m-%d'))
             </if>
         </where>
-        order by create_time desc
+        order by t_time
     </select>
 </mapper>

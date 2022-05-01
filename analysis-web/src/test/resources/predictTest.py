@@ -165,6 +165,8 @@ if __name__ == '__main__':
             last = last + res[i]
             pred.append(last)
         print("Result")
-        print(str(pred))
-        print("py over")
+        print(str(list(pred)))
+    else:
+        print("Result")
+        print(str(list(res)))
 # See PyCharm help at https://www.jetbrains.com/help/pycharm/

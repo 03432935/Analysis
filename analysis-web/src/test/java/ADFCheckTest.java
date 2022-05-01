@@ -1,7 +1,9 @@
 import com.analysis.common.utils.DateUtils;
+import com.analysis.dao.entity.AvgDto;
 import com.analysis.dao.entity.EchartDto;
 import com.analysis.dao.entity.ImportDto;
 import com.analysis.dao.mapper.ImportDtoMapper;
+import com.analysis.service.enums.PredictionStrategyEnum;
 import com.analysis.service.factory.ThreadPoolFactory;
 import com.analysis.service.service.ConversionParamService;
 import com.analysis.service.service.StrategyService;
@@ -21,6 +23,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -225,7 +228,12 @@ public class ADFCheckTest {
 
     @Test
     public void ADFStrategyTest() throws Exception {
-        strategyService.predictionStrategyRun("1");
+        AvgDto avgDto = new AvgDto();
+        Date date = DateUtils.strToDateTime("2015-11-01 06:00:00");
+        avgDto.setStartTime(date);
+        avgDto.setSenId("1110002104");
+        //还需要改,时间和senid
+        strategyService.predictionStrategyRun(PredictionStrategyEnum.ARMA.getCode(), avgDto);
     }
 
     @Test
@@ -318,5 +326,12 @@ public class ADFCheckTest {
 //            stringBuffer.append(e.getMessage());
 //        }
 //        System.out.println(stringBuffer);
+    }
+
+    @Test
+    public void DateOneEndTest() throws ParseException {
+        Date end = DateUtils.strToDateTime("2015-11-06 00:00:00");
+//        System.out.println(DateUtils.getOneDayEndTimeDate(end));
+        //todo：这个函数有问题
     }
 }
