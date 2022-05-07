@@ -98,7 +98,6 @@ public class PredictionARMAHandler extends AbstractStrategy<AvgDto> {
 
             List<Runnable> runnables = new ArrayList<>();
 
-
             Runnable runnable1 = new Runnable() {
                 @Override
                 public void run() {
@@ -174,11 +173,14 @@ public class PredictionARMAHandler extends AbstractStrategy<AvgDto> {
     @Override
     protected void after(List<AvgDto> list,StrategyContext strategyContext) throws Exception {
         log.info("预测的数据写在handler表---");
+        Double d = 0.02;
+
         //顺便加上原始数据
         //todo：优化项：后续在mapper下面写一个batchinsert较好
         //todo:疑问项：这个需不需要update？  存在一个问题，因为算法花费时间较长，是不是应该主动缓存一下。（不过优先是先实现了再说）
         for (AvgDto avgDto : list){
             //插入预测的数据
+            avgDto.setVData(avgDto.getVData()+d);
             avgDtoMapper.insert(avgDto);
         }
         //从数据库查询对应的原始数据

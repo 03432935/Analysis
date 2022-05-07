@@ -7,14 +7,10 @@ import com.analysis.service.enums.PredictionStrategyEnum;
 import com.analysis.service.factory.ThreadPoolFactory;
 import com.analysis.service.service.ConversionParamService;
 import com.analysis.service.service.StrategyService;
-import com.analysis.service.utils.ADFCheck;
+import com.analysis.service.utils.ADF.ADFCheck;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.geologic.hazard.analysis.web.StartApp;
 import org.junit.jupiter.api.Test;
-import org.python.core.PyFunction;
-import org.python.core.PyInteger;
-import org.python.core.PyObject;
-import org.python.util.PythonInterpreter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ContextConfiguration;
@@ -24,13 +20,10 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Objects;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 /**
  * @description:

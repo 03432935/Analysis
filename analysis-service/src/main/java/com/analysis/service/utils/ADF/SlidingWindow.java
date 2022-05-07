@@ -1,7 +1,9 @@
-package com.analysis.service.utils;
+package com.analysis.service.utils.ADF;
+
+import com.analysis.service.utils.ADF.Matrix;
+import com.analysis.service.utils.ADF.OLS;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 

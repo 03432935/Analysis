@@ -1,6 +1,7 @@
 package com.analysis.dao.entity;
 
 import com.alibaba.excel.annotation.ExcelProperty;
+import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
@@ -19,7 +20,7 @@ import java.util.Objects;
 @TableName("handle_data")
 public class AvgDto extends Base<AvgDto> {
 
-    @TableId
+    @TableId(value = "id",type = IdType.AUTO)
     private Long id;
 
     private String senId;
