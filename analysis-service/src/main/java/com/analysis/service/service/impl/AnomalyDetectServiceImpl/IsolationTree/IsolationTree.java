@@ -29,7 +29,9 @@ public class IsolationTree {
      * @return
      */
     private IsolationTreeNode createByR(double[] data, int currentHeight, int maxHeight, int start, int end) {
-        if (start > end) return null;
+        if (start > end) {
+            return null;
+        }
         if (currentHeight == maxHeight || end == start) {
             IsolationTreeNode node = new IsolationTreeNode(0.0);
             node.size = end - start + 1;
@@ -38,14 +40,17 @@ public class IsolationTree {
 
         double min = data[start];
         double max = data[end];
+        double diff = 1e-6f;
         double divd;
         do {
-            if (min == max) {
+            if (Math.abs(min - max) < diff) {
                 divd = min;
                 break;
             }
-            divd = min + Math.random() * max;
+            divd = min + Math.random() * Math.abs(max);
+            //取值范围为[min,min+max)
         } while (divd <= min || divd >= max);
+
         int i;
         for (i = start; i <= end; i++) {
             if (data[i] >= divd) {
@@ -77,6 +82,9 @@ public class IsolationTree {
      * @return
      */
     private double pathLengthM(double x, IsolationTreeNode node, int currHeight) {
+        if(node==null){
+            return 0;
+        }
         if (node.isExtenal()) {
             return currHeight + e(node.size);
         }

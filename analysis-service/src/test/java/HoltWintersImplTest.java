@@ -8,7 +8,7 @@ import org.junit.jupiter.api.BeforeAll;
 /**
  * Created by Administrator on 2018/4/27.
  */
-public class HoltWintersToolTest {
+public class HoltWintersImplTest {
 
     private static final double ALPHA = 0.1;
     private static final double STEP = 0.01;

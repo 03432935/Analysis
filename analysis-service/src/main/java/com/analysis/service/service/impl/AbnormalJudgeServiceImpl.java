@@ -4,6 +4,7 @@ import com.analysis.dao.entity.ImportDto;
 import com.analysis.dao.mapper.ImportDtoMapper;
 import com.analysis.service.service.AbnormalJudgeService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,6 +14,7 @@ import java.util.List;
  * @author: lingwanxian
  * @date: 2022/5/7 14:56
  */
+@Service
 public class AbnormalJudgeServiceImpl implements AbnormalJudgeService {
 
     @Autowired

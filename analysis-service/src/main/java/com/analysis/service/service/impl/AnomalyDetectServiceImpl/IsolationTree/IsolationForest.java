@@ -16,7 +16,7 @@ public class IsolationForest {
         this.subSamplingNum = maxSampling;
         this.maxTreeNum = maxTreeNum;
         this.maxTreeHeight = (int) Math.ceil(MathTool.log2(maxSampling));
-        this.forest = new ArrayList<IsolationTree>(maxTreeNum);
+        this.forest = new ArrayList<>(maxTreeNum);
     }
 
     /**
@@ -30,6 +30,7 @@ public class IsolationForest {
         if (data.length > this.subSamplingNum) {
             isSample = true;
         }
+        System.out.println("createForest running");
         for (int i = 0; i < maxTreeNum; i++) {
             IsolationTree iTree = new IsolationTree();
             if (isSample) {
@@ -38,6 +39,7 @@ public class IsolationForest {
             iTree.create(data, this.maxTreeHeight);
             forest.add(iTree);
         }
+        System.out.println("create end");
     }
 
     /**

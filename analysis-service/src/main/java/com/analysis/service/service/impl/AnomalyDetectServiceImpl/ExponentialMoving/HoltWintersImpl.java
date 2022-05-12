@@ -42,7 +42,7 @@ public class HoltWintersImpl implements AnomalyDetectService {
      */
     @Override
     public void timeSeriesAnalyse(double[] data) {
-        results = new ArrayList<Result>();
+        results = new ArrayList<>();
         initial(data.length);
         trainModel(data);
         testModel(data);
@@ -62,6 +62,7 @@ public class HoltWintersImpl implements AnomalyDetectService {
             for (int i = 1; i < data.length; i++) {
                 s1[i] = alpha * data[i - 1] + (1 - alpha) * s1[i - 1];
                 s2[i] = alpha * s1[i] + (1 - alpha) * s2[i - 1];
+                //当i=25时，s2[25]的值已经为e475超过了double的e308取值范围
                 double A = 2 * s1[i] - s2[i];
                 double B = (alpha / (1 - alpha)) * (s1[i] - s2[i]);
 //                double predict = A + B * 1;

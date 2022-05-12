@@ -1,6 +1,7 @@
 package com.analysis.service.service.impl.AnomalyDetectServiceImpl.ESD;
 
 
+import com.analysis.service.service.AnomalyDetectService;
 import com.analysis.service.utils.Result;
 
 import java.util.ArrayList;
@@ -11,22 +12,23 @@ import java.util.ArrayList;
  * @author: mezereonxp Email: mezereonxp@gmail.com
  * @create: 2018-05-07 18:16
  **/
-public class SESDTool{
+public class SESDImpl implements AnomalyDetectService {
 
     private double t;// t统计量
     private ArrayList<Result> results;
-    private ESDTool esdTool;
+    private ESDImpl esdImpl;
 
     /**
      * constructor
      */
-    SESDTool() {
-        esdTool = new ESDTool(1);
+    public SESDImpl() {
+        esdImpl = new ESDImpl(1);
     }
 
+    @Override
     public void timeSeriesAnalyse(double[] data) {
-        esdTool.timeSeriesAnalyse(data);
-        results = esdTool.getResults();
+        esdImpl.timeSeriesAnalyse(data);
+        results = esdImpl.getResults();
     }
 
     public double getT() {
@@ -37,6 +39,7 @@ public class SESDTool{
         this.t = t;
     }
 
+    @Override
     public ArrayList<Result> getResults() {
         return results;
     }
@@ -45,11 +48,11 @@ public class SESDTool{
         this.results = results;
     }
 
-    public ESDTool getEsdTool() {
-        return esdTool;
+    public ESDImpl getEsdTool() {
+        return esdImpl;
     }
 
-    public void setEsdTool(ESDTool esdTool) {
-        this.esdTool = esdTool;
+    public void setEsdTool(ESDImpl esdImpl) {
+        this.esdImpl = esdImpl;
     }
 }

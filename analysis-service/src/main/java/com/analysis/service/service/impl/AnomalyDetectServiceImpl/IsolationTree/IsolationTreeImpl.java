@@ -1,11 +1,12 @@
 package com.analysis.service.service.impl.AnomalyDetectServiceImpl.IsolationTree;
 
+import com.analysis.service.service.AnomalyDetectService;
 import com.analysis.service.utils.Result;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class IsolationTreeTool {
+public class IsolationTreeImpl implements AnomalyDetectService {
 
     private int maxTreeNum = 100;
     private int maxSampling = 256;
@@ -14,17 +15,18 @@ public class IsolationTreeTool {
     private ArrayList<Result> results;
     private IsolationForest forest;
 
-    public IsolationTreeTool() {
+    public IsolationTreeImpl() {
     }
 
-    public IsolationTreeTool(int maxTreeNum, int maxSampling) {
+    public IsolationTreeImpl(int maxTreeNum, int maxSampling) {
         this.maxTreeNum = maxTreeNum;
         this.maxSampling = maxSampling;
     }
 
 
+    @Override
     public void timeSeriesAnalyse(double[] data) {
-        this.results = new ArrayList<Result>();
+        this.results = new ArrayList<>();
         IsolationForest tempForest = new IsolationForest(maxTreeNum, maxSampling);
         tempForest.createForest(data.clone());
         this.forest = tempForest;
@@ -43,8 +45,10 @@ public class IsolationTreeTool {
                 this.results.add(new Result(i, data[i]));
             }
         }
+        System.out.println("end");
     }
 
+    @Override
     public List<Result> getResults() {
         return results;
     }

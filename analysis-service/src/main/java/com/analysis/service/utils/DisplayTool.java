@@ -2,6 +2,8 @@ package com.analysis.service.utils;
 
 import com.analysis.service.service.AnomalyDetectService;
 
+import java.util.List;
+
 /**
  * @program: AnomalyDetectTool
  * @description: A tool to display
@@ -10,13 +12,10 @@ import com.analysis.service.service.AnomalyDetectService;
  **/
 public class DisplayTool {
     public static void showResult(AnomalyDetectService detectTool) {
-
-        for (Result result : detectTool.getResults()) {
-            System.out.print(result.getIndex() + ", ");
+        List<Result> res = detectTool.getResults();
+        for (Result result : res) {
+            System.out.println(result.toString());
         }
-        System.out.println();
-        for (Result result : detectTool.getResults()) {
-            System.out.print(result.getValue() + ", ");
-        }
+        System.out.println("总条数："+res.size());
     }
 }

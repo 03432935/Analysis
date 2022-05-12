@@ -37,9 +37,9 @@ public class BruteForceTool {
             if (tempDist > bestDist) {
                 bestDist = tempDist;
                 bestLoc = p;
+                results.add(new Result(bestLoc, data[bestLoc]));
             }
         }
-        results.add(new Result(bestLoc, data[bestLoc]));
     }
 
 

@@ -5,6 +5,7 @@ import com.analysis.service.utils.MatrixUtil;
 import com.analysis.service.utils.Result;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author mezereon E-mail:mezereonxp@gmail.com
@@ -16,6 +17,8 @@ public class LOFDetectImpl implements AnomalyDetectService {
     private int L;// 时间序列的所利用的窗口长度
     private int K = 1;//  LOF算法中的k值, 默认设置为1, 也就是取历史最相似的序列进行预测
     private ArrayList<Result> results;
+
+    static final double SCORE = 0.9;
 
     /**
      * LOF检测工具的构造方法
@@ -39,8 +42,7 @@ public class LOFDetectImpl implements AnomalyDetectService {
         double[][] mat = MatrixUtil.getMat(series, T, series.length - T - L + 1, L);
 
         //一个窗口大小的测试序列, 默认是原序列中最后窗口大小的序列
-        double[] test = MatrixUtil.getTestSeries(series, series.length - L, L);
-        ;
+//        double[] test = MatrixUtil.getTestSeries(series, series.length - L, L);
 
         double[][] matC = MatrixUtil.getMatC(mat, T, series.length - T - L + 1, L);
         double[][] matT = MatrixUtil.getMatT(mat, T, series.length - T - L + 1, L);
@@ -53,15 +55,33 @@ public class LOFDetectImpl implements AnomalyDetectService {
             ncmForC[i] = lof.getLOF(matT, matC[i]);
         }
 
-        double ncmForTest = lof.getLOF(matT, test);
-        double count = 0;
-        for (double x : ncmForC) {
-            if (ncmForTest <= x) {
-                count++;
+        int n = 0;
+        ArrayList<Result> res = new ArrayList<>();
+        while ((T + n * L) < series.length) {
+            double count = 0;
+            //如果不能整除
+            double[] t;
+            if ((series.length - T + n * L) < L) {
+                t = MatrixUtil.getTestSeries(series, T + n * L, series.length - T + n * L);
+            } else {
+                t = MatrixUtil.getTestSeries(series, T + n * L, L);
             }
+            double ncmForT = lof.getLOF(matT, t);
+            for (double x : ncmForC) {
+                if (ncmForT <= x) {
+                    count++;
+                }
+            }
+            count /= matC.length;
+            System.out.println("value is " + series[T + n * L] + " ,Anomaly Score is " + count);
+            if (count > SCORE) {
+                for (int i = T + n * L; i < T + (n + 1) * L; i++) {
+                    res.add(new Result(i, series[i]));
+                }
+            }
+            n = n + 1;
         }
-        count /= matC.length;
-        System.out.println("Anomaly Score is " + count);
+        setResults(res);
     }
 
     public int getT() {

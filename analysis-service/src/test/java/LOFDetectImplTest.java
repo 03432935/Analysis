@@ -1,5 +1,6 @@
 import com.analysis.service.service.impl.AnomalyDetectServiceImpl.LOF.LOF;
 import com.analysis.service.service.impl.AnomalyDetectServiceImpl.LOF.LOFDetectImpl;
+import com.analysis.service.utils.DisplayTool;
 import com.analysis.service.utils.FileTool;
 import org.junit.Assert;
 import org.junit.Before;
@@ -8,7 +9,7 @@ import org.junit.Test;
 /**
  * Created by Administrator on 2018/4/27.
  */
-public class LOFDetectToolTest {
+public class LOFDetectImplTest {
 
     public double[] testData;
 
@@ -19,8 +20,9 @@ public class LOFDetectToolTest {
 
     @Test
     public void timeSeriesAnalyse() throws Exception {
-        LOFDetectImpl lofDetectTool = new LOFDetectImpl(200, 20);
+        LOFDetectImpl lofDetectTool = new LOFDetectImpl(200, 10);
         lofDetectTool.timeSeriesAnalyse(testData);
+        DisplayTool.showResult(lofDetectTool);
     }
 
 
