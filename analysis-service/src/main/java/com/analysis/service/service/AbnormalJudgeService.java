@@ -1,5 +1,6 @@
 package com.analysis.service.service;
 
+import com.analysis.dao.entity.EchartDto;
 import com.analysis.dao.entity.ImportDto;
 
 import java.util.List;
@@ -19,7 +20,20 @@ public interface AbnormalJudgeService {
      * @param data
      * @return
      */
-    public List<ImportDto> threeSigmaFunction(List<ImportDto> data);
+    public List<EchartDto> threeSigmaFunction(List<ImportDto> data) throws Exception;
+
+    public List<EchartDto> grubbsTestFunction(List<ImportDto> data) throws Exception;
+
+    public List<EchartDto> LOFFunction(List<ImportDto> data) throws Exception;
+
+    public List<EchartDto> iForestFunction(List<ImportDto> data) throws Exception;
+
+    public List<EchartDto> holtWintersFunction(List<ImportDto> data) throws Exception;
+
+    public List<EchartDto> ARMAFunction(List<ImportDto> data) throws Exception;
+
+
+
 
     /**
      * 实现指数移动平均值计算

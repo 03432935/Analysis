@@ -13,4 +13,6 @@ import java.util.List;
 public interface EchartsSendService {
 
     public List<EchartDto> judgeInput(ImportDto importDto) throws Exception;
+
+    public List<ImportDto> beforeAlgorithm(ImportDto importDto);
 }

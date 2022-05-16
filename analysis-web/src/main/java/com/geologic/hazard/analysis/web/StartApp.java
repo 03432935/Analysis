@@ -10,6 +10,7 @@ import org.springframework.scheduling.annotation.EnableAsync;
 @EnableAsync
 public class StartApp {
 
+//    --add-opens java.base/java.lang=ALL-UNNAMED
     public static void main(String[] args) {
         SpringApplication.run(StartApp.class, args);
     }

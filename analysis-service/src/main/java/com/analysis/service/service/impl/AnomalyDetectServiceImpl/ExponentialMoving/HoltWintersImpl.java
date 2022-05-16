@@ -24,7 +24,7 @@ public class HoltWintersImpl implements AnomalyDetectService {
     private double[] ds1;//   s1的对应偏导数
     private double[] ds2;//   s2的对应偏导数
     private ArrayList<Result> results;
-    private double THREADHOLD = 0.2;
+    private double THREADHOLD = 2.0;
 
     /**
      * @param alpha
@@ -44,7 +44,7 @@ public class HoltWintersImpl implements AnomalyDetectService {
     public void timeSeriesAnalyse(double[] data) {
         results = new ArrayList<>();
         initial(data.length);
-        trainModel(data);
+//        trainModel(data);
         testModel(data);
     }
 

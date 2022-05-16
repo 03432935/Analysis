@@ -51,4 +51,9 @@ public class EchartsSendServiceImpl implements EchartsSendService {
         log.info("EchartsController.echartsSendData.echartDtos" + echartDtos);
         return echartDtos;
     }
+
+    @Override
+    public List<ImportDto> beforeAlgorithm(ImportDto importDto) {
+        return batchQueryImportService.getSomeList(importDto);
+    }
 }

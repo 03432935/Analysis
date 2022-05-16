@@ -81,7 +81,7 @@
                 and (DATE_FORMAT( t_time, '%Y-%m-%d') BETWEEN DATE_FORMAT( #{startTime}, '%Y-%m-%d') and DATE_FORMAT( #{endTime}, '%Y-%m-%d'))
             </if>
         </where>
-        order by create_time desc
+        order by t_time
 <!--        <if test="pageNum !=null and pageSize != null">-->
 <!--            limit #{pageNum},#{pageSize}-->
 <!--        </if>-->

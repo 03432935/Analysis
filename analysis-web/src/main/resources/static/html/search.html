@@ -181,7 +181,22 @@
     </select>
 
         <input type="button" value="查询" id="query">
+
     </p>
+
+    <p>
+        异常值算法:
+        <select id="ShowException" name="ShowException">
+            <option value="1">3-sigma</option>
+            <option value="2">grubbs-test</option>
+            <option value="3">LOF</option>
+            <option value="4">iForest</option>
+            <option value="5">holtWinters</option>
+            <option value="6">ARMA</option>
+        </select>
+        <input type="button" value="算法异常显示" id="Algorithm">
+    </p>
+
     <p>
         测点模型号SenId:<input type="text" name="picturePredictionSenId" id="picturePredictionSenId">
         时间Time:<input type="datetime-local" name="picturePredictionStartTime" id="picturePredictionStartTime">
@@ -210,6 +225,9 @@
       $("#showAllPicture").click(function(){
             getPicture(true,true);
       });
+      $("#Algorithm").click(function(){
+            exceptionShow();
+      });
       // 基于准备好的dom，初始化echarts实例
       var myChart = echarts.init(document.getElementById('main'));
       var date = [];
@@ -219,6 +237,9 @@
       var flag = 0 ;
       var predate = [];
       var predata = [];
+      var expdate = [];
+      var expdata = [];
+      var exparr = new Array();
       function getPicture(whe,allPicture) {
           date = [];
           data = [];
@@ -264,6 +285,46 @@
             }
       }
 
+
+      function exceptionShow(){
+        expdate = [];
+        expdata = [];
+        exparr = new Array();
+        let requestData = {"senId":$("#pictureSenId").val(),"startTime":$("#pictureStartTime").val(),"endTime":$("#pictureEndTime").val(),
+        "showException":$("#ShowException option:selected").val()};
+            $.ajax({
+            url: 'http://localhost:8080/web/echarts/algorithm' ,
+            type: 'POST',
+            data:JSON.stringify(requestData),
+            async:false, //修改为同步请求,这个是重点，因为不加上会导致数组为空
+            method:"post",
+            contentType: "application/json;charset=UTF-8",
+            dataType:"json",
+            success: function (returndata) {
+                alert("picture success"+returndata);
+                $(returndata.message).each(function(i){
+                    var resdate = new Date(returndata.message[i].timeData);
+                    resdate = [resdate.getFullYear(), resdate.getMonth()+1, resdate.getDate(), resdate.getHours()].join('/');
+                    expdate.push(resdate);
+                    expdata.push(returndata.message[i].vData);
+                })
+              },
+            error: function (returndata) {
+                alert("picture false");
+              }
+            });
+            exparr = toTwoDimension(expdate,expdata);
+      }
+
+<!--两个一维数组变二维-->
+      function toTwoDimension(arr1,arr2) {
+        var arr = new Array();
+        for (var i = 0; i < arr1.length; i++) {
+            arr.push([arr1[i],arr2[i]]);
+        }
+        return arr;
+      }
+
 <!--这还需要修改-->
       function prediction(allPicture){
             let requestData = {"senId":$("#picturePredictionSenId").val(),"startTime":$("#picturePredictionStartTime").val(),"strategyCode":$("#PredictionStrategy option:selected").val()};
@@ -300,7 +361,7 @@
             }
       }
 
-        getPicture(true,false);
+<!--        getPicture(true,false);-->
 
         function addAllData(){
             for (var i = 0; i < date.length; i++) {
@@ -337,7 +398,7 @@
 <!--        console.log("baseData:"+baseData);-->
 <!--        console.log("predate:"+predate);-->
 <!--        console.log("predata:"+predata);-->
-
+        console.log("exparr"+exparr);
         var colors = ['#5793f3', '#d14a61', '#675bba'];
         option = {
           tooltip: {
@@ -346,7 +407,7 @@
 <!--            开启鼠标滑动显示数值的标签-->
           },
           legend: {
-              data:['原数据','预测数据']
+              data:['原数据','预测数据','异常点']
           },
           xAxis: {
             type: 'category',
@@ -361,15 +422,20 @@
             type: 'value'
           },
           series: [
+           {
+                name:'异常点',
+                type:'scatter',
+                data:exparr
+            },
             {
               name: '原数据',
               type: 'line',
               smooth: true,
               symbol: 'none',
-              stack: 'a',
-              areaStyle: {
-                normal: {}
-              },
+<!--              stack: 'a',-->
+<!--              areaStyle: {-->
+<!--                normal: {}-->
+<!--              },-->
               data: baseData
             },
             {
@@ -377,10 +443,10 @@
               type: 'line',
               smooth: true,
               symbol: 'none',
-              stack: 'a',
-              areaStyle: {
-                normal: {}
-              },
+<!--              stack: 'a',-->
+<!--              areaStyle: {-->
+<!--                normal: {}-->
+<!--              },-->
               data: predata
             }
           ]
@@ -397,6 +463,10 @@
               data: baseDate
             },
             series: [
+              {
+                name: '异常点',
+                data: exparr
+              },
               {
                 name: '原数据',
                 data: baseData

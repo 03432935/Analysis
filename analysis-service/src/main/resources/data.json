@@ -1,14 +1,6 @@
 [
   {
     "version": "v1",
-    "timestamp": "2018-04-12T05:46:00.000+08:00",
-    "event": {
-      "totalcount": 123174,
-      "service_name": "speech-answer"
-    }
-  },
-  {
-    "version": "v1",
     "timestamp": "2018-04-12T05:47:00.000+08:00",
     "event": {
       "totalcount": 103523,

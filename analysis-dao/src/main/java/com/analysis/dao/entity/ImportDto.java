@@ -79,6 +79,8 @@ public class ImportDto extends Base<ImportDto> {
     @TableField(exist = false)
     private String isShowException = "1";
 
+    @TableField(exist = false)
+    private String showException = "1";
 
     @TableField(exist = false)
     private Date startTime;

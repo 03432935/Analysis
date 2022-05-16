@@ -37,7 +37,7 @@ public class LOFDetectImpl implements AnomalyDetectService {
      */
     @Override
     public void timeSeriesAnalyse(double[] series) {
-
+        System.out.println("analyse begin");
         // 利用T和L, 以及时间序列生成测试矩阵
         double[][] mat = MatrixUtil.getMat(series, T, series.length - T - L + 1, L);
 
@@ -61,12 +61,15 @@ public class LOFDetectImpl implements AnomalyDetectService {
             double count = 0;
             //如果不能整除
             double[] t;
-            if ((series.length - T + n * L) < L) {
-                t = MatrixUtil.getTestSeries(series, T + n * L, series.length - T + n * L);
+            double ncmForT;
+            if ((series.length - (T + n * L)) < L) {
+                t = MatrixUtil.getTestSeries(series, T + n * L, series.length - (T + n * L));
+                double[][] matW = MatrixUtil.getMatT(mat, T, series.length - T - L + 1, series.length - (T + n * L));
+                ncmForT = lof.getLOF(matW,t);
             } else {
                 t = MatrixUtil.getTestSeries(series, T + n * L, L);
+                ncmForT = lof.getLOF(matT, t);
             }
-            double ncmForT = lof.getLOF(matT, t);
             for (double x : ncmForC) {
                 if (ncmForT <= x) {
                     count++;
@@ -75,9 +78,14 @@ public class LOFDetectImpl implements AnomalyDetectService {
             count /= matC.length;
             System.out.println("value is " + series[T + n * L] + " ,Anomaly Score is " + count);
             if (count > SCORE) {
-                for (int i = T + n * L; i < T + (n + 1) * L; i++) {
+                int temp = T + (n+1) * L;
+                if ((series.length - (T + n * L)) < L){
+                    temp = series.length;
+                }
+                for (int i = T + n * L; i < temp; i++) {
                     res.add(new Result(i, series[i]));
                 }
+
             }
             n = n + 1;
         }
