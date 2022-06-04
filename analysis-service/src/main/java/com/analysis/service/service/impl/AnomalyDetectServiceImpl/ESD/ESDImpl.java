@@ -9,11 +9,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 /**
- * @program: AnomalyDetectTool
- * @description: Extreme Studentized Deviate
- * @author: mezereonxp Email: mezereonxp@gmail.com
- * @create: 2018-04-28 11:41
- **/
+ * @description:
+ * @author: lingwanxian
+ * @date: 2022/5/9 16:37
+ */
 public class ESDImpl implements AnomalyDetectService {
 
     private double average;// 平均值

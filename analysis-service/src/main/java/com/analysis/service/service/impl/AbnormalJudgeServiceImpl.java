@@ -94,7 +94,7 @@ public class AbnormalJudgeServiceImpl implements AbnormalJudgeService {
     @Override
     public List<EchartDto> LOFFunction(List<ImportDto> importDtoList) throws Exception {
         double[] data = importDtoList.stream().mapToDouble(ImportDto::getVData).toArray();
-        LOFDetectImpl lofDetect = new LOFDetectImpl(1000,10);
+        LOFDetectImpl lofDetect = new LOFDetectImpl(300,10);
         log.info("begin lof,input:{}",data);
         lofDetect.timeSeriesAnalyse(data);
         List<Result> temp = lofDetect.getResults();

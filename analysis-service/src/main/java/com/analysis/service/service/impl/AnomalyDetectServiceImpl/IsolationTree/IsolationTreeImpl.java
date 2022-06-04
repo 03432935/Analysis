@@ -10,7 +10,7 @@ public class IsolationTreeImpl implements AnomalyDetectService {
 
     private int maxTreeNum = 100;
     private int maxSampling = 256;
-    private double factor = 0.6f;
+    private double factor = 0.7f;
 
     private ArrayList<Result> results;
     private IsolationForest forest;

@@ -37,6 +37,16 @@ public abstract class AbstractStrategy<T> implements InitializingBean {
         }
     }
 
+    public List<T> runWithoutBefore(List<ImportDto> importDtoList) throws Exception {
+        List<T> res = analysisStrategy(importDtoList,null);
+        return res;
+//        try{
+//            after(res,null);
+//        }catch (Exception e){
+//            log.error("保存数据出错",e);
+//            compensate();
+//        }
+    }
 
 //    /**
 //     * 写一个专门用于预测的通用方法（好像又没必要，先不写

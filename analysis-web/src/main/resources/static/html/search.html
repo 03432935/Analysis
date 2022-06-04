@@ -121,7 +121,7 @@
 
 <body>
 <div align="center" class='DataSearch'>
-    <h1>大坝数据查询</h1>
+    <h1>大坝数据分析</h1>
     <form id="importForm">
         <p>
             导入excel：<input type="file" value="导入" id="import" name="fileData">
@@ -171,9 +171,9 @@
         补全策略Strategy:<select id="pictureStrategy" name="pictureStrategy">
         <option value="0">原数据</option>
         <option value="1">avg</option>
-        <option value="2">待定</option>
-        <option value="3">待定</option>
-        <option value="4">待定</option>
+        <option value="2">holtWinters</option>
+        <option value="3">ARIMA</option>
+        <option value="4">randomForest</option>
     </select>
         是否展示包括异常值:<select id="isShowException" name="isShowException">
         <option value="1">原数据</option>
@@ -192,7 +192,8 @@
             <option value="3">LOF</option>
             <option value="4">iForest</option>
             <option value="5">holtWinters</option>
-            <option value="6">ARMA</option>
+            <option value="6">ARIMA</option>
+            <option value="7">多数投票</option>
         </select>
         <input type="button" value="算法异常显示" id="Algorithm">
     </p>
@@ -210,6 +211,13 @@
     <p>
         <!--        展示全部数据的图表-->
         <input type="button" value="展示全部" id="showAllPicture">
+        <input type="button" value="清空图" id="cleanUpPicture">
+        <input type="button" value="清空点" id="cleanUpPoint">
+
+
+        <input type="button" value="多线展示1" id="moreLinesO">
+        <input type="button" value="多线展示2" id="moreLinesT">
+
     </p>
 </div>
 <div id="main" style="width: 1200px;height:600px;">
@@ -218,20 +226,41 @@
       // 查询
       $("#query").click(function(){
             getPicture(true,false);
+            addData();
       });
       $("#PredictionQuery").click(function(){
             getPicture(false,false);
       });
       $("#showAllPicture").click(function(){
             getPicture(true,true);
+            addAllData();
       });
       $("#Algorithm").click(function(){
             exceptionShow();
+      });
+      $("#cleanUpPicture").click(function(){
+            cleanUp();
+      });
+     $("#cleanUpPoint").click(function(){
+            cleanUpPoint();
+      });
+      $("#moreLinesO").click(function(){
+            linesShowO();
+      });
+      $("#moreLinesT").click(function(){
+            linesShowT();
       });
       // 基于准备好的dom，初始化echarts实例
       var myChart = echarts.init(document.getElementById('main'));
       var date = [];
       var data = [];
+
+      var date1 = [];
+      var data1 = [];
+
+      var date2 = [];
+      var data2 = [];
+
       var baseDate = [];
       var baseData = [];
       var flag = 0 ;
@@ -240,12 +269,53 @@
       var expdate = [];
       var expdata = [];
       var exparr = new Array();
-      function getPicture(whe,allPicture) {
+      var exparr1 = new Array();
+      var exparr2 = new Array();
+
+      var colorflag = 0;
+
+      function linesShowO(){
+          date = [];
+          data = [];
+          completion(true);
+          date1 = date;
+          data1 = data;
+      }
+
+      function linesShowT(){
+          date = [];
+          data = [];
+          completion(true);
+          date2 = date;
+          data2 = data;
+      }
+
+      function cleanUp(){
           date = [];
           data = [];
           baseDate = [];
           baseData = [];
           flag = 0;
+          colorflag = 0;
+          date1 = [];
+          data1 = [];
+          date2 = [];
+          data2 = [];
+
+      }
+
+      function cleanUpPoint(){
+         expdate = [];
+          expdata = [];
+          exparr = new Array();
+          exparr1 = new Array();
+          exparr2 = new Array();
+
+
+          }
+      function getPicture(whe,allPicture) {
+          date = [];
+          data = [];
           if(whe){
             completion(allPicture);
           }else{
@@ -278,18 +348,12 @@
                 alert("picture false");
               }
             });
-            if(allPicture){
-                addAllData();
-            }else{
-                addData(false);
-            }
       }
 
 
       function exceptionShow(){
-        expdate = [];
-        expdata = [];
-        exparr = new Array();
+      expdate=[];
+      expdata=[];
         let requestData = {"senId":$("#pictureSenId").val(),"startTime":$("#pictureStartTime").val(),"endTime":$("#pictureEndTime").val(),
         "showException":$("#ShowException option:selected").val()};
             $.ajax({
@@ -313,7 +377,19 @@
                 alert("picture false");
               }
             });
-            exparr = toTwoDimension(expdate,expdata);
+
+            colorflag = colorflag + 1;
+            console.log("colorflag:"+colorflag);
+            if(colorflag==1){
+                console.log("colorflag111:"+colorflag);
+             exparr = toTwoDimension(expdate,expdata);
+            }else if(colorflag ==2){
+            console.log("colorflag222:"+colorflag);
+            exparr1 = toTwoDimension(expdate,expdata);
+            }else{
+             exparr2 = toTwoDimension(expdate,expdata);
+             }
+
       }
 
 <!--两个一维数组变二维-->
@@ -325,7 +401,6 @@
         return arr;
       }
 
-<!--这还需要修改-->
       function prediction(allPicture){
             let requestData = {"senId":$("#picturePredictionSenId").val(),"startTime":$("#picturePredictionStartTime").val(),"strategyCode":$("#PredictionStrategy option:selected").val()};
             $.ajax({
@@ -354,14 +429,8 @@
                 alert("picture false");
               }
             });
-            if(allPicture){
-                addAllData();
-            }else{
-                addData(false);
-            }
-      }
 
-<!--        getPicture(true,false);-->
+      }
 
         function addAllData(){
             for (var i = 0; i < date.length; i++) {
@@ -407,7 +476,7 @@
 <!--            开启鼠标滑动显示数值的标签-->
           },
           legend: {
-              data:['原数据','预测数据','异常点']
+              data:['1110002605的异常点','1110002602的异常点','1110030806的异常点','1110002605','1110002602','1110030806']
           },
           xAxis: {
             type: 'category',
@@ -423,12 +492,26 @@
           },
           series: [
            {
-                name:'异常点',
+                name:'1110002605的异常点',
                 type:'scatter',
+                symbolSize:8,
                 data:exparr
             },
+              {
+                name: '1110002602的异常点',
+                  type:'scatter',
+                symbolSize:8,
+                color:'pink',
+                data: exparr1
+              },
+              {
+                name: '1110030806的异常点',
+                  type:'scatter',
+                symbolSize:8,
+                data: exparr2
+              },
             {
-              name: '原数据',
+              name: '1110002605',
               type: 'line',
               smooth: true,
               symbol: 'none',
@@ -437,6 +520,20 @@
 <!--                normal: {}-->
 <!--              },-->
               data: baseData
+            },
+            {
+              name: '1110002602',
+              type: 'line',
+              smooth: true,
+              symbol: 'none',
+              data: data1
+            },
+            {
+              name: '1110030806',
+              type: 'line',
+              smooth: true,
+              symbol: 'none',
+              data: data2
             },
             {
               name: '预测数据',
@@ -464,17 +561,34 @@
             },
             series: [
               {
-                name: '异常点',
+                name: '1110002605的异常点',
                 data: exparr
               },
               {
-                name: '原数据',
+                name: '1110002602的异常点',
+                data: exparr1
+              },
+              {
+                name: '1110030806的异常点',
+                data: exparr2
+              },
+              {
+                name: '1110002605',
                 data: baseData
               },
               {
-                name: '预测数据',
-                data: predata
+                name: '1110002602',
+                data: data1
+              },
+              {
+                name: '1110030806',
+                data: data2
               }
+<!--              ,-->
+<!--              {-->
+<!--                name: '预测数据',-->
+<!--                data: predata-->
+<!--              }-->
             ]
           });
         }, 500); //每个0.5s刷新一次新数据

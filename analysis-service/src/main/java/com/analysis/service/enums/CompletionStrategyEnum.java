@@ -16,6 +16,21 @@ public enum CompletionStrategyEnum {
      * 策略一，漏的数据取平均值
      */
     AVGSTRATEGY("1","avg"),
+
+    /**
+     * 指数平滑
+     */
+    HOLTWINTERS("2","holtWinters"),
+
+    /**
+     * ARIMA
+     */
+    ARIMA("3","arima"),
+
+    /**
+     * RandomForest
+     */
+    RANDOMFOREST("4","randomForest")
     ;
 
 

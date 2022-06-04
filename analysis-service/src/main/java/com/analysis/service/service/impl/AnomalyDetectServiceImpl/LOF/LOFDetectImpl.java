@@ -5,11 +5,11 @@ import com.analysis.service.utils.MatrixUtil;
 import com.analysis.service.utils.Result;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
- * @author mezereon E-mail:mezereonxp@gmail.com
- * @since 18-4-26
+ * @description:
+ * @author: lingwanxian
+ * @date: 2022/5/14 13:59
  */
 public class LOFDetectImpl implements AnomalyDetectService {
 
@@ -33,27 +33,33 @@ public class LOFDetectImpl implements AnomalyDetectService {
 
     /**
      * 利用LOF进行时间序列分析
-     * 打印最后一段窗口的异常分数, 越接近1则越异常
+     * 打印窗口的异常分数, 越接近1则越异常
      */
     @Override
     public void timeSeriesAnalyse(double[] series) {
         System.out.println("analyse begin");
         // 利用T和L, 以及时间序列生成测试矩阵
+        //10x482
         double[][] mat = MatrixUtil.getMat(series, T, series.length - T - L + 1, L);
 
         //一个窗口大小的测试序列, 默认是原序列中最后窗口大小的序列
 //        double[] test = MatrixUtil.getTestSeries(series, series.length - L, L);
 
+        //382x10,旋转矩阵  测试
         double[][] matC = MatrixUtil.getMatC(mat, T, series.length - T - L + 1, L);
+
+        //100x10  训练
         double[][] matT = MatrixUtil.getMatT(mat, T, series.length - T - L + 1, L);
 
         LOF lof = new LOF(K);
 
         double[] ncmForC = new double[matC.length];
 
+        //382
         for (int i = 0; i < matC.length; i++) {
             ncmForC[i] = lof.getLOF(matT, matC[i]);
         }
+
 
         int n = 0;
         ArrayList<Result> res = new ArrayList<>();

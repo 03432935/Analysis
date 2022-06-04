@@ -3,10 +3,7 @@ package com.analysis.service.service.impl;
 import com.analysis.dao.entity.EchartDto;
 import com.analysis.dao.entity.ImportDto;
 import com.analysis.service.enums.CompletionStrategyEnum;
-import com.analysis.service.service.BatchQueryImportService;
-import com.analysis.service.service.ConversionParamService;
-import com.analysis.service.service.EchartsSendService;
-import com.analysis.service.service.StrategyService;
+import com.analysis.service.service.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -31,6 +28,9 @@ public class EchartsSendServiceImpl implements EchartsSendService {
     @Autowired
     private ConversionParamService conversionParamService;
 
+    @Autowired
+    private AlgorithmService algorithmService;
+
     @Override
     public List<EchartDto> judgeInput(ImportDto importDto) throws Exception {
         List<ImportDto> list = null;
@@ -42,7 +42,8 @@ public class EchartsSendServiceImpl implements EchartsSendService {
         } else {
             if (!importDto.getCompletionStrategy().equals(CompletionStrategyEnum.ORIGINAL.getCode())) {
                 //如果补全策略不为默认，对数据进行处理,update
-                strategyService.completionStrategyRun(importDto.getCompletionStrategy());
+//                strategyService.completionStrategyRun(importDto.getCompletionStrategy());
+                return algorithmService.AlgorithmCompletionRes(importDto);
             }//如果没有策略不补数据，字段默认为0
             list = batchQueryImportService.getSomeList(importDto);
             log.info("EchartsController.echartsSendData.list(importDto.isNotEmpty):" + list);

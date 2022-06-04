@@ -6,10 +6,9 @@ import com.analysis.service.utils.Result;
 import java.util.ArrayList;
 
 /**
- * 使用二阶指数平滑以及SGD进行自动化参数调整
- *
- * @author mezereon E-mail:mezereonxp@gmail.com
- * @since 18-4-26
+ * @description:使用二阶指数平滑以及SGD进行自动化参数调整
+ * @author: lingwanxian
+ * @date: 2022/5/16 01:35
  */
 public class HoltWintersImpl implements AnomalyDetectService {
 
@@ -115,6 +114,24 @@ public class HoltWintersImpl implements AnomalyDetectService {
                 System.out.println(data[i - 1] + "," + data[i] + "--------predict: " + predict);
             }
         }
+    }
+
+    public double[] forCompletion(double[] data){
+        initial(data.length);
+        s1[0] = getInitialValue(data, 5);
+        s2[0] = s1[0];
+        double sum = 0;
+        double[] res = new double[data.length];
+        for (int i = 1; i < data.length; i++) {
+            s1[i] = alpha * data[i - 1] + (1 - alpha) * s1[i - 1];
+            s2[i] = alpha * s1[i] + (1 - alpha) * s2[i - 1];
+            double A = 2 * s1[i] - s2[i];
+            double B = (alpha / (1 - alpha)) * (s1[i] - s2[i]);
+//                double predict = A + B * 1;
+            double predict = s2[i];
+            res[i] = predict;
+        }
+        return res;
     }
 
 

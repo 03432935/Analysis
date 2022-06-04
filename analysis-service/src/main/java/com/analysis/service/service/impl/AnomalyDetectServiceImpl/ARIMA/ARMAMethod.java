@@ -3,7 +3,6 @@ package com.analysis.service.service.impl.AnomalyDetectServiceImpl.ARIMA;
 import java.util.Random;
 import java.util.Vector;
 
-//import Jama.Matrix;
 
 public class ARMAMethod
 {

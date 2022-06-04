@@ -68,8 +68,13 @@ public class ADFCheckTest {
         Date start = DateUtils.strToDateTime(yearStart);
         Date end = DateUtils.strToDateTime(yearEnd);
 
+        queryWrapper.eq("sen_id","1110002605");
+        queryWrapper.isNotNull("v_data");
+        queryWrapper.eq("completion_strategy","0");
+        queryWrapper.eq("del","0");
         queryWrapper.between("t_time", start, end);
         queryWrapper.eq("abnormal", "0");
+        queryWrapper.orderByAsc("t_time");
 //        异常值对预测结果影响较大
         List<ImportDto> list = importDtoMapper.selectList(queryWrapper);
 

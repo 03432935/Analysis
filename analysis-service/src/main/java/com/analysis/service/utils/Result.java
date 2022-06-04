@@ -11,6 +11,7 @@ public class Result {
     private double value;
     private double[] multiValue;
     private Boolean isMuti;
+    private int count = 0;
 
     public Result(int index, double[] multiValue) {
         this.index = index;
@@ -26,15 +27,17 @@ public class Result {
 
     @Override
     public String toString() {
-        String result = "Index is " + index + ",  value is ";
-        if (isMuti) {
-            for (double d : multiValue) {
-                result += "[ " + d + " ],";
-            }
-            return result;
-        } else {
-            return "Index is " + index + ",  value is " + value;
-        }
+        String result = "Index is " + index + ",  value is " + value;
+        return  result;
+
+//        if (isMuti) {
+//            for (double d : multiValue) {
+//                result += "[ " + d + " ],";
+//            }
+//            return result;
+//        } else {
+//            return "Index is " + index + ",  value is " + value;
+//        }
     }
 
     public int getIndex() {
@@ -59,5 +62,13 @@ public class Result {
 
     public void setMuti(Boolean muti) {
         isMuti = muti;
+    }
+
+    public double getCount() {
+        return count;
+    }
+
+    public void setCount(int count) {
+        this.count = count;
     }
 }

@@ -164,11 +164,11 @@ public class ARIMAModel
 		}
 	}
 
-	public int predictValue(double p, double q, int period)
+	public double predictValue(double p, double q, int period)
 	{
 		double[] data = this.preDealDiff(period);
 		int n = data.length;
-		int predict = 0;
+		double predict = 0.0;
 		double tmpAR = 0.0, tmpMA = 0.0;
 		double[] errData = new double[(int) (q + 1)];
 
@@ -192,7 +192,7 @@ public class ARIMAModel
 				errData[0] = random.nextGaussian() * Math.sqrt(maCoe[0]);
 			}
 
-			predict = (int) (tmpMA); // 产生预测
+			predict =  tmpMA; // 产生预测
 		} else if (q == 0)
 		{
 			double[] arCoe = this.arimaCoe.get(0);
@@ -205,7 +205,7 @@ public class ARIMAModel
 					tmpAR += arCoe[i] * data[k - i - 1];
 				}
 			}
-			predict = (int) (tmpAR);
+			predict = tmpAR;
 		} else
 		{
 			double[] arCoe = this.arimaCoe.get(0);
@@ -233,7 +233,7 @@ public class ARIMAModel
 				errData[0] = random.nextGaussian() * Math.sqrt(maCoe[0]);
 			}
 
-			predict = (int) (tmpAR + tmpMA);
+			predict = (tmpAR + tmpMA);
 		}
 
 		return predict;

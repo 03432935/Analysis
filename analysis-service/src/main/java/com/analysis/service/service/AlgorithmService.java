@@ -14,4 +14,5 @@ public interface AlgorithmService {
 
     public List<EchartDto> AlgorithmRes(String name , List<ImportDto> importDtoList) throws Exception;
 
+    public List<EchartDto> AlgorithmCompletionRes(ImportDto importDto) throws Exception;
 }

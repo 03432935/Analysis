@@ -1,12 +1,12 @@
 package com.analysis.service.service.impl.AnomalyDetectServiceImpl.LOF;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 /**
- * Local Outlier Factor
- *
- * @author mezereon E-mail:mezereonxp@gmail.com
- * @since 18-4-12
+ * @description:
+ * @author: lingwanxian
+ * @date: 2022/5/14 13:20
  */
 public class LOF {
 
@@ -30,6 +30,7 @@ public class LOF {
         return sum / k;
     }
 
+
     /**
      * 获取local density
      *
@@ -46,6 +47,7 @@ public class LOF {
         return sum / k;
     }
 
+
     /**
      * 找到第k个相似的序列
      *
@@ -54,19 +56,18 @@ public class LOF {
      */
     public double[] findKthPoint(double[][] knn, double[] x) {
 
-        ArrayList list = new ArrayList();
-        for (int i = 0; i < knn.length; i++) {
-            list.add(knn[i]);
-        }
+        ArrayList<double[]> list = new ArrayList<>(Arrays.asList(knn));
         int index = 0;
-        double minDist = dist(knn[0], x);
+        double minDist;
 
+        //k默认为1
         for (int i = 0; i < k; i++) {
+            //记录最小的dist
             index = 0;
-            minDist = dist((double[]) list.get(0), x);
+            minDist = dist(list.get(0), x);
             for (int j = 0; j < list.size(); j++) {
-                if (minDist > dist((double[]) list.get(j), x)) {
-                    minDist = dist((double[]) list.get(j), x);
+                if (minDist > dist( list.get(j), x)) {
+                    minDist = dist( list.get(j), x);
                     index = j;
                 }
             }
@@ -75,8 +76,10 @@ public class LOF {
             }
         }
 
-        return (double[]) list.get(index);
+        return list.get(index);
     }
+
+
 
     /**
      * 返回与相似序列的距离比较之下的较大值
@@ -88,6 +91,7 @@ public class LOF {
     public double reachDist(double[] o, double[] x, double[] nnk) {
         return Math.max(dist(o, x), dist(nnk, x));
     }
+
 
     /**
      * 返回序列之间的欧几里德距离
@@ -104,6 +108,22 @@ public class LOF {
 
         return Math.sqrt(sum);
     }
+
+//    /**
+//     * 返回序列之间的欧几里德距离
+//     *
+//     * @param nnk 第k相似的序列
+//     * @param x 测试序列
+//     */
+//    private double dist(double[] nnk, double x) {
+//
+//        double sum = 0;
+//        for (int i = 0; i < nnk.length; i++) {
+//            sum += (nnk[i] - x) * (nnk[i] - x);
+//        }
+//
+//        return Math.sqrt(sum);
+//    }
 
     public int getK() {
         return k;

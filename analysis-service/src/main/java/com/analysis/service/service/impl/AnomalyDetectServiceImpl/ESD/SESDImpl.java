@@ -6,12 +6,12 @@ import com.analysis.service.utils.Result;
 
 import java.util.ArrayList;
 
+
 /**
- * @program: AnomalyDetectTool
- * @description: Seasonal Extreme Studentized Deviate
- * @author: mezereonxp Email: mezereonxp@gmail.com
- * @create: 2018-05-07 18:16
- **/
+ * @description:
+ * @author: lingwanxian
+ * @date: 2022/5/9 16:38
+ */
 public class SESDImpl implements AnomalyDetectService {
 
     private double t;// t统计量

@@ -8,11 +8,10 @@ import com.analysis.service.utils.Result;
 import java.util.ArrayList;
 
 /**
- * @program: GrubbsTool
- * @description: Grubbs method to detect anomaly point
- * @author: mezereonxp Email: mezereonxp@gmail.com
- * @create: 2018-05-03 15:08
- **/
+ * @description:
+ * @author: lingwanxian
+ * @date: 2022/5/9 16:37
+ */
 public class GrubbsImpl implements AnomalyDetectService {
 
     private double average;// 平均值

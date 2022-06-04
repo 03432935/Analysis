@@ -12,5 +12,11 @@ import java.util.List;
  */
 public interface CompletionService {
 
+    public List<EchartDto> strategyAvgFunction(ImportDto importDto) throws Exception;
+
+    public List<EchartDto> holtWintersCompletionFunction(ImportDto importDto) throws Exception;
+
+    public List<EchartDto> armaCompletionFunction(ImportDto importDto) throws Exception;
+
     public List<EchartDto> randomForestFunction(ImportDto importDto);
 }
